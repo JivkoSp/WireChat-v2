@@ -17,6 +17,46 @@
       "PackagePath": "staticwebassets\\home\\bird.jpg"
     },
     {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\freeforeveryone.png",
+      "PackagePath": "staticwebassets\\home\\freeforeveryone.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\messaging.png",
+      "PackagePath": "staticwebassets\\home\\messaging.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\messaging2.PNG",
+      "PackagePath": "staticwebassets\\home\\messaging2.PNG"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\mitm.png",
+      "PackagePath": "staticwebassets\\home\\mitm.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\mitm2.png",
+      "PackagePath": "staticwebassets\\home\\mitm2.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\noadds.png",
+      "PackagePath": "staticwebassets\\home\\noadds.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\noadds2.png",
+      "PackagePath": "staticwebassets\\home\\noadds2.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\noadds3.PNG",
+      "PackagePath": "staticwebassets\\home\\noadds3.PNG"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\speaking.png",
+      "PackagePath": "staticwebassets\\home\\speaking.png"
+    },
+    {
+      "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\home\\speaking2.PNG",
+      "PackagePath": "staticwebassets\\home\\speaking2.PNG"
+    },
+    {
       "Id": "D:\\Projects\\C#\\Chat\\WireChat\\WireChat\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

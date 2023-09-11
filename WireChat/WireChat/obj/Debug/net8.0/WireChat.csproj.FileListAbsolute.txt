@@ -28,3 +28,4 @@ D:\Projects\C#\Chat\WireChat\WireChat\obj\Debug\net8.0\refint\WireChat.dll
 D:\Projects\C#\Chat\WireChat\WireChat\obj\Debug\net8.0\WireChat.pdb
 D:\Projects\C#\Chat\WireChat\WireChat\obj\Debug\net8.0\WireChat.genruntimeconfig.cache
 D:\Projects\C#\Chat\WireChat\WireChat\obj\Debug\net8.0\ref\WireChat.dll
+D:\Projects\C#\Chat\WireChat\WireChat\obj\Debug\net8.0\WireChat.sourcelink.json
