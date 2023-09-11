@@ -1,0 +1,70 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.custom-paragraph-home {
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    font-size: 1.2rem; 
+    line-height: 1.5; 
+    color: #333;
+}
+
+.siteIconNav {
+    width: 3rem;
+}
+
+.siteIconFooter {
+    width: 6rem;
+}
+
+.modern-button {
+    background-color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color:black;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.modern-button:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-nav {
+    flex-direction: column;
+    text-align: center;
+}
+
+.navbar-toggler {
+    margin-left: auto;
+}
+
+@media (min-width: 992px) {
+    .navbar-nav {
+        flex-direction: row;
+        text-align: left;
+    }
+}

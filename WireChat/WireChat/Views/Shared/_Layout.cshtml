@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WireChat</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WireChat.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <button class="navbar-toggler shadow" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <a class="navbar-brand" href="#">
+                        <div class="siteIconNav m-auto">
+                            <img src="~/siteIcon/Logo 500x500 px(2).png" class="img-fluid" />
+                        </div>
+                    </a>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+
+                            @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link active h5" aria-current="page"
+                                   asp-controller="Home" asp-action="HomePage">
+                                    <span class="text-primary font-weight-bold">@ViewContext.HttpContext.User.Identity.Name</span>
+                                    <i class="bi bi-unlock-fill"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nav-link active h5" aria-current="page" href="/">Home</a>
+                            }
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link h5" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link h5">Blog</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container-fluid justify-content-end mt-4 mt-md-1 me-2">
+                <a href="#" class="modern-button me-2">Log In</a>
+                <a href="#" class="modern-button">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-5">
+        <div class="text-center">
+            &copy; 2024 - WireChat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
