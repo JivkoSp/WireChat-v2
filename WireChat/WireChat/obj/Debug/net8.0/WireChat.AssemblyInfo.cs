@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WireChat")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f79d63a194d515ab2810acc7d855e0ec6f3d8ac")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+035d4fc3ebc93ca82d7b673ccff50090e57ec94b")]
 [assembly: System.Reflection.AssemblyProductAttribute("WireChat")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WireChat")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
