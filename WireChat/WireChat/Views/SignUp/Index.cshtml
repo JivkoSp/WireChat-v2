@@ -1,4 +1,6 @@
-﻿<!-- Section: Design Block -->
+﻿@model WireChat.Controllers.SignUpController
+
+<!-- Section: Design Block -->
 <section class="">
     <!-- Jumbotron -->
     <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
@@ -20,19 +22,31 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="card">
                         <div class="card-body py-5 px-md-5">
-                            <form>
+                            <form asp-controller="SignUp" asp-action="SignUp" class="needs-validation" novalidate method="post">
                                 <!-- 2 column grid layout with text inputs for the first and last names -->
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="form3Example1" class="form-control" />
-                                            <label class="form-label" for="form3Example1">First name</label>
+                                            <input id="firstName" type="text" class="form-control" asp-for="FirstName" required/>
+                                            <label class="form-label" for="firstName">First name</label>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div>
+                                                <span asp-validation-for="FirstName" class="text-danger h6 font-weight-bold"></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="form3Example2" class="form-control" />
-                                            <label class="form-label" for="form3Example2">Last name</label>
+                                            <input id="lastName" type="text" class="form-control" asp-for="LastName" required/>
+                                            <label class="form-label" for="lastName">Last name</label>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div>
+                                                <span asp-validation-for="LastName" class="text-danger h6 font-weight-bold"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -41,28 +55,52 @@
                                 <div class="row">
                                     <div class="col-12 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="form3Example1" class="form-control" />
-                                            <label class="form-label" for="form3Example1">Username</label>
+                                            <input id="userName" type="text" class="form-control" asp-for="UserName" required/>
+                                            <label class="form-label" for="userName">Username</label>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div>
+                                                <span asp-validation-for="UserName" class="text-danger h6 font-weight-bold"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Email input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="email" id="form3Example3" class="form-control" />
-                                    <label class="form-label" for="form3Example3">Email address</label>
+                                    <input id="emailAddress" type="email" class="form-control" asp-for="Email" required/>
+                                    <label class="form-label" for="emailAddress">Email address</label>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div>
+                                        <span asp-validation-for="Email" class="text-danger h6 font-weight-bold"></span>
+                                    </div>
                                 </div>
 
                                 <!-- Password input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="password" id="form3Example4" class="form-control" />
-                                    <label class="form-label" for="form3Example4">Password</label>
+                                    <input id="password" type="password" class="form-control" asp-for="Password" required/>
+                                    <label class="form-label" for="password">Password</label>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div>
+                                        <span asp-validation-for="Password" class="text-danger h6 font-weight-bold"></span>
+                                    </div>
                                 </div>
 
                                 <!-- Confirm Password input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="password" id="form3Example4" class="form-control" />
-                                    <label class="form-label" for="form3Example4">Confirm Password</label>
+                                    <input id="confirmPassword" type="password" class="form-control" asp-for="ConfirmPassword" required/>
+                                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div>
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger h6 font-weight-bold"></span>
+                                    </div>
                                 </div>
 
                                 <!-- Submit button -->
