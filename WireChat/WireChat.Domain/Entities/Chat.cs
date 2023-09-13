@@ -12,7 +12,7 @@ namespace WireChat.Domain.Entities
 
         private Chat() {}
 
-        public Chat(ChatID chatId, ChatType chatType)
+        internal Chat(ChatID chatId, ChatType chatType)
         {
             ValidateConstructorParameters<NullChatParametersException>([chatId, chatType]);
 
@@ -48,6 +48,20 @@ namespace WireChat.Domain.Entities
             _users.Remove(chatUserToRemove);
 
             AddEvent(new ChatUserRemoved(this, chatUser));
+        }
+
+        public void AddMessage(ChatMessage chatMessage)
+        {
+            var alreadyExists = _messages.Any(x => x.Id == chatMessage.Id);
+
+            if (alreadyExists)
+            {
+                throw new ChatMessageAlreadyExistsException(chatMessage.Id);
+            }
+
+            _messages.Add(chatMessage);
+
+            AddEvent(new ChatMessageAdded(this, chatMessage));
         }
     }
 }
