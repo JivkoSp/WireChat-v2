@@ -43,6 +43,10 @@ namespace WireChat.Domain.Entities
             {
                 throw new ChatUserNotFoundException(chatUser.UserID, chatUser.ChatID);
             }
+
+            _users.Remove(chatUserToRemove);
+
+            AddEvent(new ChatUserRemoved(this, chatUser));
         }
     }
 }
