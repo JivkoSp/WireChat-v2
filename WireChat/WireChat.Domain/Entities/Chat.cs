@@ -8,6 +8,7 @@ namespace WireChat.Domain.Entities
     {
         private ChatType _chatType;
         private HashSet<ChatUser> _users =new HashSet<ChatUser>();
+        private List<ChatMessage> _messages = new List<ChatMessage>();
 
         private Chat() {}
 
