@@ -63,5 +63,19 @@ namespace WireChat.Domain.Entities
 
             AddEvent(new ChatMessageAdded(this, chatMessage));
         }
+
+        public void RemoveMessage(ChatMessageID chatMessageId)
+        {
+            var chatMessage = _messages.SingleOrDefault(x => x.Id == chatMessageId);
+
+            if (chatMessage is null)
+            {
+                throw new ChatMessageNotFoundException(chatMessageId);
+            }
+
+            _messages.Remove(chatMessage);
+
+            AddEvent(new ChatMessageRemoved(this, chatMessage));
+        }
     }
 }
