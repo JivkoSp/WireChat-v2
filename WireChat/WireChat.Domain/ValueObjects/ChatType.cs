@@ -2,7 +2,7 @@
 
 namespace WireChat.Domain.ValueObjects
 {
-    public class ChatType
+    public record ChatType
     {
         internal string Value { get; }
 
