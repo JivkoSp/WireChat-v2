@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using WireChat.Domain.Events;
 using WireChat.Domain.Exceptions;
 using WireChat.Domain.ValueObjects;
 
@@ -34,6 +35,20 @@ namespace WireChat.Domain.Entities
             _lastName = userLastName;
             _userName = userName;
             _email = userEmail;
+        }
+
+        public void AddContactRequest(UserContactRequest userContactRequest)
+        {
+            var alreadyExists = _contactRequests.Any(x => x.SenderUserId == userContactRequest.SenderUserId);
+
+            if (alreadyExists)
+            {
+                throw new UserContactRequestAlreadyExistsException(userContactRequest.SenderUserId);
+            }
+
+            _contactRequests.Add(userContactRequest);
+
+            AddEvent(new UserContactRequestAdded(this, userContactRequest));
         }
     }
 }
