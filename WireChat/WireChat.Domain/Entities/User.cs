@@ -11,14 +11,8 @@ namespace WireChat.Domain.Entities
         private UserLastName _lastName;
         private UserName _userName;
         private UserEmail _email;
-        private List<User> _contacts;
-        private List<UserContactRequest> _contactRequests;
+        private List<UserContactRequest> _contactRequests = new List<UserContactRequest>();
         
-        public IReadOnlyCollection<User> Contacts
-        {
-            get { return new ReadOnlyCollection<User>(_contacts); }
-        }
-
         public IReadOnlyCollection<UserContactRequest> ContactRequests
         {
             get { return new ReadOnlyCollection<UserContactRequest>(_contactRequests); }
