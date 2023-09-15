@@ -37,18 +37,34 @@ namespace WireChat.Domain.Entities
             _email = userEmail;
         }
 
-        public void AddContactRequest(UserContactRequest userContactRequest)
+        // Add contact request to the receiver side.
+        public void AddContactRequest(UserContactRequest contactRequest)
         {
-            var alreadyExists = _contactRequests.Any(x => x.SenderUserId == userContactRequest.SenderUserId);
+            var alreadyExists = _contactRequests.Any(x => x.SenderUserId == contactRequest.SenderUserId);
 
             if (alreadyExists)
             {
-                throw new UserContactRequestAlreadyExistsException(userContactRequest.SenderUserId);
+                throw new UserContactRequestAlreadyExistsException(contactRequest.SenderUserId);
             }
 
-            _contactRequests.Add(userContactRequest);
+            _contactRequests.Add(contactRequest);
 
-            AddEvent(new UserContactRequestAdded(this, userContactRequest));
+            AddEvent(new UserContactRequestAdded(this, contactRequest));
+        }
+
+        // Remove contact request from the receiver side.
+        public void RemoveContactRequest(UserID senderUserId)
+        {
+            var contactRequest = _contactRequests.SingleOrDefault(x => x.SenderUserId == senderUserId);
+            
+            if (contactRequest is null)
+            {
+                throw new UserContactRequestNotFoundException(senderUserId);
+            }
+
+            _contactRequests.Remove(contactRequest);
+
+            AddEvent(new UserContactRequestRemoved(this, contactRequest));
         }
     }
 }
