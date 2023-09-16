@@ -36,18 +36,18 @@ namespace WireChat.Domain.Entities
         }
 
         //Remove ChatUser from Group chat.
-        public void RemoveChatUser(ChatUser chatUser)
+        public void RemoveChatUser(UserID userId)
         {
-            var chatUserToRemove = _users.SingleOrDefault(chatUser);
+            var chatUserToRemove = _users.SingleOrDefault(x => x.UserID == userId);
 
             if (chatUserToRemove is null)
             {
-                throw new ChatUserNotFoundException(chatUser.UserID, chatUser.ChatID);
+                throw new ChatUserNotFoundException(userId, Id);
             }
 
             _users.Remove(chatUserToRemove);
 
-            AddEvent(new ChatUserRemoved(this, chatUser));
+            AddEvent(new ChatUserRemoved(this, chatUserToRemove));
         }
 
         public void AddMessage(ChatMessage chatMessage)
