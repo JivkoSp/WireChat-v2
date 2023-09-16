@@ -30,15 +30,17 @@ namespace WireChat.Application.Commands.Handlers
                 throw new UserNotFoundException(command.UserId);
             }
 
-            var chat = _chatFactory.Create(Guid.NewGuid(), "Group");
+            var chatId = Guid.NewGuid();
 
             // There may be edge cases where the newly created chat has an ID that already exists in the database.
-            var chatExists = await _chatReadService.ExistsByIdAsync(chat.Id);
+            var chatExists = await _chatReadService.ExistsByIdAsync(chatId);
 
-            if (chatExists is false)
+            if (chatExists)
             {
-                throw new ChatNotFoundException(command.UserId);
+                throw new ChatAlreadyExistsException(chatId);
             }
+
+            var chat = _chatFactory.Create(chatId, "Group");
 
             var chatUser = new ChatUser(command.UserId, chat.Id);
 
