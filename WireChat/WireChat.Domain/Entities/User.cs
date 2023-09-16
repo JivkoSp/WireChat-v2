@@ -46,14 +46,27 @@ namespace WireChat.Domain.Entities
             AddEvent(new UserContactRequestAdded(this, contactRequest));
         }
 
-        // Remove contact request from the receiver side.
-        public void RemoveContactRequest(UserID senderUserId)
+        public void RemoveReceivedContactRequest(UserID senderUserId)
         {
             var contactRequest = _contactRequests.SingleOrDefault(x => x.SenderUserId == senderUserId);
             
             if (contactRequest is null)
             {
                 throw new UserContactRequestNotFoundException(senderUserId);
+            }
+
+            _contactRequests.Remove(contactRequest);
+
+            AddEvent(new UserContactRequestRemoved(this, contactRequest));
+        }
+
+        public void RemoveIssuedContactRequest(UserID receiverUserId)
+        {
+            var contactRequest = _contactRequests.SingleOrDefault(x => x.ReceiverUserId == receiverUserId);
+            
+            if (contactRequest is null)
+            {
+                throw new UserContactRequestNotFoundException(receiverUserId);
             }
 
             _contactRequests.Remove(contactRequest);
