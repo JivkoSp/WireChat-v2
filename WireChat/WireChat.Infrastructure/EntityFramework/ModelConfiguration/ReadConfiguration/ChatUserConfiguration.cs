@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WireChat.Infrastructure.EntityFramework.Models;
 
-namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration
+namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.ReadConfiguration
 {
     internal sealed class ChatUserConfiguration : IEntityTypeConfiguration<ChatUserReadModel>
     {
