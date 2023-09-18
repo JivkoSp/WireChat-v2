@@ -11,6 +11,6 @@ namespace WireChat.Infrastructure.EntityFramework.Models
         // Relationships
         public virtual List<UserContactRequestReadModel> UserContactRequests { get; set; }
         public virtual List<ChatUserReadModel> ChatUsers { get; set; }
-
+        public virtual List<ChatMessageReadModel> ChatMessages { get; set; }
     }
 }
