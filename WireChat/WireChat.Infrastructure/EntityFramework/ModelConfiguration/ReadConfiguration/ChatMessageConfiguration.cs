@@ -4,7 +4,7 @@ using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionConverters;
 using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionProvider;
 using WireChat.Infrastructure.EntityFramework.Models;
 
-namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration
+namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.ReadConfiguration
 {
     internal sealed class ChatMessageConfiguration : IEntityTypeConfiguration<ChatMessageReadModel>
     {
