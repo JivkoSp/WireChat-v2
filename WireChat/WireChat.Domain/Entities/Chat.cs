@@ -1,4 +1,5 @@
-﻿using WireChat.Domain.Events;
+﻿using System.Collections.ObjectModel;
+using WireChat.Domain.Events;
 using WireChat.Domain.Exceptions;
 using WireChat.Domain.ValueObjects;
 
@@ -9,6 +10,16 @@ namespace WireChat.Domain.Entities
         private ChatType _chatType;
         private HashSet<ChatUser> _users =new HashSet<ChatUser>();
         private List<ChatMessage> _messages = new List<ChatMessage>();
+
+        public IReadOnlyCollection<ChatUser> Users
+        {
+            get { return new ReadOnlyCollection<ChatUser>(_users.ToList()); }
+        }
+
+        public IReadOnlyCollection<ChatMessage> Messages
+        {
+            get { return new ReadOnlyCollection<ChatMessage>(_messages); }
+        }
 
         private Chat() {}
 
