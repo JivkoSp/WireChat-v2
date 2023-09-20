@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WireChat.Domain.Entities;
 using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionProvider;
 using WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfiguration;
 
@@ -17,6 +18,10 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             _encryptionProvider = encryptionProvider;
         }
 
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<User> Users { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
