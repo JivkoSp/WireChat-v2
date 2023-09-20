@@ -4,16 +4,16 @@ using WireChat.Infrastructure.EntityFramework.Contexts;
 
 namespace WireChat.Infrastructure.EntityFramework.Services.ReadServices
 {
-    internal sealed class PostgreChatReadService : IChatReadService
+    internal sealed class PostgresChatReadService : IChatReadService
     {
         private readonly ReadDbContext _readDbContext;
 
-        public PostgreChatReadService(ReadDbContext readDbContext)
+        public PostgresChatReadService(ReadDbContext readDbContext)
         {
             _readDbContext = readDbContext;
         }
 
         public Task<bool> ExistsByIdAsync(Guid id)
-            => _readDbContext.Chats.AnyAsync(x => x.ChatId == id);
+            => _readDbContext.ChatReadModels.AnyAsync(x => x.ChatId == id);
     }
 }
