@@ -8,6 +8,6 @@ namespace WireChat.Domain.Repositories
         Task<User> GetUserByIdAsync(UserID userId);
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(UserID userId);
+        Task DeleteUserAsync(User user);
     }
 }
