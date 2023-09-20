@@ -15,6 +15,9 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             _encryptionProvider = encryptionProvider;
         }
 
+        public DbSet<ChatReadModel> ChatReadModels { get; set; }
+        public DbSet<UserReadModel> UserReadModels { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("wirechat");
