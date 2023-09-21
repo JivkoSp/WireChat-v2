@@ -15,6 +15,7 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             _encryptionProvider = encryptionProvider;
         }
 
+        public DbSet<ChatMessageReadModel> ChatMessageReadModels { get; set; }
         public DbSet<ChatReadModel> ChatReadModels { get; set; }
         public DbSet<UserReadModel> UserReadModels { get; set; }
         
