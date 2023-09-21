@@ -18,6 +18,7 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
         public DbSet<ChatMessageReadModel> ChatMessageReadModels { get; set; }
         public DbSet<ChatReadModel> ChatReadModels { get; set; }
         public DbSet<UserReadModel> UserReadModels { get; set; }
+        public DbSet<ChatUserReadModel> ChatUserReadModels { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
