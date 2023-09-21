@@ -2,5 +2,5 @@ using WireChat.Application.Dtos;
 
 namespace WireChat.Application.Queries
 {
-    public record GetGroupChatsQuery(Guid UserId) : IQuery<List<ChatDto>>;
+    public record GetGroupChatsQuery(string UserId) : IQuery<List<ChatDto>>;
 }
