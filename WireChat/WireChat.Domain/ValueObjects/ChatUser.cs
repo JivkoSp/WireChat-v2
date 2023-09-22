@@ -7,6 +7,8 @@ namespace WireChat.Domain.ValueObjects
         public UserID UserID { get; }
         public ChatID ChatID { get; }
 
+        private ChatUser() {}
+
         public ChatUser(UserID userId, ChatID chatId)
         {
             if (userId == null)
