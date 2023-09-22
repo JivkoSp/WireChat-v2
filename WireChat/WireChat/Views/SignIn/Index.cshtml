@@ -1,4 +1,6 @@
-﻿<!-- Section: Design Block -->
+﻿@model WireChat.Controllers.SignInController
+
+<!-- Section: Design Block -->
 <section class="">
     <!-- Jumbotron -->
     <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
@@ -20,29 +22,39 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="card">
                         <div class="card-body py-5 px-md-5">
-                            <form>
+                            <form asp-controller="SignIn" asp-action="SignIn" class="needs-validation" novalidate method="post">
                                 <!-- Username input -->
                                 <div class="row">
                                     <div class="col-12 mb-4">
                                         <div data-mdb-input-init class="form-outline">
-                                            <input type="text" id="form3Example1" class="form-control" />
-                                            <label class="form-label" for="form3Example1">Username</label>
+                                            <input id="userName" type="text" class="form-control" asp-for="UserName" required />
+                                            <label class="form-label" for="userName">Username</label>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div>
+                                                <span asp-validation-for="UserName" class="text-danger h6 font-weight-bold"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Password input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="password" id="form3Example4" class="form-control" />
-                                    <label class="form-label" for="form3Example4">Password</label>
+                                    <input id="password" type="password" class="form-control" asp-for="Password" required />
+                                    <label class="form-label" for="password">Password</label>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div>
+                                        <span asp-validation-for="Password" class="text-danger h6 font-weight-bold"></span>
+                                    </div>
                                 </div>
 
                                 <!-- Checkbox -->
                                 <div class="form-check d-flex justify-content-center mb-4">
-                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                                    <label class="form-check-label" for="form2Example33">
-                                        Remember me
-                                    </label>
+                                    <input id="checkbox" class="form-check-input me-2" type="checkbox" value="true" asp-for="RememberMe" checked />
+                                    <label class="form-check-label" for="checkbox">Remember me</label>
                                 </div>
 
                                 <!-- Submit button -->
