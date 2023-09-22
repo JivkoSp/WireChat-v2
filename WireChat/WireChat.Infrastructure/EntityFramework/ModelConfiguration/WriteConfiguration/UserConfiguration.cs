@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WireChat.Domain.Entities;
 using WireChat.Domain.ValueObjects;
 using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionConverters;
@@ -41,6 +42,7 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
                 .IsRequired();
 
             builder.Property(typeof(UserName), "_userName")
+                .HasConversion(new ValueConverter<UserName, string>(x => x, x => new UserName(x)))
                 .HasColumnName("UserName");
 
             builder.Property(typeof(UserEmail), "_email")
