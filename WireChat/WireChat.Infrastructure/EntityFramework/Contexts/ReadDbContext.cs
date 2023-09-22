@@ -6,7 +6,7 @@ using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Infrastructure.EntityFramework.Contexts
 {
-    internal sealed class ReadDbContext : IdentityDbContext<UserReadModel>
+    public sealed class ReadDbContext : IdentityDbContext<UserReadModel>
     {
         private readonly IEncryptionProvider _encryptionProvider;
 
