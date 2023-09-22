@@ -1,6 +1,6 @@
 namespace WireChat.Infrastructure.EntityFramework.Models
 {
-    internal class ChatUserReadModel
+    public class ChatUserReadModel
     {
          // Composite Primary Key { UserId, ChatId }
          public string UserId { get; set; }

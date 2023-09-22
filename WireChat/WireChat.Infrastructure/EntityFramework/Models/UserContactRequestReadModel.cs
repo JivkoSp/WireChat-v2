@@ -1,6 +1,6 @@
 namespace WireChat.Infrastructure.EntityFramework.Models
 {
-    internal class UserContactRequestReadModel
+    public class UserContactRequestReadModel
     {
         // Composite Primary Key { SenderUserId, ReceiverUserId }
         public string SenderUserId { get; set; }

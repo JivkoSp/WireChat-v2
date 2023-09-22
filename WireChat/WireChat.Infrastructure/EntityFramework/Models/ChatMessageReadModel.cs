@@ -1,6 +1,6 @@
 namespace WireChat.Infrastructure.EntityFramework.Models
 {
-    internal class ChatMessageReadModel
+    public class ChatMessageReadModel
     {
         // Primary key
         public Guid ChatMessageId { get; set; }
