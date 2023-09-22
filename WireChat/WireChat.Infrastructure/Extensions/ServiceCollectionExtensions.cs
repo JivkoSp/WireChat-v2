@@ -14,7 +14,7 @@ using WireChat.Infrastructure.Automapper.Profiles;
 
 namespace WireChat.Infrastructure.Extensions
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
