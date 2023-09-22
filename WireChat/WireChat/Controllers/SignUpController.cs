@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Controllers
 {
     public class SignUpController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserReadModel> _userManager;
 
         [BindProperty]
         [Required(ErrorMessage = "Enter valid first name!")]
@@ -39,17 +40,36 @@ namespace WireChat.Controllers
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
+        public SignUpController(UserManager<UserReadModel> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult SignUp()
+        public async Task<IActionResult> SignUp()
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Chat");
+                var user = new UserReadModel
+                {
+                    UserFirstName = FirstName,
+                    UserLastName = LastName,
+                    UserName = UserName,
+                    Email = Email,
+                    EmailConfirmed = true
+                };
+
+                var result = await _userManager.CreateAsync(user, Password);
+                
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Chat");
+                }
             }
 
             return View("Index");
