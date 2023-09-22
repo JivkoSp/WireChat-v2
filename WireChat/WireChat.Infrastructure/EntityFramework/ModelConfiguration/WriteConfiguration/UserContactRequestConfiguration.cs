@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WireChat.Domain.ValueObjects;
 using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionConverters;
 using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionProvider;
@@ -24,6 +25,14 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
             builder.HasKey(key => new { key.SenderUserId, key.ReceiverUserId });
 
             // Property config
+            builder.Property(p => p.SenderUserId)
+                .HasConversion(new ValueConverter<UserID, string>(id => id.Value.ToString(), id => new UserID(Guid.Parse(id))))
+                .IsRequired();
+
+            builder.Property(p => p.ReceiverUserId)
+                .HasConversion(new ValueConverter<UserID, string>(id => id.Value.ToString(), id => new UserID(Guid.Parse(id))))
+                .IsRequired();
+
             builder.Property(typeof(string), "Message")
                 .HasConversion(new EncryptedStringConverter(_encryptionProvider));
         }
