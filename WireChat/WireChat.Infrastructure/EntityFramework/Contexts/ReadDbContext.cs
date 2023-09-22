@@ -19,7 +19,8 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
         public DbSet<ChatReadModel> ChatReadModels { get; set; }
         public DbSet<UserReadModel> UserReadModels { get; set; }
         public DbSet<ChatUserReadModel> ChatUserReadModels { get; set; }
-        
+        public DbSet<UserContactRequestReadModel> UserContactRequestReadModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("wirechat");
