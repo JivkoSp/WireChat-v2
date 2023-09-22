@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WireChat.Infrastructure.Exceptions;
@@ -16,6 +17,20 @@ namespace WireChat.Infrastructure.EntityFramework.Initialization
             _serviceProvider = serviceProvider;
         }
 
+        private bool IsIdentityDbContext(Type type)
+        {
+            if (type == null || !type.IsClass) return false;
+
+            if (type == typeof(IdentityDbContext) ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IdentityDbContext<>)) ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IdentityDbContext<,,>)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         //Starts the database initialization process, which applies any pending migrations.
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
         /// <returns>A Task that represents the asynchronous operation.</returns>
@@ -23,14 +38,24 @@ namespace WireChat.Infrastructure.EntityFramework.Initialization
         {
             // Retrieve all DbContext types from the current application domain.
             var dbContextTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x => typeof(DbContext).IsAssignableFrom(x) && !x.IsInterface && x != typeof(DbContext));
+                   .SelectMany(assembly => assembly.GetTypes())
+                   .Where(type => typeof(DbContext).IsAssignableFrom(type)
+                                  && type != typeof(DbContext)
+                                  && !type.IsInterface
+                                  && !type.IsAbstract
+                                  && !type.IsGenericTypeDefinition);
 
             // Create a new scope to resolve services.
             var scope = _serviceProvider.CreateScope();
 
             foreach (var dbContextType in dbContextTypes)
             {
+                // Skip IdentityDbContext and its generic variants
+                if (IsIdentityDbContext(dbContextType))
+                {
+                    continue;
+                }
+
                 // Resolve the DbContext instance from the service provider.
                 var dbContext = scope.ServiceProvider.GetRequiredService(dbContextType) as DbContext;
 
