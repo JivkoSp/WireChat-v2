@@ -67,5 +67,17 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(removeIssuedContactRequestCommand);
         }
+
+        [HttpDelete]
+        public async Task RemoveReceivedContactRequest(string senderUserName)
+        {
+            var receiverUserId = Guid.Parse(_userManager.GetUserId(User));
+
+            var sender = await _userManager.FindByNameAsync(senderUserName);
+
+            var removeIssuedContactRequestCommand = new RemoveReceivedContactRequestCommand(Guid.Parse(sender.Id), receiverUserId);
+
+            await _commandDispatcher.DispatchAsync(removeIssuedContactRequestCommand);
+        }
     }
 }
