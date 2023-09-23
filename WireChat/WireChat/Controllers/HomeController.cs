@@ -1,21 +1,33 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WireChat.Infrastructure.EntityFramework.Models;
 using WireChat.Models;
 
 namespace WireChat.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly SignInManager<UserReadModel> _signInManager;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SignInManager<UserReadModel> signInManager, ILogger<HomeController> logger)
         {
+            _signInManager = signInManager;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Privacy()
