@@ -14,5 +14,11 @@ namespace WireChat.Infrastructure.SignalR.Hubs
         {
             await Clients.Group(contactRequest.ContactName).SendAsync("ContactRequest", contactRequest);
         }
+
+        public async Task RemovedReceivedContactRequest(SignalRRemoveContactRequestDto removeContactRequestDto)
+        {
+            await Clients.Group(removeContactRequestDto.ReceiverUserName)
+                .SendAsync("RemovedReceivedContactRequest", removeContactRequestDto);
+        }
     }
 }
