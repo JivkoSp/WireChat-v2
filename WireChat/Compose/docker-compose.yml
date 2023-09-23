@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgredb_wirechat:
+    container_name: wirechat_postgredb
+    image: postgres:14.2
+    command: [
+      "postgres",
+      "-c", "ssl=on",
+      "-c", "ssl_cert_file=/var/lib/postgresql/certs/server.crt",
+      "-c", "ssl_key_file=/var/lib/postgresql/certs/server.key"
+    ]
+    volumes:
+      - wirechat_vlm:/var/lib/postgresql/data/
+      - ./database-certs:/var/lib/postgresql/certs
+    env_file:
+      - ./database-wirechat.dev.env
+    healthcheck:
+      test: "exit 0"
+    ports:
+      - "127.0.0.1:5434:5432"
+      - "127.0.0.1:2224:22"
+    networks:
+      - wirechat_network
+
+  pgadmin:
+    container_name: pgadmin_wirechat
+    image: dpage/pgadmin4:latest
+    env_file:
+      - ./pgadmin.dev.env
+    ports:
+      - "127.0.0.1:5500:80"
+    networks:
+      - wirechat_network
+
+
+volumes:
+  wirechat_vlm:
+
+networks:
+  wirechat_network:
+    name: wirechat_network
+    driver: bridge
