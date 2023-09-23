@@ -1,0 +1,174 @@
+﻿@model WireChat.ViewModels.ContactRequestViewModel
+
+<section>
+    <div class="container-fluid py-5">
+        <div class="row">
+            <partial name="_SideMenu" />
+
+            <div class="col-sm-10 mt-sm-1 text-center">
+                <div class="row">
+                    <div class="row">
+                        <!-- Issued Requests Column -->
+                        <div id="issuedRequests" class="col-md-6 mb-3">
+                            <h4>Issued Requests</h4>
+                            @foreach (var contactRequest in Model.IssuedContactRequests)
+                            {
+                                <div id="removeIssuedContactRequestCard-@contactRequest.ReceiverUserName" 
+                                    class="card mb-3 shadow rounded-3 w-75 m-auto">
+                                    <div class="contact-request-card-header bg-primary text-white rounded-3">
+                                        <div>
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                                 class="rounded-circle shadow-1-strong" width="40">
+                                            <span class="online-indicator" style="left:42px;"></span>
+                                            <strong class="ms-1">@contactRequest.ReceiverUserName</strong>
+                                        </div>
+                                        <div class="ms-2">
+                                            <div class="small">2024-08-06 14:45</div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-request-card-body rounded-3">
+                                        <p class="card-text">@contactRequest.Message</p>
+                                        <button id="removeContactRequest-@contactRequest.ReceiverUserName"
+                                                class="modern-button mt-1 me-2 d-inline-block text-danger">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Received Requests Column -->
+                        <div id="receivedRequests" class="col-md-6 mb-3">
+                            <h4>Received Requests</h4>
+                            @foreach (var contactRequest in Model.ReceivedContactRequests)
+                            {
+                                <div id="removeReceivedContactRequestCard-@contactRequest.SenderUserName" 
+                                    class="card mb-3 shadow rounded-3 w-75 m-auto">
+                                    <div class="contact-request-card-header bg-primary text-white rounded-3">
+                                        <div>
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                                 class="rounded-circle shadow-1-strong" width="40">
+                                            <span class="online-indicator" style="left:42px;"></span>
+                                            <strong class="ms-1">@contactRequest.SenderUserName</strong>
+                                        </div>
+                                        <div class="ms-2">
+                                            <div class="small">2024-08-06 14:45</div>
+                                        </div>
+                                    </div>
+                                    <div class="contact-request-card-body rounded-3">
+                                        <p class="card-text">@contactRequest.Message</p>
+                                        <button id="acceptContactRequest-@contactRequest.SenderUserName"
+                                                class="modern-button me-2 d-inline-block text-primary">
+                                            Accept
+                                        </button>
+                                        <button id="declineContactRequest-@contactRequest.SenderUserName"
+                                                class="modern-button me-2 d-inline-block text-danger">
+                                            Decline
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+
+        $("document").ready(() => {
+
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("/contactHub").build();
+
+            connection.start().then(() => {
+
+                connection.invoke("JoinGroup", "@ViewContext.HttpContext.User.Identity.Name");
+
+                connection.on("ContactRequest", (message) => {
+
+                    let divElement = createContactRequest(message);
+
+                    $("#receivedRequests").append(divElement);
+                });
+
+                $(document).on('click', '[id^="removeContactRequest-"]', function () {
+
+                    let receiverUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                    const signalRRemoveContactRequestDto = {
+                        "SenderUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                        "ReceiverUserName": receiverUserName
+                    };
+
+                    connection.invoke("RemovedReceivedContactRequest", signalRRemoveContactRequestDto);
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/ContactRequest/RemoveIssuedContactRequest',
+                        data: {
+                            "receiverUserName": receiverUserName
+                        },
+                        success: () => {
+                            $(`#removeIssuedContactRequestCard-${receiverUserName}`).remove();
+                        },
+                        failure: (response) => {
+                            console.log("Fail", response);
+                        },
+                        error: (response) => {
+                            console.log("Error", response);
+                        }
+                    });
+                });
+
+                $(document).on('click', '[id^="declineContactRequest-"]', function () {
+
+                    let senderUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                    const signalRRemoveContactRequestDto = {
+                        "SenderUserName": senderUserName,
+                        "ReceiverUserName": "@ViewContext.HttpContext.User.Identity.Name"
+                    };
+
+                    connection.invoke("RemovedIssuedContactRequest", signalRRemoveContactRequestDto);
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/ContactRequest/RemoveReceivedContactRequest',
+                        data: {
+                            "senderUserName": senderUserName
+                        },
+                        success: () => {
+                            $(`#removeReceivedContactRequestCard-${senderUserName}`).remove();
+                        },
+                        failure: (response) => {
+                            console.log("Fail", response);
+                        },
+                        error: (response) => {
+                            console.log("Error", response);
+                        }
+                    });
+                });
+
+                connection.on("RemovedReceivedContactRequest", (message) => {
+
+                    $(`#removeReceivedContactRequestCard-${message.senderUserName}`).remove();
+                });
+
+                connection.on("RemovedIssuedContactRequest", (message) => {
+
+                    $(`#removeIssuedContactRequestCard-${message.receiverUserName}`).remove();
+                });
+
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+        });
+
+    </script>
+}
