@@ -53,7 +53,13 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
             // Property config - End
 
             // Relationships
-            builder.HasMany(p => p.ContactRequests);
+            builder.HasMany(p => p.SendedContactRequests)
+                .WithOne()
+                .HasForeignKey(p => p.SenderUserId);
+
+            builder.HasMany(p => p.ReceivedContactRequests)
+                .WithOne()
+                .HasForeignKey(p => p.ReceiverUserId);
         }
     }
 }
