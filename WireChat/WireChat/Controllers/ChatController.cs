@@ -44,5 +44,13 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(addChatMessageCommand);
         }
+
+        [HttpDelete]
+        public async Task RemoveMessage(Guid chatId, Guid chatMessageId)
+        {
+            var removeChatMessageCommand = new RemoveChatMessageCommand(chatId, chatMessageId);
+
+            await _commandDispatcher.DispatchAsync(removeChatMessageCommand);
+        }
     }
 }
