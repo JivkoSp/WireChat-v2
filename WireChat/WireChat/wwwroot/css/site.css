@@ -21,6 +21,14 @@ body {
   margin-bottom: 60px;
 }
 
+.navbar-nav .nav-item {
+    margin: 0.5rem 0; 
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1rem; 
+}
+
 .custom-paragraph-home {
     font-family: 'Helvetica Neue', Arial, sans-serif; 
     font-size: 1.2rem; 
@@ -74,9 +82,143 @@ body {
     color: white;
 }
 
+.contact-request-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem; 
+}
+
+.contact-request-card-body {
+    max-height: 200px; 
+    overflow: auto; 
+    max-width: 100%; 
+    padding: 1rem; 
+}
+
+.online-indicator {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background-color: #53d977;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+}
+
+.main-page-container {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    position: relative;
+    padding: 0.5rem;
+}
+
+.chat-container li.chat-left,
+.chat-container li.chat-right {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    margin-bottom: 40px;
+}
+
+.chat-container li.chat-right {
+    margin-right: 6%;
+    justify-content: flex-end;
+}
+
+.chat-message-list {
+    height: 70vh;
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.modern-textarea {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    resize: none;
+    padding: 10px;
+    font-size: 14px;
+    padding-right: 80px;
+}
+
+.chat-form-container {
+    position: relative;
+    margin-top: 15px;
+}
+
+#sendMessageBtn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1; 
+}
+
+#sendMessageBtn:hover {
+    color: blue; 
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.delete-message:hover{
+    color:red;
+}
+
+.siteIconNav {
+    cursor: pointer; 
+    text-decoration: none; 
+}
+
+.groups-side-menu {
+    display: none;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 @media (min-width: 992px) {
     .navbar-nav {
         flex-direction: row;
         text-align: left;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand.mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .side-menu {
+        display: none;
+    }
+
+    .home-main-img {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    .navbar-brand.ms-5 {
+        margin-left: 1.5rem !important; 
     }
 }
