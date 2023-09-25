@@ -3,6 +3,7 @@ using WireChat.Application.Extensions;
 using WireChat.Infrastructure.EntityFramework.Contexts;
 using WireChat.Infrastructure.EntityFramework.Models;
 using WireChat.Infrastructure.Extensions;
+using WireChat.Infrastructure.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,5 +45,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<ChatHub>("/chatHub");
+
+app.MapHub<ContactHub>("/contactHub");
 
 app.Run();
