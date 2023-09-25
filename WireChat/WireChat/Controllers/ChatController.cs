@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using WireChat.Application.Commands;
 using WireChat.Application.Commands.Dispatcher;
-using WireChat.Application.Dtos;
 using WireChat.Application.Queries;
 using WireChat.Application.Queries.Dispatcher;
 using WireChat.ViewModels;
