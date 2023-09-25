@@ -48,12 +48,24 @@ namespace WireChat.Controllers
         {
             var senderUserId = Guid.Parse(_userManager.GetUserId(User));
 
-            var receiver = await _userManager.FindByNameAsync(contactRequestDto.ContactName);
+            var receiver = await _userManager.FindByNameAsync(contactRequestDto.ReceiverUserName);
 
             var addContactRequestCommand = new AddContactRequestCommand(senderUserId, Guid.Parse(receiver.Id), 
                 contactRequestDto.ContactMessage);
 
             await _commandDispatcher.DispatchAsync(addContactRequestCommand);
+        }
+
+        [HttpPost]
+        public async Task AddContactRequest(string senderUserName)
+        {
+            var receiverUserId = Guid.Parse(_userManager.GetUserId(User));
+
+            var sender = await _userManager.FindByNameAsync(senderUserName);
+
+            var createOneToOneChatCommand = new CreateOneToOneChatCommand(Guid.Parse(sender.Id), receiverUserId);
+
+            await _commandDispatcher.DispatchAsync(createOneToOneChatCommand);
         }
 
         [HttpDelete]
