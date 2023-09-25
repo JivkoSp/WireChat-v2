@@ -41,7 +41,7 @@ namespace WireChat.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Chat");
+                    return RedirectToAction("Index", "Main");
                 }
 
                 // TODO: Add logic for two factor authentication 
