@@ -12,52 +12,173 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-1">
-            <div class="container-fluid">
-                <button class="navbar-toggler shadow" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-                        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <a class="navbar-brand" href="#">
-                        <div class="siteIconNav m-auto">
-                            <img src="~/siteIcon/Logo 500x500 px(2).png" class="img-fluid" />
-                        </div>
-                    </a>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-
-                            @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
-                            {
-                                <a class="nav-link active h5" aria-current="page"
-                                   asp-controller="Home" asp-action="HomePage">
-                                    <span class="text-primary font-weight-bold">@ViewContext.HttpContext.User.Identity.Name</span>
-                                    <i class="bi bi-unlock-fill"></i>
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="nav-link active h5" aria-current="page" href="/">Home</a>
-                            }
-
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link h5" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link h5">Blog</a>
-                        </li>
-                    </ul>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-1">
+            
+            <a id="siteIconNav" class="navbar-brand">
+                <div class="siteIconNav ms-3">
+                    <img src="~/siteIcon/Logo 500x500 px(2).png" class="img-fluid" />
                 </div>
-            </div>
-            <div class="container-fluid justify-content-end mt-4 mt-md-1 me-2">
-                <a asp-controller="SignIn" asp-action="Index" class="modern-button me-2">Sign In</a>
-                <a asp-controller="SignUp" asp-action="Index" class="modern-button">Sign Up</a>
+            </a>
+
+            <!-- Hamburger Toggle Button -->
+            <button class="modern-button navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Collapsible Navbar Content -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item me-sm-5">
+                            <strong>
+                                <span class="nav-link text-primary font-weight-bold">
+                                    <i class="fas fa-user me-2"></i>@ViewContext.HttpContext.User.Identity.Name
+                                </span>
+                            </strong>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Contact Menu Button for Mobile -->
+                            <button id="contactsMenuBtn" class="modern-button me-2 d-inline-block d-sm-none me-3" type="button" 
+                                data-bs-toggle="modal" data-bs-target="#contactsSideMenuModal">
+                                Contacts
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="ContactRequest" asp-action="Index" class="modern-button me-2 d-inline-block">Contact Requests</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Notification Menu Button for Mobile -->
+                            <button class="modern-button me-2 d-inline-block d-sm-none me-3" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#notificationsSideMenuModal">
+                                Notifications
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button id="newContact" class="modern-button me-2 d-inline-block">New Contact</button>
+                        </li>
+                        <li class="nav-item">
+                            <button id="newGroup" class="modern-button me-2 d-inline-block">New Group</button>
+                        </li>
+                        <li class="nav-item me-sm-3">
+                            <a asp-controller="Home" asp-action="Logout" class="modern-button me-2 d-inline-block">Log Out</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="SignIn" asp-action="Index" class="modern-button me-2 d-inline-block">Sign In</a>
+                        </li>
+                        <li class="nav-item me-sm-3">
+                            <a asp-controller="SignUp" asp-action="Index" class="modern-button me-2 d-inline-block">Sign Up</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     </header>
 
-    <div class="container">
+    <!-- Contacts Menu Modal -->
+    <div id="contactsSideMenuModal" class="modal fade" tabindex="-1" aria-labelledby="contactsSideMenuModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactsSideMenuModalLabel">Contacts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        @await Component.InvokeAsync("SideMenu")
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Groups Menu Modal -->
+    <div class="modal fade" id="groupsSideMenuModal" tabindex="-1" aria-labelledby="groupsSideMenuModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="groupsSideMenuModalLabel">Groups</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        @await Component.InvokeAsync("GroupsSideMenu")
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Menu Modal -->
+    <div class="modal fade" id="notificationsSideMenuModal" tabindex="-1" aria-labelledby="notificationsSideMenuModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationsSideMenuModalLabel">Notifications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Contact Modal -->
+    <div id="newContactModal" class="modal fade" tabindex="-1" aria-labelledby="newContactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="newContactModalLabel" class="modal-title">New Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input id="contactName" type="text" class="form-control" placeholder="Enter contact name">
+                    </div>
+                    <div class="mb-3">
+                        <textarea id="contactMessage" class="form-control" rows="3" placeholder="Enter a message to the user"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="sendContactButton" type="button" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Group Modal -->
+    <div id="newGroupModal" class="modal fade" tabindex="-1" aria-labelledby="newGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="newGroupModalLabel" class="modal-title">New Group</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input id="groupName" type="text" class="form-control" placeholder="Enter group name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="createGroupButton" type="button" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -69,9 +190,98 @@
         </div>
     </footer>
     <script src="https://use.typekit.net/hoy3lrg.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $("document").ready(() => {
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("/contactHub").build();
+
+            connection.start().then(() => {
+
+                $("#newContact").click(() => {
+
+                    $('#newContactModal').modal('show');
+                });
+
+                $("#newGroup").click(() => {
+
+                    $('#newGroupModal').modal('show');
+                });
+
+                $("#sendContactButton").click(() => {
+
+                    const contactName = $("#contactName").val();
+
+                    const contactMessage = $("#contactMessage").val();
+
+                    let signalRContactRequestDto = {
+                        "SenderUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                        "ReceiverUserName": contactName,
+                        "ContactMessage": contactMessage,
+                        "DateTime": getCurrentDateTimeOffset()
+                    };
+
+                    connection.invoke("ReceivedContactRequest", signalRContactRequestDto);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ContactRequest/IssueContactRequest',
+                        data: {
+                            "contactRequestDto": signalRContactRequestDto
+                        },
+                        failure: function (response) {
+                            console.log("Fail", response);
+                        },
+                        error: function (response) {
+                            console.log("Error", response);
+                        }
+                    });
+
+                    // Close the modal after sending the contact
+                    $('#newContactModal').modal('hide');
+                });
+
+                $("#createGroupButton").click(() => {
+
+                    const groupName = $("#groupName").val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Group/AddCroup',
+                        data: {
+                            "groupName": groupName
+                        },
+                        failure: function (response) {
+                            console.log("Fail", response);
+                        },
+                        error: function (response) {
+                            console.log("Error", response);
+                        }
+                    });
+
+                    // Close the modal after sending the contact
+                    $('#newContactModal').modal('hide');
+                });
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+
+            $("#siteIconNav").click(() => {
+
+                @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    <text>
+                        $("#siteIconNav").addClass("siteIconNav");
+
+                        window.location.href = '@Url.Action("Index", "Main")';
+                    </text>
+                }
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
