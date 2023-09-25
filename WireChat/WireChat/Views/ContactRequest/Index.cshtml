@@ -3,8 +3,9 @@
 <section>
     <div class="container-fluid py-5">
         <div class="row">
-            <partial name="_SideMenu" />
-
+            <div class="col side-menu">
+                @await Component.InvokeAsync("SideMenu")
+            </div>
             <div class="col-sm-10 mt-sm-1 text-center">
                 <div class="row">
                     <div class="row">
@@ -90,13 +91,6 @@
 
                 connection.invoke("JoinGroup", "@ViewContext.HttpContext.User.Identity.Name");
 
-                connection.on("ContactRequest", (message) => {
-
-                    let divElement = createContactRequest(message);
-
-                    $("#receivedRequests").append(divElement);
-                });
-
                 $(document).on('click', '[id^="removeContactRequest-"]', function () {
 
                     let receiverUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
@@ -116,6 +110,49 @@
                         },
                         success: () => {
                             $(`#removeIssuedContactRequestCard-${receiverUserName}`).remove();
+                        },
+                        failure: (response) => {
+                            console.log("Fail", response);
+                        },
+                        error: (response) => {
+                            console.log("Error", response);
+                        }
+                    });
+                });
+
+                $(document).on('click', '[id^="acceptContactRequest-"]', function () {
+
+                    let senderUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                    const signalRRemoveContactRequestDto = {
+                        "SenderUserName": senderUserName,
+                        "ReceiverUserName": "@ViewContext.HttpContext.User.Identity.Name"
+                    };
+
+                    connection.invoke("RemovedIssuedContactRequest", signalRRemoveContactRequestDto);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ContactRequest/AddContactRequest',
+                        data: { 
+                            "senderUserName": senderUserName 
+                        },
+                        failure: (response) => {
+                            console.log("Fail", response);
+                        },
+                        error: (response) => {
+                            console.log("Error", response);
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/ContactRequest/RemoveReceivedContactRequest',
+                        data: {
+                            "senderUserName": senderUserName
+                        },
+                        success: () => {
+                            $(`#removeReceivedContactRequestCard-${senderUserName}`).remove();
                         },
                         failure: (response) => {
                             console.log("Fail", response);
@@ -155,6 +192,20 @@
                     });
                 });
 
+                connection.on("IssuedContactRequest", (message) => {
+
+                    let divElement = createIssuedContactRequest(message);
+
+                    $("#issuedRequests").append(divElement);
+                });
+
+                connection.on("ReceivedContactRequest", (message) => {
+
+                    let divElement = createReceivedContactRequest(message);
+
+                    $("#receivedRequests").append(divElement);
+                });
+
                 connection.on("RemovedReceivedContactRequest", (message) => {
 
                     $(`#removeReceivedContactRequestCard-${message.senderUserName}`).remove();
@@ -164,8 +215,8 @@
 
                     $(`#removeIssuedContactRequestCard-${message.receiverUserName}`).remove();
                 });
-
             }).catch(function (err) {
+                console.error("SignalR connection error:", err.toString());
                 return console.error(err.toString());
             });
         });
