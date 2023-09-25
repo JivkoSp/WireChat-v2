@@ -1,4 +1,5 @@
 ﻿using WireChat.Application.Exceptions;
+using WireChat.Application.Extensions;
 using WireChat.Application.Services.ReadServices;
 using WireChat.Domain.Factories.Interfaces;
 using WireChat.Domain.Repositories;
@@ -9,16 +10,20 @@ namespace WireChat.Application.Commands.Handlers
     internal sealed class CreateGroupChatHandler : ICommandHandler<CreateGroupChatCommand>
     {
         private readonly IChatRepository _chatRepository;
+        private readonly IGroupRepository _groupRepository;
         private readonly IUserReadService _userReadService;
         private readonly IChatFactory _chatFactory;
+        private readonly IGroupFactory _groupFactory;
         private readonly IChatReadService _chatReadService;
 
-        public CreateGroupChatHandler(IChatRepository chatRepository, IChatFactory chatFactory, 
-            IUserReadService userReadService, IChatReadService chatReadService)
+        public CreateGroupChatHandler(IChatRepository chatRepository, IGroupRepository groupRepository, IChatFactory chatFactory, 
+           IGroupFactory groupFactory, IUserReadService userReadService, IChatReadService chatReadService)
         {
             _chatRepository = chatRepository;
+            _groupRepository = groupRepository;
             _userReadService = userReadService;
             _chatFactory = chatFactory;
+            _groupFactory = groupFactory;
             _chatReadService = chatReadService;
         }
         public async Task HandleAsync(CreateGroupChatCommand command)
@@ -30,9 +35,8 @@ namespace WireChat.Application.Commands.Handlers
                 throw new UserNotFoundException(command.UserId);
             }
 
-            var chatId = Guid.NewGuid();
-
-            // There may be edge cases where the newly created chat has an ID that already exists in the database.
+            var chatId = command.UserId.GenerateChatId(command.GroupName);
+        
             var chatExists = await _chatReadService.ExistsByIdAsync(chatId);
 
             if (chatExists)
@@ -42,11 +46,15 @@ namespace WireChat.Application.Commands.Handlers
 
             var chat = _chatFactory.Create(chatId, "Group");
 
+            await _chatRepository.AddChatAsync(chat);
+
             var chatUser = new ChatUser(command.UserId, chat.Id);
 
-            chat.AddChatUser(chatUser);
+            var group = _groupFactory.Create(chatId, command.GroupName, chat);
 
-            await _chatRepository.AddChatAsync(chat);
+            group.AddChatUser(chatUser);
+
+            await _groupRepository.AddGroupAsync(group);
         }
     }
 }
