@@ -1,21 +1,18 @@
 ﻿using WireChat.Application.Exceptions;
 using WireChat.Application.Services.ReadServices;
-using WireChat.Domain.Factories.Interfaces;
 using WireChat.Domain.Repositories;
+using WireChat.Domain.ValueObjects;
 
 namespace WireChat.Application.Commands.Handlers
 {
     internal sealed class AddChatMessageHandler : ICommandHandler<AddChatMessageCommand>
     {
         private readonly IChatRepository _chatRepository;
-        private readonly IChatMessageFactory _chatMessageFactory;
         private readonly IUserReadService _userReadService;
 
-        public AddChatMessageHandler(IChatRepository chatRepository, IChatMessageFactory chatMessageFactory, 
-            IUserReadService userReadService)
+        public AddChatMessageHandler(IChatRepository chatRepository, IUserReadService userReadService)
         {
             _chatRepository = chatRepository;
-            _chatMessageFactory = chatMessageFactory;
             _userReadService = userReadService;
         }
 
@@ -35,7 +32,7 @@ namespace WireChat.Application.Commands.Handlers
                 throw new UserNotFoundException(command.UserId);
             }
 
-            var chatMessage = _chatMessageFactory.Create(command.ChatMessageId, command.UserId, command.Message,
+            var chatMessage =  new ChatMessage(command.ChatMessageId, command.ChatId, command.UserId, command.Message,
                 command.MessageDateTime);
 
             chat.AddMessage(chatMessage);
