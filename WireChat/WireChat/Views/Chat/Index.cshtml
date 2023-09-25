@@ -1,201 +1,181 @@
-﻿<section>
+﻿@model WireChat.ViewModels.ChatViewModel
+
+<section>
     <div class="container-fluid py-5">
-
         <div class="row">
-
-            <div class="col mb-4 mb-md-0">
-
-                <h5 class="font-weight-bold mb-3 text-center text-lg-start">Member</h5>
-
-                <div class="card shadow">
-                    <div class="card-body">
-
-                        <div class="input-group rounded mb-3">
-                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                                   aria-describedby="search-addon" />
-                            <span class="input-group-text border-0" id="search-addon">
-                                <i class="fas fa-search text-primary"></i>
-                            </span>
-                        </div>
-
-                        <ul class="list-unstyled mb-0">
-                            <li class="p-2 border-bottom bg-body-tertiary">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
+            <div class="col side-menu">
+                @await Component.InvokeAsync("SideMenu")
+            </div>
+            <div class="col-sm-8 mt-sm-2 ps-lg-5 pe-lg-5">
+                <div class="chat-container ps-lg-5">
+                    <ul id="chatMessageList" class="list-unstyled chat-message-list pe-3 pe-lg-5">
+                        @foreach (var chatMessage in Model.ChatDto.ChatMessageDtos)
+                        {
+                            if (chatMessage.UserId == Model.CurrentUserId)
+                            {
+                                <li class="chat-right d-flex mb-4">
+                                    <div class="card">
+                                        <div class="card-header bg-primary text-white d-flex p-3">
+                                            <div class="d-flex justify-content-end ms-auto">
+                                                <p class="fw-bold mb-0">@chatMessage.UserName</p>
+                                                <p class="small ms-3 mb-0"><i class="far fa-clock me-2"></i>@chatMessage.MessageDateTime</p>
+                                                <i id="delete-message" class="delete-message fas fa-trash-alt ms-3" title="Delete"></i>
+                                                <input id="message-@chatMessage.ChatMessageId" type="hidden" value="@chatMessage.ChatMessageId" />
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-0">
+                                                @chatMessage.Message
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div>
                                         <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0">John Doe</p>
-                                            <p class="small text-muted">Hello, Are you there?</p>
+                                             class="rounded-circle shadow-1-strong ms-1" width="40">
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="chat-left d-flex mb-4">
+                                    <div>
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                             class="rounded-circle shadow-1-strong me-1" width="40">
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header bg-info d-flex justify-content-between p-3">
+                                            <p class="fw-bold mb-0">@chatMessage.UserName</p>
+                                            <p class="small ms-2 mb-0"><i class="far fa-clock me-1"></i>@chatMessage.MessageDateTime</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-0">
+                                                @chatMessage.Message
+                                            </p>
                                         </div>
                                     </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1">Just now</p>
-                                        <span class="badge bg-danger float-end">1</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="p-2 border-bottom">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0">Danny Smith</p>
-                                            <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1">5 mins ago</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="p-2 border-bottom">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0">Alex Steward</p>
-                                            <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1">Yesterday</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="p-2 border-bottom">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0">Ashley Olsen</p>
-                                            <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1">Yesterday</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="p-2 border-bottom">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0">Kate Moss</p>
-                                            <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1">Yesterday</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="p-2 border-bottom">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0">Lara Croft</p>
-                                            <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1">Yesterday</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="p-2">
-                                <a href="#!" class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                                             class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                        <div class="pt-1">
-                                            <p class="fw-bold mb-0">Brad Pitt</p>
-                                            <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-1">
-                                        <p class="small text-muted mb-1">5 mins ago</p>
-                                        <span class="text-muted float-end"><i class="fas fa-check" aria-hidden="true"></i></span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-
-                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
                 </div>
-
+                <div class="chat-form-container col-sm-8 m-auto mt-2">
+                    <textarea id="chatMessage" class="form-control modern-textarea" rows="4" placeholder="Type your message..."></textarea>
+                    <button id="sendMessageBtn" type="button" data-mdb-button-init data-mdb-ripple-init class="modern-button me-2 d-inline-block btn-rounded">Send</button>
+                </div>
             </div>
-
-            <div class="col-sm-8 mt-sm-2">
-
-                <ul class="list-unstyled">
-                    <li class="d-flex justify-content-between mb-4">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                             class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="d-flex justify-content-between mb-4">
-                        <div class="card w-100">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">Lara Croft</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0">
-                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                    laudantium.
-                                </p>
-                            </div>
-                        </div>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-                             class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
-                    </li>
-                    <li class="d-flex justify-content-between mb-4">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                             class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-                            </div>
-                            <div class="card-body">
-                                <p class="mb-0">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="bg-white mb-3">
-                        <div data-mdb-input-init class="form-outline">
-                            <textarea class="form-control bg-body-tertiary" id="textAreaExample2" rows="4"></textarea>
-                            <label class="form-label" for="textAreaExample2">Message</label>
-                        </div>
-                    </li>
-                    <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-rounded float-end">Send</button>
-                </ul>
-
+            <div class="side-menu col-sm-2 mt-sm-2">
+                <h5 class="font-weight-bold mb-3 text-center">Notifications</h5>
             </div>
-
         </div>
-
     </div>
 </section>
+
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+
+        $("document").ready(() => {
+
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("/chatHub").build();
+
+            connection.start().then(() => {
+
+                connection.invoke("JoinGroup", "@Model.ChatDto.ChatId");
+
+                $("#sendMessageBtn").click(() => {
+
+                    try {
+                        const message = $("#chatMessage").val();
+
+                        const signalRChatMessageDto = {
+                            "ChatId": "@Model.ChatDto.ChatId",
+                            "UserName": "@ViewContext.HttpContext.User.Identity.Name",
+                            "Message": message,
+                            "MessageDateTime": getCurrentDateTimeOffset()
+                        };
+
+                        connection.invoke("SendMessage", signalRChatMessageDto);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Chat/PostMessage',
+                            data: {
+                                "chatId": "@Model.ChatDto.ChatId",
+                                "message": message,
+                                "dateTime": signalRChatMessageDto.MessageDateTime
+                            },
+                            failure: function (response) {
+                                console.log("Fail", response);
+                            },
+                            error: function (response) {
+                                console.log("Error", response);
+                            }
+                        });
+
+                    } catch (err) {
+                        console.error(err);
+                    }
+                });
+
+                $(document).on('click', '.delete-message', function () {
+                    try {
+                        // Get the parent <li> of the clicked delete icon
+                        const listItem = $(this).closest('li');
+
+                        // Find the hidden input within the same <li> and get its value
+                        const chatMessageId = listItem.find('input[type="hidden"]').val();
+
+                        const signalRRemoveChatMessageDto = {
+                            "ChatId": "@Model.ChatDto.ChatId",
+                            "ChatMessageId": chatMessageId
+                        };
+
+                        connection.invoke("RemoveMessage", signalRRemoveChatMessageDto);
+
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/Chat/RemoveMessage',
+                            data: {
+                                "chatId": "@Model.ChatDto.ChatId",
+                                "chatMessageId": chatMessageId
+                            },
+                            failure: function (response) {
+                                console.log("Fail", response);
+                            },
+                            error: function (response) {
+                                console.log("Error", response);
+                            }
+                        });
+                    } catch (err) {
+                        console.error('Error:', err);
+                    }
+                });
+
+                connection.on("SendMessage", (message) => {
+
+                    let chatMessage = createChatMessage(message, "@ViewContext.HttpContext.User.Identity.Name");
+
+                    $("#chatMessageList").append(chatMessage);
+
+                    var chatMessageList = $("#chatMessageList");
+
+                    // Scroll to the bottom of the chat message list
+                    chatMessageList.animate({
+                        scrollTop: chatMessageList[0].scrollHeight
+                    }, 500); // Duration in milliseconds
+                });
+
+                connection.on("RemoveMessage", (message) => {
+
+                    // Find and remove the <li> with the corresponding ChatMessageId
+                    $(`li:has(input[type="hidden"][value="${message.chatMessageId}"])`).remove();
+                });
+
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+        });
+    </script>
+}
