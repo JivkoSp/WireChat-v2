@@ -8,6 +8,7 @@ namespace WireChat.Controllers
     public class SignUpController : Controller
     {
         private readonly UserManager<UserReadModel> _userManager;
+        private readonly SignInManager<UserReadModel> _signInManager;
 
         [BindProperty]
         [Required(ErrorMessage = "Enter valid first name!")]
@@ -40,9 +41,10 @@ namespace WireChat.Controllers
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-        public SignUpController(UserManager<UserReadModel> userManager)
+        public SignUpController(UserManager<UserReadModel> userManager, SignInManager<UserReadModel> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -68,7 +70,9 @@ namespace WireChat.Controllers
                 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Chat");
+                    await _signInManager.PasswordSignInAsync(UserName, Password, false, false);
+
+                    return RedirectToAction("Index", "Main"); 
                 }
             }
 
