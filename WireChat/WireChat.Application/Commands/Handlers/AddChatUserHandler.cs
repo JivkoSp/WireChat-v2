@@ -7,24 +7,24 @@ namespace WireChat.Application.Commands.Handlers
 {
     internal sealed class AddChatUserHandler : ICommandHandler<AddChatUserCommand>
     {
-        private readonly IChatRepository _chatRepository;
+        private readonly IGroupRepository _groupRepository;
         private readonly IUserReadService _userReadService;
 
-        public AddChatUserHandler(IChatRepository chatRepository, IUserReadService userReadService)
+        public AddChatUserHandler(IGroupRepository groupRepository, IUserReadService userReadService)
         {
-            _chatRepository = chatRepository;
+            _groupRepository = groupRepository;
             _userReadService = userReadService;
         }
 
         public async Task HandleAsync(AddChatUserCommand command)
         {
-            var chat = await _chatRepository.GetChatByIdAsync(command.ChatId);
+            var group = await _groupRepository.GetGroupByIdAsync(command.ChatId);
 
-            if (chat is null)
+            if (group is null)
             {
-                throw new ChatNotFoundException(command.ChatId);
+                throw new GroupNotFoundException(command.ChatId);
             }
-
+            
             var userExists = await _userReadService.ExistsByIdAsync(command.UserId);
 
             if (userExists is false)
@@ -34,9 +34,9 @@ namespace WireChat.Application.Commands.Handlers
 
             var chatUser = new ChatUser(command.UserId, command.ChatId);
 
-            chat.AddChatUser(chatUser);
+            group.AddChatUser(chatUser);
 
-            await _chatRepository.UpdateChatAsync(chat);
+            await _groupRepository.UpdateGroupAsync(group);
         }
     }
 }
