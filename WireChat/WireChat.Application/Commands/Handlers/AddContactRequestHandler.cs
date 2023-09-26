@@ -18,25 +18,28 @@ namespace WireChat.Application.Commands.Handlers
 
         public async Task HandleAsync(AddContactRequestCommand command)
         {
-            var receiver = await _userRepository.GetUserByIdAsync(command.ReceiverUserId);
+            var issuer = await _userRepository.GetUserByIdAsync(command.SenderUserId);
 
-            if (receiver is null)
-            {
-                throw new UserNotFoundException(command.ReceiverUserId);
-            }
-
-            var senderExists = await _userReadService.ExistsByIdAsync(command.SenderUserId);
-
-            if (senderExists is false)
+            if (issuer is null)
             {
                 throw new UserNotFoundException(command.SenderUserId);
             }
 
+            var receiverExists = await _userReadService.ExistsByIdAsync(command.ReceiverUserId);
+
+            if (receiverExists is false)
+            {
+                throw new UserNotFoundException(command.ReceiverUserId);
+            }
+
+            // TODO: Аdd a check to see if command.SenderUserId and command.ReceiverUserId are already in a chat.
+            // Maybe add a chat read service that will have such method.
+
             var contactRequest = new UserContactRequest(command.SenderUserId, command.ReceiverUserId, command.Message);
 
-            receiver.AddContactRequest(contactRequest);
+            issuer.AddContactRequest(contactRequest);
 
-            await _userRepository.UpdateUserAsync(receiver);
+            await _userRepository.UpdateUserAsync(issuer);
         }
     }
 }
