@@ -11,12 +11,14 @@ namespace WireChat.Domain.Entities
         private UserLastName _lastName;
         private UserName _userName;
         private UserEmail _email;
-        private List<UserContactRequest> _contactRequests = new List<UserContactRequest>();
-        
-        public IReadOnlyCollection<UserContactRequest> ContactRequests
-        {
-            get { return new ReadOnlyCollection<UserContactRequest>(_contactRequests); }
-        }
+        private List<UserContactRequest> _sendedContactRequests = new List<UserContactRequest>();
+        private List<UserContactRequest> _receivedContactRequests = new List<UserContactRequest>();
+
+        public IReadOnlyCollection<UserContactRequest> SendedContactRequests => 
+                new ReadOnlyCollection<UserContactRequest>(_sendedContactRequests);
+
+        public IReadOnlyCollection<UserContactRequest> ReceivedContactRequests => 
+                new ReadOnlyCollection<UserContactRequest>(_receivedContactRequests);
 
         private User() {}
 
@@ -31,45 +33,44 @@ namespace WireChat.Domain.Entities
             _email = userEmail;
         }
 
-        // Add contact request to the receiver side.
         public void AddContactRequest(UserContactRequest contactRequest)
         {
-            var alreadyExists = _contactRequests.Any(x => x.SenderUserId == contactRequest.SenderUserId);
+            var alreadyExists = _sendedContactRequests.Any(x => x.ReceiverUserId == contactRequest.ReceiverUserId);
 
             if (alreadyExists)
             {
-                throw new UserContactRequestAlreadyExistsException(contactRequest.SenderUserId);
+                throw new UserContactRequestAlreadyExistsException(contactRequest.ReceiverUserId);
             }
 
-            _contactRequests.Add(contactRequest);
+            _sendedContactRequests.Add(contactRequest);
 
             AddEvent(new UserContactRequestAdded(this, contactRequest));
         }
 
+        public void RemoveIssuedContactRequest(UserID receiverUserId)
+        {
+            var contactRequest = _sendedContactRequests.SingleOrDefault(x => x.ReceiverUserId == receiverUserId);
+
+            if (contactRequest is null)
+            {
+                throw new UserContactRequestNotFoundException(receiverUserId);
+            }
+
+            _sendedContactRequests.Remove(contactRequest);
+
+            AddEvent(new UserContactRequestRemoved(this, contactRequest));
+        }
+
         public void RemoveReceivedContactRequest(UserID senderUserId)
         {
-            var contactRequest = _contactRequests.SingleOrDefault(x => x.SenderUserId == senderUserId);
+            var contactRequest = _receivedContactRequests.SingleOrDefault(x => x.SenderUserId == senderUserId);
             
             if (contactRequest is null)
             {
                 throw new UserContactRequestNotFoundException(senderUserId);
             }
 
-            _contactRequests.Remove(contactRequest);
-
-            AddEvent(new UserContactRequestRemoved(this, contactRequest));
-        }
-
-        public void RemoveIssuedContactRequest(UserID receiverUserId)
-        {
-            var contactRequest = _contactRequests.SingleOrDefault(x => x.ReceiverUserId == receiverUserId);
-            
-            if (contactRequest is null)
-            {
-                throw new UserContactRequestNotFoundException(receiverUserId);
-            }
-
-            _contactRequests.Remove(contactRequest);
+            _receivedContactRequests.Remove(contactRequest);
 
             AddEvent(new UserContactRequestRemoved(this, contactRequest));
         }
