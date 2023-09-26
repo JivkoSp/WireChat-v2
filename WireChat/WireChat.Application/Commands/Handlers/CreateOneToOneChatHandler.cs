@@ -1,4 +1,5 @@
 using WireChat.Application.Exceptions;
+using WireChat.Application.Extensions;
 using WireChat.Application.Services.ReadServices;
 using WireChat.Domain.Factories.Interfaces;
 using WireChat.Domain.Repositories;
@@ -38,9 +39,8 @@ namespace WireChat.Application.Commands.Handlers
                 throw new UserNotFoundException(command.ReceiverUserId);
             }
             
-            var chatId = Guid.NewGuid();
+            var chatId = command.SenderUserId.GenerateChatId(command.ReceiverUserId);
 
-            // There may be edge cases where the newly created chat has an ID that already exists in the database.
             var chatExists = await _chatReadService.ExistsByIdAsync(chatId);
 
             if (chatExists)
