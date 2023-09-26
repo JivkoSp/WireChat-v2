@@ -8,18 +8,10 @@ namespace WireChat.Domain.Entities
     public class Chat : AggregateRoot<ChatID>
     {
         private ChatType _chatType;
-        private HashSet<ChatUser> _users =new HashSet<ChatUser>();
+        private HashSet<ChatUser> _users = new HashSet<ChatUser>();
         private List<ChatMessage> _messages = new List<ChatMessage>();
-
-        public IReadOnlyCollection<ChatUser> Users
-        {
-            get { return new ReadOnlyCollection<ChatUser>(_users.ToList()); }
-        }
-
-        public IReadOnlyCollection<ChatMessage> Messages
-        {
-            get { return new ReadOnlyCollection<ChatMessage>(_messages); }
-        }
+        public IReadOnlyCollection<ChatUser> Users => new ReadOnlyCollection<ChatUser>(_users.ToList());
+        public IReadOnlyCollection<ChatMessage> Messages => new ReadOnlyCollection<ChatMessage>(_messages);
 
         private Chat() {}
 
@@ -31,10 +23,9 @@ namespace WireChat.Domain.Entities
             _chatType = chatType;
         }
 
-        //Add ChatUser to OneToOne or Group chat
         public void AddChatUser(ChatUser chatUser)
         {
-            var alreadyExists = _users.Contains(chatUser);  
+            var alreadyExists = _users.Contains(chatUser);
 
             if (alreadyExists)
             {
@@ -46,7 +37,6 @@ namespace WireChat.Domain.Entities
             AddEvent(new ChatUserAdded(this, chatUser));
         }
 
-        //Remove ChatUser from Group chat.
         public void RemoveChatUser(UserID userId)
         {
             var chatUserToRemove = _users.SingleOrDefault(x => x.UserID == userId);
@@ -63,11 +53,11 @@ namespace WireChat.Domain.Entities
 
         public void AddMessage(ChatMessage chatMessage)
         {
-            var alreadyExists = _messages.Any(x => x.Id == chatMessage.Id);
+            var alreadyExists = _messages.Any(x => x.ChatMessageID == chatMessage.ChatMessageID);
 
             if (alreadyExists)
             {
-                throw new ChatMessageAlreadyExistsException(chatMessage.Id);
+                throw new ChatMessageAlreadyExistsException(chatMessage.ChatMessageID);
             }
 
             _messages.Add(chatMessage);
@@ -77,7 +67,7 @@ namespace WireChat.Domain.Entities
 
         public void RemoveMessage(ChatMessageID chatMessageId)
         {
-            var chatMessage = _messages.SingleOrDefault(x => x.Id == chatMessageId);
+            var chatMessage = _messages.SingleOrDefault(x => x.ChatMessageID == chatMessageId);
 
             if (chatMessage is null)
             {
