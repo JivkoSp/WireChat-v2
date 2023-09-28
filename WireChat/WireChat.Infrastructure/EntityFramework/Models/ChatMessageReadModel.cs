@@ -4,6 +4,7 @@ namespace WireChat.Infrastructure.EntityFramework.Models
     {
         // Primary key
         public Guid ChatMessageId { get; set; }
+        public int Version { get; set; }
         public string Message { get; set; }
         public DateTimeOffset MessageDateTime { get; set; }
 
