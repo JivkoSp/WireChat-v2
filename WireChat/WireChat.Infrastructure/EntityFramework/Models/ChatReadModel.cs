@@ -4,6 +4,7 @@ namespace WireChat.Infrastructure.EntityFramework.Models
     {
         // Primary key
         public Guid ChatId { get; set; }
+        public int Version { get; set; }
         public string ChatType {get; set; }
 
         // Relationships
