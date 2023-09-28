@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WireChat.Domain.Entities;
 using WireChat.Domain.ValueObjects;
 using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionConverters;
 using WireChat.Infrastructure.EntityFramework.Encryption.EncryptionProvider;
@@ -23,27 +22,31 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
             builder.ToTable("ChatMessage");
 
             // Primary key
-            builder.HasKey(key => key.Id);
+            builder.HasKey(key => key.ChatMessageID);
 
             // Property config - Start
 
-            builder.Property(p => p.Id)
+            builder.Property(p => p.ChatMessageID)
                 .HasConversion(id => id.Value, id => new ChatMessageID(id))
                 .HasColumnName("ChatMessageId")
                 .IsRequired();
 
-            builder.Property(typeof(UserID), "_userID")
-                .HasConversion(new ValueConverter<UserID, string>(id => id.Value.ToString(), id => new UserID(Guid.Parse(id))))
+            builder.Property(p => p.ChatID)
+                .HasConversion(id => id.Value, id => new ChatID(id))
+                .HasColumnName("ChatId")
+                .IsRequired();
+
+            builder.Property(p => p.UserID)
+                .HasConversion(id => id.Value.ToString(), id => new UserID(Guid.Parse(id)))
                 .HasColumnName("UserId")
                 .IsRequired();  
 
-            builder.Property(typeof(Message), "_message")
-                .HasConversion(new EncryptedMessageConverter(_encryptionProvider))
-                .HasColumnName("Message")
+            builder.Property(typeof(string), "Message")
+                .HasConversion(new EncryptedStringConverter(_encryptionProvider))
                 .IsRequired();
 
-            builder.Property(typeof(MessageDateTime), "_messageDateTime")
-                .HasConversion(new EncryptedMessageDateTimeConverter(_encryptionProvider))
+            builder.Property(typeof(DateTimeOffset), "DateTime")
+                .HasConversion(new EncryptedDateTimeOffsetConverter(_encryptionProvider))
                 .HasColumnName("MessageDateTime")
                 .IsRequired();
 
