@@ -23,6 +23,8 @@ namespace WireChat.Infrastructure.Queries.Handlers
         {
             var userContactRequestReadModels = await _readDbContext.UserContactRequestReadModels
                 .Where(x => x.ReceiverUserId == query.UserId)
+                .Include(x => x.Sender)
+                .Include(x => x.Receiver)
                 .AsNoTracking()
                 .ToListAsync();
 
