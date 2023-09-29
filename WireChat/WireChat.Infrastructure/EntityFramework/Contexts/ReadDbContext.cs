@@ -15,8 +15,9 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             _encryptionProvider = encryptionProvider;
         }
 
-        public DbSet<ChatMessageReadModel> ChatMessageReadModels { get; set; }
+        public DbSet<GroupReadModel> Groups { get; set; }
         public DbSet<ChatReadModel> ChatReadModels { get; set; }
+        public DbSet<ChatMessageReadModel> ChatMessageReadModels { get; set; }
         public DbSet<UserReadModel> UserReadModels { get; set; }
         public DbSet<ChatUserReadModel> ChatUserReadModels { get; set; }
         public DbSet<UserContactRequestReadModel> UserContactRequestReadModels { get; set; }
@@ -33,6 +34,7 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             modelBuilder.ApplyConfiguration(new ChatUserConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration(_encryptionProvider));
             modelBuilder.ApplyConfiguration(new UserContactRequestConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new GroupConfiguration(_encryptionProvider));
         }
     }
 }
