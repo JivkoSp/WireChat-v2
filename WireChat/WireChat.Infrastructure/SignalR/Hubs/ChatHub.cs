@@ -12,12 +12,12 @@ namespace WireChat.Infrastructure.SignalR.Hubs
 
         public async Task SendMessage(SignalRChatMessageDto chatMessage)
         {
-            await Clients.Group(chatMessage.ChatId.ToString()).SendAsync("SendMessage", chatMessage);
+            await Clients.Group(chatMessage.ChatId).SendAsync("SendMessage", chatMessage);
         }
 
-        public async Task RemoveMessage(SignalRChatMessageDto chatMessage)
+        public async Task RemoveMessage(SignalRRemoveChatMessageDto removeChatMessage)
         {
-            await Clients.Group(chatMessage.ChatId.ToString()).SendAsync("RemoveMessage", chatMessage);
+            await Clients.Group(removeChatMessage.ChatId).SendAsync("RemoveMessage", removeChatMessage);
         }
     }
 }
