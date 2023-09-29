@@ -22,7 +22,7 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
                 .IsRequired();
 
             builder.Property(p => p.ChatID)
-                .HasConversion(id => id.Value.ToString(), id => new ChatID(Guid.Parse(id)))
+                .HasConversion(id => id.Value, id => new ChatID(id))
                 .HasColumnName("ChatId")
                 .IsRequired();
 
