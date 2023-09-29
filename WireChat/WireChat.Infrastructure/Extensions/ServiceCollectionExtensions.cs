@@ -28,11 +28,11 @@ namespace WireChat.Infrastructure.Extensions
 
             services.AddHostedService<DbInitializer>();
 
-            services.AddScoped<IChatMessageRepository, PostgresChatMessageRepository>();
-
             services.AddScoped<IChatRepository, PostgresChatRepository>();
 
             services.AddScoped<IUserRepository, PostgresUserRepository>();
+
+            services.AddScoped<IGroupRepository, PostgresGroupRepository>();
 
             services.AddScoped<IChatReadService, PostgresChatReadService>();
 
@@ -44,7 +44,11 @@ namespace WireChat.Infrastructure.Extensions
                 configAction.AddProfile<ChatMessageProfile>();
                 configAction.AddProfile<ChatProfile>();
                 configAction.AddProfile<ChatUserProfile>();
+                configAction.AddProfile<UserContactRequestProfile>();
+                configAction.AddProfile<GroupProfile>();
             });
+
+            services.AddSignalR(opt => opt.EnableDetailedErrors = true);
 
             return services;
         }
