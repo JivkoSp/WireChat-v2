@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WireChat.Infrastructure.EntityFramework.Contexts;
@@ -11,9 +12,11 @@ using WireChat.Infrastructure.EntityFramework.Contexts;
 namespace WireChat.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(ReadDbContext))]
-    partial class ReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240812133447_Added GroupId to the ChatUserReadModel and ChatMessageReadModel")]
+    partial class AddedGroupIdtotheChatUserReadModelandChatMessageReadModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,6 +167,12 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("ChatId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("GroupReadModelGroupId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
@@ -181,6 +190,8 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.HasKey("ChatMessageId");
 
                     b.HasIndex("ChatId");
+
+                    b.HasIndex("GroupReadModelGroupId");
 
                     b.HasIndex("UserId");
 
@@ -213,9 +224,17 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("ChatId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("GroupReadModelGroupId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("UserId", "ChatId");
 
                     b.HasIndex("ChatId");
+
+                    b.HasIndex("GroupReadModelGroupId");
 
                     b.ToTable("ChatUser", "wirechat");
                 });
@@ -391,6 +410,10 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Chat_ChatMessages");
 
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.GroupReadModel", null)
+                        .WithMany("ChatMessages")
+                        .HasForeignKey("GroupReadModelGroupId");
+
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "User")
                         .WithMany("ChatMessages")
                         .HasForeignKey("UserId")
@@ -410,6 +433,10 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Chat_ChatUsers");
+
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.GroupReadModel", null)
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("GroupReadModelGroupId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "User")
                         .WithMany("ChatUsers")
@@ -457,6 +484,13 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                 });
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.ChatReadModel", b =>
+                {
+                    b.Navigation("ChatMessages");
+
+                    b.Navigation("ChatUsers");
+                });
+
+            modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.GroupReadModel", b =>
                 {
                     b.Navigation("ChatMessages");
 
