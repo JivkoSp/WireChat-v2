@@ -17,8 +17,12 @@ namespace WireChat.Infrastructure.EntityFramework.Repositories
 
         public Task<User> GetUserByIdAsync(UserID userId)
             => _writeDbContext.Users
-                .Include(x => x.ContactRequests)
+                .Include(x => x.SendedContactRequests)
+                .Include(x => x.ReceivedContactRequests)
                 .SingleOrDefaultAsync(x => x.Id == userId);
+
+        // TODO
+        // Maybe delete the below methods because they are more related to Identity, rather than the Domain layer.
 
         public async Task AddUserAsync(User user)
         {
