@@ -2,16 +2,20 @@
 using System.Security.Claims;
 using WireChat.Application.Commands.Dispatcher;
 using WireChat.Application.Commands;
+using Microsoft.AspNetCore.Identity;
+using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Controllers
 {
     public class GroupController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;
+        private readonly UserManager<UserReadModel> _userManager;
 
-        public GroupController(ICommandDispatcher commandDispatcher)
+        public GroupController(ICommandDispatcher commandDispatcher, UserManager<UserReadModel> userManager)
         {
             _commandDispatcher = commandDispatcher;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -22,6 +26,18 @@ namespace WireChat.Controllers
             var createGroupChatCommand = new CreateGroupChatCommand(userId, groupName);
 
             await _commandDispatcher.DispatchAsync(createGroupChatCommand);
+        }
+
+        [HttpPost]
+        public async Task AddCroupMember(Guid chatId, string userName)
+        {
+            var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var newChatUserId = await _userManager.FindByNameAsync(userName);
+
+            var addChatUserCommand = new AddChatUserCommand(chatId, Guid.Parse(newChatUserId.Id), currentUserId);
+
+            await _commandDispatcher.DispatchAsync(addChatUserCommand);
         }
     }
 }
