@@ -39,5 +39,15 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(addChatUserCommand);
         }
+
+        [HttpDelete]
+        public async Task RemoveCroupMember(Guid chatId, string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            var removeChatUserCommand = new RemoveChatUserCommand(chatId, Guid.Parse(user.Id));
+
+            await _commandDispatcher.DispatchAsync(removeChatUserCommand);
+        }
     }
 }
