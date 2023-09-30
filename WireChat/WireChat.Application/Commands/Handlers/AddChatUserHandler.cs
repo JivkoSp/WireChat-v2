@@ -24,12 +24,26 @@ namespace WireChat.Application.Commands.Handlers
             {
                 throw new GroupNotFoundException(command.ChatId);
             }
-            
+
+            var newChatUserExists = await _userReadService.ExistsByIdAsync(command.NewChatUserId);
+
+            if (newChatUserExists is false)
+            {
+                throw new UserNotFoundException(command.NewChatUserId);
+            }
+
             var userExists = await _userReadService.ExistsByIdAsync(command.UserId);
 
             if (userExists is false)
             {
                 throw new UserNotFoundException(command.UserId);
+            }
+
+            var hasUserInContacts = await _userReadService.HasUserInContactsAsync(command.UserId, command.NewChatUserId);
+
+            if(hasUserInContacts is false)
+            {
+                throw new ContactNotFoundException(command.UserId, command.NewChatUserId);
             }
 
             var chatUser = new ChatUser(command.UserId, command.ChatId);
