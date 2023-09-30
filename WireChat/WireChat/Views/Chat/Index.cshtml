@@ -7,6 +7,16 @@
                 @await Component.InvokeAsync("SideMenu")
             </div>
             <div class="col-sm-8 mt-sm-2 ps-lg-5 pe-lg-5">
+                @if (Model.ChatDto.ChatType == "OneToOne")
+                {
+                    var contact = Model.ChatDto.ChatUserDtos.SingleOrDefault(x => x.UserId != Model.CurrentUserId);
+
+                    @await Component.InvokeAsync("Contact", contact)
+                }
+                else if (Model.ChatDto.ChatType == "Group")
+                {
+                    @await Component.InvokeAsync("Group", Model.ChatDto.ChatId)
+                }
                 <div class="chat-container ps-lg-5">
                     <ul id="chatMessageList" class="list-unstyled chat-message-list pe-3 pe-lg-5">
                         @foreach (var chatMessage in Model.ChatDto.ChatMessageDtos)
@@ -59,7 +69,7 @@
                     </ul>
                 </div>
                 <div class="chat-form-container col-sm-8 m-auto mt-2">
-                    <textarea id="chatMessage" class="form-control modern-textarea" rows="4" placeholder="Type your message..."></textarea>
+                    <textarea id="chatMessage" class="form-control modern-textarea" rows="4" placeholder="Message"></textarea>
                     <button id="sendMessageBtn" type="button" data-mdb-button-init data-mdb-ripple-init class="modern-button me-2 d-inline-block btn-rounded">Send</button>
                 </div>
             </div>
