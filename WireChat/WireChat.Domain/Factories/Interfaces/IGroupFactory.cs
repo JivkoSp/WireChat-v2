@@ -5,6 +5,6 @@ namespace WireChat.Domain.Factories.Interfaces
 {
     public interface IGroupFactory
     {
-        Group Create(GroupID groupId, GroupName groupName, Chat chat);
+        Group Create(ChatID chatId, GroupName groupName, Chat chat);
     }
 }
