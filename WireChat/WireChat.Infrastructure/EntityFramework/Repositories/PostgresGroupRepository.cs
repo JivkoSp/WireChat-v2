@@ -15,9 +15,13 @@ namespace WireChat.Infrastructure.EntityFramework.Repositories
             _writeDbContext = writeDbContext;
         }
 
-        public Task<Group> GetGroupByIdAsync(GroupID groupId)
+        public Task<Group> GetGroupByIdAsync(ChatID chatId)
             => _writeDbContext.Groups
-                .SingleOrDefaultAsync(x => x.Id == groupId);
+                .Include(x => x.Chat)
+                .ThenInclude(x => x.Users)
+                .Include(x => x.Chat)
+                .ThenInclude(x => x.Messages)
+                .SingleOrDefaultAsync(x => x.Id == chatId);
 
         public async Task AddGroupAsync(Group group)
         {
