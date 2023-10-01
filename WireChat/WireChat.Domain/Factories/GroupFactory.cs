@@ -6,7 +6,7 @@ namespace WireChat.Domain.Factories
 {
     public class GroupFactory : IGroupFactory
     {
-        public Group Create(GroupID groupId, GroupName groupName, Chat chat)
-            => new Group(groupId, groupName, chat);
+        public Group Create(ChatID chatId, GroupName groupName, Chat chat)
+            => new Group(chatId, groupName, chat);
     }
 }
