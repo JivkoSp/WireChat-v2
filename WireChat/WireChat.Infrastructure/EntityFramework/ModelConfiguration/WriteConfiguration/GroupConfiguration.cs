@@ -26,7 +26,7 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
 
             // Property config
             builder.Property(p => p.Id)
-                .HasConversion(id => id.Value, id => new GroupID(id))
+                .HasConversion(id => id.Value, id => new ChatID(id))
                 .HasColumnName("GroupId")
                 .IsRequired();
 
@@ -35,15 +35,12 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
                 .HasColumnName("GroupName")
                 .IsRequired();
 
-            //builder.HasOne(p => p.Chat)
-            //   .WithOne()
-            //   .HasForeignKey<GroupReadModel>(p => p.GroupId)
-            //   .HasConstraintName("FK_Group_Chat")
-            //   .OnDelete(DeleteBehavior.SetNull);
-
-            //builder.Property(typeof(Chat), "_chat")
-            //    .HasColumnName("Chat")
-            //    .IsRequired();
+            // Relationships
+            builder.HasOne(p => p.Chat)
+                .WithOne()
+                .HasForeignKey<Group>(p => p.Id)
+                .HasConstraintName("FK_Group_Chat")
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
