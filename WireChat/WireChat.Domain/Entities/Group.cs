@@ -3,18 +3,20 @@ using WireChat.Domain.ValueObjects;
 
 namespace WireChat.Domain.Entities
 {
-    public class Group : AggregateRoot<GroupID>
+    public class Group : AggregateRoot<ChatID>
     {
         private GroupName _groupName;
-        private Chat _chat;
+        private readonly Chat _chat;
+
+        public Chat Chat => _chat;
 
         private Group() {}
 
-        public Group(GroupID groupId, GroupName groupName, Chat chat)
+        public Group(ChatID chatId, GroupName groupName, Chat chat)
         {
-            ValidateConstructorParameters<NullGroupParametersException>([groupId, groupName, chat]);
+            ValidateConstructorParameters<NullGroupParametersException>([chatId, groupName, chat]);
 
-            Id = groupId;
+            Id = chatId;
             _groupName = groupName;
             _chat = chat;
         }
