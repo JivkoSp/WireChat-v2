@@ -5,6 +5,7 @@ namespace WireChat.Application.Dtos
         public Guid ChatId { get; set; }
         public string ChatType { get; set; }
         public List <ChatUserDto> ChatUserDtos { get; set; }
+        public List<BlockedChatUserDto> BlockedChatUserDtos { get; set; }
         public List <ChatMessageDto> ChatMessageDtos { get; set; }
     }
 }
