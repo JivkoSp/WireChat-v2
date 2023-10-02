@@ -24,6 +24,7 @@ namespace WireChat.Infrastructure.Queries.Handlers
                 .Include(x => x.Chat)
                 .Where(x => x.UserId == query.UserId)
                 .Select(x => x.Chat)
+                .AsNoTracking()
                 .ToListAsync();
 
             var groupReadModels = await _readDbContext.Groups
