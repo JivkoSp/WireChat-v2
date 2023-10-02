@@ -9,8 +9,10 @@ namespace WireChat.Domain.Entities
     {
         private ChatType _chatType;
         private HashSet<ChatUser> _users = new HashSet<ChatUser>();
+        private HashSet<BlockedChatUser> _blockedUsers = new HashSet<BlockedChatUser>();
         private List<ChatMessage> _messages = new List<ChatMessage>();
         public IReadOnlyCollection<ChatUser> Users => new ReadOnlyCollection<ChatUser>(_users.ToList());
+        public IReadOnlyCollection<BlockedChatUser> BlockedUsers => new ReadOnlyCollection<BlockedChatUser>(_blockedUsers.ToList());
         public IReadOnlyCollection<ChatMessage> Messages => new ReadOnlyCollection<ChatMessage>(_messages);
 
         private Chat() {}
@@ -49,6 +51,34 @@ namespace WireChat.Domain.Entities
             _users.Remove(chatUserToRemove);
 
             AddEvent(new ChatUserRemoved(this, chatUserToRemove));
+        }
+
+        public void BlockChatUser(BlockedChatUser blockedChatUser)
+        {
+            var alreadyExists = _blockedUsers.Contains(blockedChatUser);
+
+            if (alreadyExists)
+            {
+                throw new BlockedChatUserAlreadyExistsException(blockedChatUser.UserID, blockedChatUser.ChatID);
+            }
+
+            _blockedUsers.Add(blockedChatUser);
+
+            AddEvent(new BlockedChatUserAdded(this, blockedChatUser));
+        }
+
+        public void UnblockChatUser(UserID userId)
+        {
+            var chatUserToUnblock = _blockedUsers.SingleOrDefault(x => x.UserID == userId);
+
+            if (chatUserToUnblock is null)
+            {
+                throw new BlockedChatUserNotFoundException(userId, Id);
+            }
+
+            _blockedUsers.Remove(chatUserToUnblock);
+
+            AddEvent(new BlockedChatUserRemoved(this, chatUserToUnblock));
         }
 
         public void AddMessage(ChatMessage chatMessage)
