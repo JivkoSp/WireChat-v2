@@ -10,7 +10,8 @@ namespace WireChat.Infrastructure.Automapper.Profiles
         {
             CreateMap<ChatReadModel, ChatDto>()
                 .ForMember(dest => dest.ChatMessageDtos, opt => opt.MapFrom(src => src.ChatMessages))
-                .ForMember(dest => dest.ChatUserDtos, opt => opt.MapFrom(src => src.ChatUsers));
+                .ForMember(dest => dest.ChatUserDtos, opt => opt.MapFrom(src => src.ChatUsers))
+                .ForMember(dest => dest.BlockedChatUserDtos, opt => opt.MapFrom(src => src.BlockedChatUsers));
         }
     }
 }
