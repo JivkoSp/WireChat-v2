@@ -46,7 +46,7 @@ namespace WireChat.Application.Commands.Handlers
                 throw new ContactNotFoundException(command.UserId, command.NewChatUserId);
             }
 
-            var chatUser = new ChatUser(command.UserId, command.ChatId);
+            var chatUser = new ChatUser(command.NewChatUserId, command.ChatId);
 
             group.AddChatUser(chatUser);
 
