@@ -46,6 +46,7 @@ namespace WireChat.Infrastructure.Extensions
                 configAction.AddProfile<ChatUserProfile>();
                 configAction.AddProfile<UserContactRequestProfile>();
                 configAction.AddProfile<GroupProfile>();
+                configAction.AddProfile<BlockedChatUserProfile>();
             });
 
             services.AddSignalR(opt => opt.EnableDetailedErrors = true);
