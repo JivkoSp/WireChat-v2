@@ -23,7 +23,7 @@ namespace WireChat.Infrastructure.Queries.Handlers
             var chatUserReadModel = await _readDbContext.ChatUserReadModels
                     .Include(x => x.User)
                     .AsNoTracking()
-                    .SingleOrDefaultAsync(x => x.UserId == query.UserId);
+                    .SingleOrDefaultAsync(x => x.ChatId == query.ChatId && x.UserId == query.UserId);
 
             return _mapper.Map<ChatUserDto>(chatUserReadModel);
         }
