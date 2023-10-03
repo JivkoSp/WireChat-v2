@@ -20,7 +20,7 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.ReadConfigu
                 .HasForeignKey(p => p.UserId)
                 .HasConstraintName("FK_User_ChatUsers")
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             builder.HasOne(p => p.Chat)
                 .WithMany(p => p.ChatUsers)
                 .HasForeignKey(p => p.ChatId)
