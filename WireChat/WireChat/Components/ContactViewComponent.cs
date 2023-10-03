@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WireChat.Application.Dtos;
 using WireChat.Application.Queries;
 using WireChat.Application.Queries.Dispatcher;
 
@@ -13,9 +14,9 @@ namespace WireChat.Components
             _queryDispatcher = queryDispatcher;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string userId)
+        public async Task<IViewComponentResult> InvokeAsync(ChatUserDto chatUser)
         {
-            var getChatUserQuery = new GetChatUserQuery(userId);
+            var getChatUserQuery = new GetChatUserQuery(chatUser.ChatId, chatUser.UserId);
 
             var user = await _queryDispatcher.DispatchAsync(getChatUserQuery);
 
