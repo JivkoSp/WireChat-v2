@@ -34,7 +34,11 @@
             </ul>
         </div>
         <!-- Button to Groups -->
-        <button class="modern-button m-3 mb-3 w-50 text-center m-auto" type="button"
+        <button class="modern-button m-3 mb-3 w-50 text-center m-auto d-none d-sm-block" type="button" onclick="showGroupsMenu()">
+            <i class="fas fa-users me-2"></i> Groups
+        </button>
+        <!-- Button to Groups Mobile -->
+        <button class="modern-button m-3 mb-3 w-50 text-center m-auto d-block d-sm-none" type="button"
                 data-bs-toggle="modal" data-bs-target="#groupsSideMenuModal" onclick="showGroupsMenu()">
             <i class="fas fa-users me-2"></i> Groups
         </button>
