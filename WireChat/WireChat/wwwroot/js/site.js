@@ -129,7 +129,16 @@ function showGroupsMenu() {
 
     document.getElementById('groupsSideMenu').classList.remove('groups-side-menu');
 
-    document.getElementById('contactsSideMenu').style.display = 'none';
+    document.getElementById('contactsSideMenu').classList.add('contacts-side-menu');
 
     $('#contactsSideMenuModal').modal('hide');
+}
+
+function showContactsMenu() {
+
+    document.getElementById('groupsSideMenu').classList.add('groups-side-menu');
+
+    document.getElementById('contactsSideMenu').classList.remove('contacts-side-menu');
+
+    $('#groupsSideMenuModal').modal('hide');
 }
