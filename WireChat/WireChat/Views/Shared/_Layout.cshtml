@@ -336,6 +336,80 @@
                     }
                 });
             });
+
+            $(document).on('click', '[id^="blockGroupMemberBtn-"]', function () {
+
+                const groupMemberGroupId = $("#groupMemberGroupId").val();
+
+                const groupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const groupMemberUserId = $(`#groupMemberUserId-${groupMemberUserName}`).val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Chat/BlockUser',
+                    data: {
+                        "chatId": groupMemberGroupId,
+                        "userId": groupMemberUserId
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $("#groupMembersBtn").click(() => {
+
+                $("#groupMembers").removeClass('d-none').addClass('d-block');
+                $("#blockedGroupMembers").removeClass('d-block').addClass('d-none');
+                
+                $("#groupMembersBtn").addClass('pulse-animation');
+
+                setTimeout(() => {
+                    $("#groupMembersBtn").removeClass('pulse-animation');
+                }, 500); 
+            });
+
+            $("#blockedGroupMembersBtn").click(() => {
+
+                $("#groupMembers").removeClass('d-block').addClass('d-none');
+                $("#blockedGroupMembers").removeClass('d-none').addClass('d-block');
+
+                $("#blockedGroupMembersBtn").addClass('pulse-animation');
+                
+                setTimeout(() => {
+                    $("#blockedGroupMembersBtn").removeClass('pulse-animation');
+                }, 500); 
+            });
+
+            $(document).on('click', '[id^="unblockGroupMemberBtn-"]', function () {
+
+                console.log("ok");
+
+                const groupMemberGroupId = $("#groupMemberGroupId").val();
+
+                const blockedGroupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const blockedGroupMemberUserId = $(`#blockedGroupMemberUserId-${blockedGroupMemberUserName}`).val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/Chat/UnblockChatUser',
+                    data: {
+                        "chatId": groupMemberGroupId,
+                        "userId": blockedGroupMemberUserId
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
         });
     </script>
     @await RenderSectionAsync("Scripts", required: false)
