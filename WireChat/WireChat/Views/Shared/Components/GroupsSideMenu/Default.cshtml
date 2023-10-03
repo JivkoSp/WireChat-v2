@@ -33,8 +33,13 @@
                 }
             </ul>
         </div>
-        <!-- Button to Groups -->
-        <button id="contacts" class="modern-button m-3 mb-3 w-50 text-center m-auto">
+        <!-- Button to Contacts -->
+        <button id="contacts" class="modern-button m-3 mb-3 w-50 text-center m-auto d-none d-sm-block" type="button" onclick="showContactsMenu()">
+            <i class="fas fa-address-book me-2"></i> Contacts
+        </button>
+        <!-- Button to Contacts Mobile -->
+        <button id="contacts" class="modern-button m-3 mb-3 w-50 text-center m-auto d-block d-sm-none" type="button" onclick="showContactsMenu()"
+                data-bs-toggle="modal" data-bs-target="#contactsSideMenuModal">
             <i class="fas fa-address-book me-2"></i> Contacts
         </button>
     </div>
