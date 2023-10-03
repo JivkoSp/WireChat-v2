@@ -18,6 +18,7 @@ namespace WireChat.Infrastructure.EntityFramework.Repositories
         public Task<Chat> GetChatByIdAsync(ChatID chatId)
             => _writeDbContext.Chats
                 .Include(x => x.Users)
+                .Include(x => x.BlockedUsers)
                 .Include(x => x.Messages)
                 .SingleOrDefaultAsync(x => x.Id == chatId);
 
