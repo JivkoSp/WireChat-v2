@@ -39,6 +39,8 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
             // Relationships
             builder.HasMany(p => p.Users);
 
+            builder.HasMany(p => p.BlockedUsers);
+
             builder.HasMany(p => p.Messages);
         }
     }
