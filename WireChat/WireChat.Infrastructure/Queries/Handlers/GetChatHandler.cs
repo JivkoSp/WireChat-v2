@@ -25,6 +25,7 @@ namespace WireChat.Infrastructure.Queries.Handlers
                     .ThenInclude(x => x.User)
                     .Include(x => x.ChatMessages.OrderBy(x => x.MessageDateTime))
                     .ThenInclude(x => x.User)
+                    .Include(x => x.BlockedChatUsers)
                     .AsNoTracking()
                     .SingleOrDefaultAsync(x => x.ChatId == query.ChatId);
 
