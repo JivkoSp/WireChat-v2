@@ -51,5 +51,21 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(removeChatMessageCommand);
         }
+
+        [HttpPost]
+        public async Task BlockUser(Guid chatId, string userId)
+        {
+            var blockChatUserCommand = new BlockChatUserCommand(chatId, Guid.Parse(userId));
+
+            await _commandDispatcher.DispatchAsync(blockChatUserCommand);
+        }
+
+        [HttpDelete]
+        public async Task UnblockChatUser(Guid chatId, string userId)
+        {
+            var unblockChatUserCommand = new UnblockChatUserCommand(chatId, Guid.Parse(userId));
+
+            await _commandDispatcher.DispatchAsync(unblockChatUserCommand);
+        }
     }
 }
