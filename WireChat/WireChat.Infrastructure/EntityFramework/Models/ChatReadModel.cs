@@ -9,6 +9,7 @@ namespace WireChat.Infrastructure.EntityFramework.Models
 
         // Relationships
         public virtual List<ChatUserReadModel> ChatUsers { get; set; }
+        public virtual List<BlockedChatUserReadModel> BlockedChatUsers { get; set; } 
         public virtual List<ChatMessageReadModel> ChatMessages { get; set; }
     }
 }
