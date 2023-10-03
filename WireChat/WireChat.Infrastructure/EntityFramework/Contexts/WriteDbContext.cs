@@ -46,6 +46,7 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             modelBuilder.ApplyConfiguration(new UserConfiguration(_encryptionProvider));
             modelBuilder.ApplyConfiguration(new UserContactRequestConfiguration(_encryptionProvider));
             modelBuilder.ApplyConfiguration(new GroupConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new BlockedChatUserConfiguration());
         }
     }
 }
