@@ -27,6 +27,9 @@ namespace WireChat.Infrastructure.Queries.Handlers
                    .Include(x => x.Chat)
                    .ThenInclude(x => x.ChatMessages)
                    .ThenInclude(x => x.User)
+                   .Include(x => x.Chat)
+                   .ThenInclude(x => x.BlockedChatUsers)
+                   .ThenInclude(x => x.User)
                    .AsNoTracking()
                    .SingleOrDefaultAsync(x => x.Chat.ChatId == query.ChatId);
 
