@@ -28,7 +28,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h5 class="fw-bold text-center">Add Members</h5>
+                <p class="fw-bold text-center">Add Members</p>
                 <div class="mt-3 mb-5">
                     <div class="d-flex col-sm-10 m-auto mt-2" style="position:relative">
                         <input id="groupMemberGroupId" type="hidden" value="@Model.GroupId" />
@@ -38,33 +38,65 @@
                         </button>
                     </div>
                 </div>
-                <h5 class="fw-bold text-center">Members</h5>
-                <div class="row ms-2">
+                <div class="ms-5 me-5 row">
+                    <div class="col-2 border-bottom border-primary me-5">
+                        <p id="groupMembersBtn" class="group-menu-btn fw-bold text-center">Members</p>
+                    </div>
+                    @if(Model.ChatDto.BlockedChatUserDtos.Count > 0)
+                    {
+                        <div class="col-3 border-bottom border-primary">
+                            <p id="blockedGroupMembersBtn" class="group-menu-btn fw-bold text-center">Blocked Members</p>
+                        </div>
+                    }
+                </div>
+                <div id="groupMembers" class="row ms-2">
                     @foreach (var groupMember in Model.ChatDto.ChatUserDtos)
+                    {
+                        if(Model.ChatDto.BlockedChatUserDtos.Any(x => x.UserId == groupMember.UserId) is false)
+                        {
+                            <div class="col d-flex align-items-center py-2">
+                                <div class="d-flex flex-row">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                         class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
+                                    <div class="d-flex flex-column flex-grow-1">
+                                        <p class="fw-bold mb-1 mt-5">@groupMember.UserName</p>
+                                        <input id="groupMemberUserId-@groupMember.UserName" type="hidden" value="@groupMember.UserId" />
+                                        <div class="d-flex">
+                                            @if (groupMember.UserName != ViewContext.HttpContext.User.Identity.Name)
+                                            {
+                                                <button id="blockGroupMemberBtn-@groupMember.UserName" class="modern-button text-danger me-2">Block</button>
+                                                <button id="removeGroupMemberBtn-@groupMember.UserName" class="modern-button text-danger">Remove</button>
+                                            }
+                                            else
+                                            {
+                                                <button id="leaveGroupBtn-@groupMember.UserName" class="modern-button text-danger">Leave</button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }      
+                </div>
+                <div id="blockedGroupMembers" class="row ms-2 d-none">
+                    @foreach (var blockedChatUser in Model.ChatDto.BlockedChatUserDtos)
                     {
                         <div class="col d-flex align-items-center py-2">
                             <div class="d-flex flex-row">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                                     class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
+                                     class="rounded-circle d-flex align-self-center me-3 shadow-1-strong grayscale" width="40">
                                 <div class="d-flex flex-column flex-grow-1">
-                                    <p class="fw-bold mb-1 mt-5">@groupMember.UserName</p>
+                                    <p class="fw-bold mb-1 mt-5">@blockedChatUser.UserName</p>
+                                    <input id="blockedGroupMemberUserId-@blockedChatUser.UserName" type="hidden" value="@blockedChatUser.UserId" />
                                     <div class="d-flex">
-                                        @if (groupMember.UserName != ViewContext.HttpContext.User.Identity.Name)
-                                        {
-                                            <button id="blockGroupMemberBtn-@groupMember.UserName" class="modern-button text-danger me-2">Block</button>
-                                            <button id="removeGroupMemberBtn-@groupMember.UserName" class="modern-button text-danger">Remove</button>
-                                        }
-                                        else
-                                        {
-                                            <button id="leaveGroupBtn-@groupMember.UserName" class="modern-button text-danger">Leave</button>
-                                        }
+                                        <button id="unblockGroupMemberBtn-@blockedChatUser.UserName" class="modern-button text-primary me-2">Unblock</button>
+                                        <button id="removeGroupMemberBtn-@blockedChatUser.UserName" class="modern-button text-danger">Remove</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }      
-                </div>     
-            </div>
+                    }
+                </div>
         </div>
     </div>
 </div>
