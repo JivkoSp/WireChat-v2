@@ -38,13 +38,14 @@
                         </button>
                     </div>
                 </div>
-                <div class="ms-5 me-5 row">
-                    <div class="col-2 border-bottom border-primary me-5">
+                <div id="groupOptions" class="ms-5 me-5 row">
+                    <input id="blockedChatUsersCount" type="hidden" value="@Model.ChatDto.BlockedChatUserDtos.Count" />
+                    <div id="groupOptionsMembers" class="col-2 border-bottom border-primary me-5">
                         <p id="groupMembersBtn" class="group-menu-btn fw-bold text-center">Members</p>
                     </div>
                     @if(Model.ChatDto.BlockedChatUserDtos.Count > 0)
                     {
-                        <div class="col-3 border-bottom border-primary">
+                        <div id="groupOptionsBlockedMembers" class="col-3 border-bottom border-primary">
                             <p id="blockedGroupMembersBtn" class="group-menu-btn fw-bold text-center">Blocked Members</p>
                         </div>
                     }
@@ -54,7 +55,7 @@
                     {
                         if(Model.ChatDto.BlockedChatUserDtos.Any(x => x.UserId == groupMember.UserId) is false)
                         {
-                            <div class="col d-flex align-items-center py-2">
+                            <div id="groupMember-@groupMember.UserName" class="col d-flex align-items-center py-2">
                                 <div class="d-flex flex-row">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
                                          class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
@@ -81,7 +82,7 @@
                 <div id="blockedGroupMembers" class="row ms-2 d-none">
                     @foreach (var blockedChatUser in Model.ChatDto.BlockedChatUserDtos)
                     {
-                        <div class="col d-flex align-items-center py-2">
+                        <div id="blockedGroupMember-@blockedChatUser.UserName" class="col d-flex align-items-center py-2">
                             <div class="d-flex flex-row">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
                                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong grayscale" width="40">
@@ -90,13 +91,14 @@
                                     <input id="blockedGroupMemberUserId-@blockedChatUser.UserName" type="hidden" value="@blockedChatUser.UserId" />
                                     <div class="d-flex">
                                         <button id="unblockGroupMemberBtn-@blockedChatUser.UserName" class="modern-button text-primary me-2">Unblock</button>
-                                        <button id="removeGroupMemberBtn-@blockedChatUser.UserName" class="modern-button text-danger">Remove</button>
+                                        <button id="removeBlokedGroupMemberBtn-@blockedChatUser.UserName" class="modern-button text-danger">Remove</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
                 </div>
+            </div>
         </div>
     </div>
 </div>
