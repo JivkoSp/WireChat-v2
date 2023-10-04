@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using WireChat.Application.Dtos;
 using WireChat.Infrastructure.Dtos.SignalR;
 
 namespace WireChat.Infrastructure.SignalR.Hubs
@@ -18,6 +19,31 @@ namespace WireChat.Infrastructure.SignalR.Hubs
         public async Task RemoveMessage(SignalRRemoveChatMessageDto removeChatMessage)
         {
             await Clients.Group(removeChatMessage.ChatId).SendAsync("RemoveMessage", removeChatMessage);
+        }
+
+        public async Task UserAdded(ChatUserDto chatUserDto)
+        {
+            await Clients.Group(chatUserDto.ChatId.ToString()).SendAsync("UserAdded", chatUserDto);
+        }
+
+        public async Task UserRemoved(SignalRRemoveChatUserDto removeChatUser)
+        {
+            await Clients.Group(removeChatUser.ChatId).SendAsync("UserRemoved", removeChatUser);
+        }
+
+        public async Task UserBlocked(SignalRRemoveChatUserDto removeChatUser)
+        {
+            await Clients.Group(removeChatUser.ChatId).SendAsync("UserBlocked", removeChatUser);
+        }
+
+        public async Task UserUnblocked(SignalRRemoveChatUserDto removeChatUser)
+        {
+            await Clients.Group(removeChatUser.ChatId).SendAsync("UserUnblocked", removeChatUser);
+        }
+
+        public async Task BlockedUserRemoved(SignalRRemoveChatUserDto removeChatUser)
+        {
+            await Clients.Group(removeChatUser.ChatId).SendAsync("BlockedUserRemoved", removeChatUser);
         }
     }
 }
