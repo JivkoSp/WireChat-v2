@@ -4,17 +4,22 @@ using WireChat.Application.Commands.Dispatcher;
 using WireChat.Application.Commands;
 using Microsoft.AspNetCore.Identity;
 using WireChat.Infrastructure.EntityFramework.Models;
+using WireChat.Application.Queries.Dispatcher;
+using WireChat.Application.Queries;
+using WireChat.Application.Dtos;
 
 namespace WireChat.Controllers
 {
     public class GroupController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly UserManager<UserReadModel> _userManager;
 
-        public GroupController(ICommandDispatcher commandDispatcher, UserManager<UserReadModel> userManager)
+        public GroupController(ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher, UserManager<UserReadModel> userManager)
         {
             _commandDispatcher = commandDispatcher;
+            _queryDispatcher = queryDispatcher;
             _userManager = userManager;
         }
 
@@ -38,6 +43,18 @@ namespace WireChat.Controllers
             var addChatUserCommand = new AddChatUserCommand(chatId, Guid.Parse(newChatUserId.Id), currentUserId);
 
             await _commandDispatcher.DispatchAsync(addChatUserCommand);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetGroupMember(Guid chatId, string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            var getChatUserQuery = new GetChatUserQuery(chatId, user.Id);
+
+            var groupMember = await _queryDispatcher.DispatchAsync(getChatUserQuery);
+
+            return new JsonResult(groupMember); 
         }
 
         [HttpDelete]
