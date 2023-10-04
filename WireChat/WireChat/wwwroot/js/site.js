@@ -125,6 +125,63 @@ function createIssuedContactRequest(contactRequestDto) {
     return divElement;
 }
 
+function createGroupMember(chatUser) {
+
+    let divElement = '';
+
+    if (chatUser != null) {
+
+        divElement = `<div id="groupMember-${chatUser.userName}" class="col d-flex align-items-center py-2">
+                                <div class="d-flex flex-row">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                         class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
+                                    <div class="d-flex flex-column flex-grow-1">
+                                        <p class="fw-bold mb-1 mt-5">${chatUser.userName}</p>
+                                        <input id="groupMemberUserId-${chatUser.userName}" type="hidden" value="${chatUser.userId}" />
+                                        <div class="d-flex">
+                                           <button id="blockGroupMemberBtn-${chatUser.userName}" class="modern-button text-danger me-2">Block</button>
+                                           <button id="removeGroupMemberBtn-${chatUser.userName}" class="modern-button text-danger">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+    }
+
+    return divElement;
+}
+
+function createBlockMembersButton() {
+
+    return `<div id="groupOptionsBlockedMembers" class="col-3 border-bottom border-primary">
+                <p id="blockedGroupMembersBtn" class="group-menu-btn fw-bold text-center">Blocked Members</p>
+            </div>`;
+}
+
+function createBlockedGroupMember(chatUser) {
+
+    let divElement = '';
+
+    if (chatUser != null) {
+
+        divElement = ` <div id="blockedGroupMember-${chatUser.userName}" class="col d-flex align-items-center py-2">
+                            <div class="d-flex flex-row">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                     class="rounded-circle d-flex align-self-center me-3 shadow-1-strong grayscale" width="40">
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <p class="fw-bold mb-1 mt-5">${chatUser.userName}</p>
+                                    <input id="blockedGroupMemberUserId-${chatUser.userName}" type="hidden" value="${chatUser.userId}" />
+                                    <div class="d-flex">
+                                        <button id="unblockGroupMemberBtn-${chatUser.userName}" class="modern-button text-primary me-2">Unblock</button>
+                                        <button id="removeBlokedGroupMemberBtn-${chatUser.userName}" class="modern-button text-danger">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+    }
+
+    return divElement;
+}
+
 function showGroupsMenu() {
 
     document.getElementById('groupsSideMenu').classList.remove('groups-side-menu');
