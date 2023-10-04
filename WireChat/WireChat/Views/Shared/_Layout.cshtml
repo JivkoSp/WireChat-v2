@@ -211,6 +211,11 @@
             var connection = new signalR.HubConnectionBuilder()
                 .withUrl("/contactHub").build();
 
+            var chatHubConnection = new signalR.HubConnectionBuilder()
+                .withUrl("/chatHub").build();
+            
+            chatHubConnection.start();
+
             connection.start().then(() => {
 
                 $("#newContact").click(() => {
@@ -306,6 +311,29 @@
                         "chatId": groupMemberGroupId,
                         "userName": newGroupMemberUserName
                     },
+                    success: function (response) {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/Group/GetGroupMember',
+                            data: {
+                                "chatId": groupMemberGroupId,
+                                "userName": newGroupMemberUserName
+                            },
+                            success: function (response) {
+
+                                if (response != null) {
+
+                                    chatHubConnection.invoke("UserAdded", response);
+                                }
+                            },
+                            failure: function (response) {
+                                console.log("Fail", response);
+                            },
+                            error: function (response) {
+                                console.log("Error", response);
+                            }
+                        });
+                    },
                     failure: function (response) {
                         console.log("Fail", response);
                     },
@@ -335,6 +363,66 @@
                         console.log("Error", response);
                     }
                 });
+
+                const signalRRemoveChatUserDto = {
+                    "ChatId": groupMemberGroupId,
+                    "UserName": groupMemberUserName
+                };
+
+                chatHubConnection.invoke("UserRemoved", signalRRemoveChatUserDto);
+            });
+
+            $(document).on('click', '[id^="removeBlokedGroupMemberBtn-"]', function () {
+
+                const groupMemberGroupId = $("#groupMemberGroupId").val();
+
+                const blockedGroupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const blockedGroupMemberUserId = $(`#blockedGroupMemberUserId-${blockedGroupMemberUserName}`).val();
+
+                let blockedChatUsersCount = $("#blockedChatUsersCount").val();
+
+                blockedChatUsersCount -= 1;
+
+                $("#blockedChatUsersCount").val(blockedChatUsersCount);
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/Chat/UnblockChatUser',
+                    data: {
+                        "chatId": groupMemberGroupId,
+                        "userId": blockedGroupMemberUserId
+                    },
+                    success: function (response) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/Group/RemoveCroupMember',
+                            data: {
+                                "chatId": groupMemberGroupId,
+                                "userName": blockedGroupMemberUserName
+                            },
+                            failure: function (response) {
+                                console.log("Fail", response);
+                            },
+                            error: function (response) {
+                                console.log("Error", response);
+                            }
+                        });
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+
+                const signalRRemoveChatUserDto = {
+                    "ChatId": groupMemberGroupId,
+                    "UserName": blockedGroupMemberUserName
+                };
+
+                chatHubConnection.invoke("BlockedUserRemoved", signalRRemoveChatUserDto);
             });
 
             $(document).on('click', '[id^="blockGroupMemberBtn-"]', function () {
@@ -344,6 +432,12 @@
                 const groupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
 
                 const groupMemberUserId = $(`#groupMemberUserId-${groupMemberUserName}`).val();
+
+                let blockedChatUsersCount = $("#blockedChatUsersCount").val();
+
+                blockedChatUsersCount += 1;
+
+                $("#blockedChatUsersCount").val(blockedChatUsersCount);
 
                 $.ajax({
                     type: 'POST',
@@ -359,12 +453,21 @@
                         console.log("Error", response);
                     }
                 });
+
+                const signalRRemoveChatUserDto = {
+                    "ChatId": groupMemberGroupId,
+                    "UserId": groupMemberUserId,
+                    "UserName": groupMemberUserName
+                };
+
+                chatHubConnection.invoke("UserBlocked", signalRRemoveChatUserDto);
             });
 
             $("#groupMembersBtn").click(() => {
 
-                $("#groupMembers").removeClass('d-none').addClass('d-block');
-                $("#blockedGroupMembers").removeClass('d-block').addClass('d-none');
+                $("#groupMembers").removeClass('d-none');
+
+                $("#blockedGroupMembers").addClass('d-none');
                 
                 $("#groupMembersBtn").addClass('pulse-animation');
 
@@ -373,27 +476,32 @@
                 }, 500); 
             });
 
-            $("#blockedGroupMembersBtn").click(() => {
-
-                $("#groupMembers").removeClass('d-block').addClass('d-none');
-                $("#blockedGroupMembers").removeClass('d-none').addClass('d-block');
-
-                $("#blockedGroupMembersBtn").addClass('pulse-animation');
+            $("#groupOptions").on("click", "#blockedGroupMembersBtn", function () {
                 
+                $("#groupMembers").addClass('d-none');
+
+                $("#blockedGroupMembers").removeClass('d-none');
+
+                $(this).addClass('pulse-animation');
+
                 setTimeout(() => {
-                    $("#blockedGroupMembersBtn").removeClass('pulse-animation');
-                }, 500); 
+                    $(this).removeClass('pulse-animation');
+                }, 500);
             });
 
             $(document).on('click', '[id^="unblockGroupMemberBtn-"]', function () {
-
-                console.log("ok");
 
                 const groupMemberGroupId = $("#groupMemberGroupId").val();
 
                 const blockedGroupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
 
                 const blockedGroupMemberUserId = $(`#blockedGroupMemberUserId-${blockedGroupMemberUserName}`).val();
+
+                let blockedChatUsersCount = $("#blockedChatUsersCount").val();
+
+                blockedChatUsersCount -= 1;
+
+                $("#blockedChatUsersCount").val(blockedChatUsersCount);
 
                 $.ajax({
                     type: 'DELETE',
@@ -409,6 +517,14 @@
                         console.log("Error", response);
                     }
                 });
+
+                const signalRRemoveChatUserDto = {
+                    "ChatId": groupMemberGroupId,
+                    "UserId": blockedGroupMemberUserId,
+                    "UserName": blockedGroupMemberUserName
+                };
+
+                chatHubConnection.invoke("UserUnblocked", signalRRemoveChatUserDto);
             });
         });
     </script>
