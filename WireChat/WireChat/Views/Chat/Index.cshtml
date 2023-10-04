@@ -183,6 +183,71 @@
                     $(`li:has(input[type="hidden"][value="${message.chatMessageId}"])`).remove();
                 });
 
+                connection.on("UserAdded", (message) => {
+
+                    const divElement = createGroupMember(message);
+
+                    $("#groupMembers").append(divElement);
+                });
+
+                connection.on("UserRemoved", (message) => {
+
+                    $(`#groupMember-${message.userName}`).remove();
+                });
+
+                connection.on("BlockedUserRemoved", (message) => {
+
+                    $(`#blockedGroupMember-${message.userName}`).remove();
+
+                    const blockedChatUsersCount = parseInt($("#blockedChatUsersCount").val(), 10);
+
+                    if (blockedChatUsersCount === 0) {
+
+                        $("#groupOptionsBlockedMembers").remove();
+
+                        $("#groupMembers").removeClass('d-none');
+
+                        $("#blockedGroupMembers").addClass('d-none');
+                    }
+                });
+
+                connection.on("UserBlocked", (message) => {
+
+                    $(`#groupMember-${message.userName}`).remove();
+
+                    const blockedChatUsersCount = parseInt($("#blockedChatUsersCount").val(), 10);
+
+                    if (blockedChatUsersCount === 1) {
+                        
+                        const blockMembersButton = createBlockMembersButton();
+
+                        $("#groupOptions").append(blockMembersButton);
+                    }
+
+                    const blockedGroupMember = createBlockedGroupMember(message);
+
+                    $("#blockedGroupMembers").append(blockedGroupMember);
+                });
+
+                connection.on("UserUnblocked", (message) => {
+
+                    $(`#blockedGroupMember-${message.userName}`).remove();
+
+                    const blockedChatUsersCount = parseInt($("#blockedChatUsersCount").val(), 10);
+
+                    if (blockedChatUsersCount === 0) {
+
+                        $("#groupOptionsBlockedMembers").remove();
+
+                        $("#groupMembers").removeClass('d-none');
+
+                        $("#blockedGroupMembers").addClass('d-none');
+
+                        const divElement = createGroupMember(message);
+
+                        $("#groupMembers").append(divElement);
+                    }
+                });
             }).catch(function (err) {
                 return console.error(err.toString());
             });
