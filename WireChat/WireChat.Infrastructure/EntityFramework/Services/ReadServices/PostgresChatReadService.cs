@@ -15,5 +15,8 @@ namespace WireChat.Infrastructure.EntityFramework.Services.ReadServices
 
         public Task<bool> ExistsByIdAsync(Guid id)
             => _readDbContext.ChatReadModels.AnyAsync(x => x.ChatId == id);
+
+        public Task<bool> ChatMessageExistsByIdAsync(Guid id)
+            => _readDbContext.ChatMessageReadModels.AnyAsync(x => x.ChatMessageId == id);
     }
 }
