@@ -5,7 +5,7 @@ namespace WireChat.Domain.ValueObjects
     public record UserContactRequest
     {
         public UserID SenderUserId { get; }
-        public UserID ReceiverUserId { get; set; }
+        public UserID ReceiverUserId { get; }
         internal string Message { get; }
 
         public UserContactRequest(UserID senderUserId, UserID receiverUserId, string message)
