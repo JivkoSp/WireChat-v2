@@ -23,7 +23,8 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<User> Users { get; set; }
-        
+        public DbSet<NotificationHub> NotificationHubs { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -47,6 +48,18 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             modelBuilder.ApplyConfiguration(new UserContactRequestConfiguration(_encryptionProvider));
             modelBuilder.ApplyConfiguration(new GroupConfiguration(_encryptionProvider));
             modelBuilder.ApplyConfiguration(new BlockedChatUserConfiguration());
+            modelBuilder.ApplyConfiguration(new AcceptedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new ActiveGroupNotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new AddedGroupMemberNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new BannedContactNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new BannedGroupMemberNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new CreatedGroupNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new DeclinedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new IssuedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new NotificationHubConfiguration());
+            modelBuilder.ApplyConfiguration(new ReceivedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new RemovedChatMessageNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new RemovedGroupMemberNotificationConfiguration(_encryptionProvider));
         }
     }
 }
