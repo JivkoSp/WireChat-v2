@@ -21,7 +21,8 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
         public DbSet<UserReadModel> UserReadModels { get; set; }
         public DbSet<ChatUserReadModel> ChatUserReadModels { get; set; }
         public DbSet<UserContactRequestReadModel> UserContactRequestReadModels { get; set; }
-
+        public DbSet<NotificationHubReadModel> NotificationHubReadModels { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("wirechat");
@@ -36,6 +37,18 @@ namespace WireChat.Infrastructure.EntityFramework.Contexts
             modelBuilder.ApplyConfiguration(new UserContactRequestConfiguration(_encryptionProvider));
             modelBuilder.ApplyConfiguration(new GroupConfiguration(_encryptionProvider));
             modelBuilder.ApplyConfiguration(new BlockedChatUserConfiguration());
+            modelBuilder.ApplyConfiguration(new AcceptedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new ActiveGroupNotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new AddedGroupMemberNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new BannedContactNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new BannedGroupMemberNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new CreatedGroupNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new DeclinedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new IssuedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new NotificationHubConfiguration());
+            modelBuilder.ApplyConfiguration(new ReceivedContactRequestNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new RemovedChatMessageNotificationConfiguration(_encryptionProvider));
+            modelBuilder.ApplyConfiguration(new RemovedGroupMemberNotificationConfiguration(_encryptionProvider));
         }
     }
 }
