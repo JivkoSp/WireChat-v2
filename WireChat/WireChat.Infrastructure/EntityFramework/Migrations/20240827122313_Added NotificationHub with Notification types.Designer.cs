@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WireChat.Infrastructure.EntityFramework.Contexts;
@@ -11,9 +12,11 @@ using WireChat.Infrastructure.EntityFramework.Contexts;
 namespace WireChat.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(ReadDbContext))]
-    partial class ReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240827122313_Added NotificationHub with Notification types")]
+    partial class AddedNotificationHubwithNotificationtypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -468,10 +471,16 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.Property<int>("Version")
                         .HasColumnType("integer");
 
                     b.HasKey("NotificationHubId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("NotificationHub", "wirechat");
                 });
@@ -996,6 +1005,17 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", b =>
+                {
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "User")
+                        .WithOne()
+                        .HasForeignKey("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_User_NotificationHub");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.ReceivedContactRequestNotificationReadModel", b =>
