@@ -32,6 +32,7 @@ namespace WireChat.Application.Extensions
             services.AddSingleton<IUserFactory, UserFactory>();
             services.AddSingleton<IChatFactory, ChatFactory>();
             services.AddSingleton<IGroupFactory, GroupFactory>();
+            services.AddSingleton<INotificationHubFactory, NotificationHubFactory>();
 
             return services;
         }
