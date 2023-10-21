@@ -34,9 +34,13 @@ namespace WireChat.Infrastructure.Extensions
 
             services.AddScoped<IGroupRepository, PostgresGroupRepository>();
 
+            services.AddScoped<INotificationHubRepository, PostgresNotificationHubRepository>();
+
             services.AddScoped<IChatReadService, PostgresChatReadService>();
 
             services.AddScoped<IUserReadService, PostgresUserReadService>();
+
+            services.AddScoped<IGroupReadService, PostgresGroupReadService>();
 
             services.AddQueriesWithDispatcher();
 
@@ -47,6 +51,17 @@ namespace WireChat.Infrastructure.Extensions
                 configAction.AddProfile<UserContactRequestProfile>();
                 configAction.AddProfile<GroupProfile>();
                 configAction.AddProfile<BlockedChatUserProfile>();
+                configAction.AddProfile<AcceptedContactRequestNotificationProfile>();
+                configAction.AddProfile<ActiveGroupNotificationProfile>();
+                configAction.AddProfile<AddedGroupMemberNotificationProfile>();
+                configAction.AddProfile<BannedGroupMemberNotificationProfile>();
+                configAction.AddProfile<CreatedGroupNotificationProfile>();
+                configAction.AddProfile<DeclinedContactRequestNotificationProfile>();
+                configAction.AddProfile<IssuedContactRequestNotificationProfile>();
+                configAction.AddProfile<ReceivedContactRequestNotificationProfile>();
+                configAction.AddProfile<RemovedChatMessageNotificationProfile>();
+                configAction.AddProfile<RemovedGroupMemberNotificationProfile>();
+                configAction.AddProfile<NotificationHubProfile>();
             });
 
             services.AddSignalR(opt => opt.EnableDetailedErrors = true);
