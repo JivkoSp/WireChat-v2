@@ -12,7 +12,7 @@ namespace WireChat.Domain.Entities
 
         private Group() {}
 
-        public Group(ChatID chatId, GroupName groupName, Chat chat)
+        internal Group(ChatID chatId, GroupName groupName, Chat chat)
         {
             ValidateConstructorParameters<NullGroupParametersException>([chatId, groupName, chat]);
 
