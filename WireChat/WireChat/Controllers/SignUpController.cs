@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using WireChat.Application.Commands;
+using WireChat.Application.Commands.Dispatcher;
 using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Controllers
@@ -9,6 +11,7 @@ namespace WireChat.Controllers
     {
         private readonly UserManager<UserReadModel> _userManager;
         private readonly SignInManager<UserReadModel> _signInManager;
+        private readonly ICommandDispatcher _commandDispatcher;
 
         [BindProperty]
         [Required(ErrorMessage = "Enter valid first name!")]
@@ -41,10 +44,12 @@ namespace WireChat.Controllers
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-        public SignUpController(UserManager<UserReadModel> userManager, SignInManager<UserReadModel> signInManager)
+        public SignUpController(UserManager<UserReadModel> userManager, SignInManager<UserReadModel> signInManager,
+            ICommandDispatcher commandDispatcher)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _commandDispatcher = commandDispatcher;
         }
 
         public IActionResult Index()
@@ -70,6 +75,12 @@ namespace WireChat.Controllers
                 
                 if (result.Succeeded)
                 {
+                    var newUser = await _userManager.FindByNameAsync(user.UserName);
+
+                    var createNotificationHubCommand = new CreateNotificationHubCommand(Guid.Parse(newUser.Id));
+
+                    await _commandDispatcher.DispatchAsync(createNotificationHubCommand);
+
                     await _signInManager.PasswordSignInAsync(UserName, Password, false, false);
 
                     return RedirectToAction("Index", "Main"); 
