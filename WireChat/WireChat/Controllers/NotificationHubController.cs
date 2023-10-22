@@ -125,5 +125,18 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(addIssuedContactRequestNotificationCommand);
         }
+
+        [HttpPost]
+        public async Task AddReceivedContactRequestNotification(Guid notificationHubId, string senderUserName)
+        {
+            var receiverUserId = Guid.Parse(_userManager.GetUserId(User));
+
+            var sender = await _userManager.FindByNameAsync(senderUserName);
+
+            var addReceivedContactRequestNotificationCommand = new AddReceivedContactRequestNotificationCommand(notificationHubId, 
+                Guid.Parse(sender.Id), receiverUserId, DateTimeOffset.Now);
+
+            await _commandDispatcher.DispatchAsync(addReceivedContactRequestNotificationCommand);
+        }
     }
 }
