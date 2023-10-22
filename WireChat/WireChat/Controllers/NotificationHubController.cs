@@ -76,11 +76,14 @@ namespace WireChat.Controllers
         }
 
         [HttpPost]
-        public async Task AddBannedGroupMemberNotification(Guid notificationHubId, Guid groupAdminUserId,
-            Guid groupMemberUserId, Guid groupId)
+        public async Task AddBannedGroupMemberNotification(Guid notificationHubId, string groupMemberUserName, Guid groupId)
         {
+            var groupAdminUserId = Guid.Parse(_userManager.GetUserId(User));
+
+            var groupMember = await _userManager.FindByNameAsync(groupMemberUserName);
+
             var addBannedGroupMemberNotificationCommand = new AddBannedGroupMemberNotificationCommand(notificationHubId, 
-                groupAdminUserId, groupMemberUserId, groupId, DateTimeOffset.Now);
+                groupAdminUserId, Guid.Parse(groupMember.Id), groupId, DateTimeOffset.Now);
 
             await _commandDispatcher.DispatchAsync(addBannedGroupMemberNotificationCommand);
         }
