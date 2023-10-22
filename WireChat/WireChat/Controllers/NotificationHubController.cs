@@ -84,5 +84,14 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(addBannedGroupMemberNotificationCommand);
         }
+
+        [HttpPost]
+        public async Task AddCreatedGroupNotification(Guid notificationHubId, Guid userId, Guid groupId)
+        {
+            var addCreatedGroupNotificationCommand = 
+                new AddCreatedGroupNotificationCommand(notificationHubId, userId, groupId, DateTimeOffset.Now);
+
+            await _commandDispatcher.DispatchAsync(addCreatedGroupNotificationCommand);
+        }
     }
 }
