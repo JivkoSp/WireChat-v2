@@ -149,5 +149,18 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(addRemovedChatMessageNotificationCommand);
         }
+
+        [HttpPost]
+        public async Task AddRemovedGroupMemberNotification(Guid notificationHubId, string groupMemberUserName, Guid groupId)
+        {
+            var groupAdminUserId = Guid.Parse(_userManager.GetUserId(User));
+
+            var groupMember = await _userManager.FindByNameAsync(groupMemberUserName);
+
+            var addRemovedGroupMemberNotificationCommand = new AddRemovedGroupMemberNotificationCommand(notificationHubId, 
+                groupAdminUserId, Guid.Parse(groupMember.Id), groupId, DateTimeOffset.Now);
+
+            await _commandDispatcher.DispatchAsync(addRemovedGroupMemberNotificationCommand);
+        }
     }
 }
