@@ -257,5 +257,14 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(removeReceivedContactRequestNotificationCommand);
         }
+
+        [HttpDelete]
+        public async Task RemoveRemovedChatMessageNotification(Guid notificationHubId, Guid chatMessageId)
+        {
+            var removeRemovedChatMessageNotificationCommand 
+                = new RemoveRemovedChatMessageNotificationCommand(notificationHubId, chatMessageId);
+
+            await _commandDispatcher.DispatchAsync(removeRemovedChatMessageNotificationCommand);
+        }
     }
 }
