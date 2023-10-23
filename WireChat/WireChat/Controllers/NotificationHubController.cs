@@ -162,5 +162,16 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(addRemovedGroupMemberNotificationCommand);
         }
+
+        [HttpDelete]
+        public async Task RemoveAcceptedContactRequestNotification(Guid notificationHubId, string senderUserName)
+        {
+            var sender = await _userManager.FindByNameAsync(senderUserName);
+
+            var removeAcceptedContactRequestNotificationCommand = 
+                new RemoveAcceptedContactRequestNotificationCommand(notificationHubId, Guid.Parse(sender.Id));
+
+            await _commandDispatcher.DispatchAsync(removeAcceptedContactRequestNotificationCommand);
+        }
     }
 }
