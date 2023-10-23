@@ -237,14 +237,25 @@ namespace WireChat.Controllers
         }
 
         [HttpDelete]
-        public async Task RemoveIssuedContactRequestNotification(Guid notificationHubId, string receiverUserName)
+        public async Task RemoveIssuedContactRequestNotification(Guid notificationHubId)
         {
-            var receiver = await _userManager.FindByNameAsync(receiverUserName);
+            var receiverUserId = Guid.Parse(_userManager.GetUserId(User));
 
             var removeIssuedContactRequestNotificationCommand 
-                = new RemoveIssuedContactRequestNotificationCommand(notificationHubId, Guid.Parse(receiver.Id));
+                = new RemoveIssuedContactRequestNotificationCommand(notificationHubId, receiverUserId);
 
             await _commandDispatcher.DispatchAsync(removeIssuedContactRequestNotificationCommand);
+        }
+
+        [HttpDelete]
+        public async Task RemoveReceivedContactRequestNotification(Guid notificationHubId, string senderUserName)
+        {
+            var sender = await _userManager.FindByNameAsync(senderUserName);
+
+            var removeReceivedContactRequestNotificationCommand 
+                = new RemoveReceivedContactRequestNotificationCommand(notificationHubId, Guid.Parse(sender.Id));
+
+            await _commandDispatcher.DispatchAsync(removeReceivedContactRequestNotificationCommand);
         }
     }
 }
