@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 using WireChat.Application.Commands;
 using WireChat.Application.Commands.Dispatcher;
 using WireChat.Application.Queries;
@@ -172,6 +173,14 @@ namespace WireChat.Controllers
                 new RemoveAcceptedContactRequestNotificationCommand(notificationHubId, Guid.Parse(sender.Id));
 
             await _commandDispatcher.DispatchAsync(removeAcceptedContactRequestNotificationCommand);
+        }
+
+        [HttpDelete]
+        public async Task RemoveActiveGroupNotification(Guid notificationHubId, Guid groupId)
+        {
+            var removeActiveGroupNotificationCommand = new RemoveActiveGroupNotificationCommand(notificationHubId, groupId);
+
+            await _commandDispatcher.DispatchAsync(removeActiveGroupNotificationCommand);
         }
     }
 }
