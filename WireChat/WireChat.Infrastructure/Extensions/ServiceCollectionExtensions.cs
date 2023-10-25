@@ -42,6 +42,8 @@ namespace WireChat.Infrastructure.Extensions
 
             services.AddScoped<IGroupReadService, PostgresGroupReadService>();
 
+            services.AddScoped<INotificationHubReadService, PostgresNotificationHubReadService>();
+
             services.AddQueriesWithDispatcher();
 
             services.AddAutoMapper(configAction => {
