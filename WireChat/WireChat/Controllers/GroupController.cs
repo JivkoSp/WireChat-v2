@@ -33,6 +33,18 @@ namespace WireChat.Controllers
             await _commandDispatcher.DispatchAsync(createGroupChatCommand);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetGroupByName(string groupName)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var getGroupByNameQuery = new GetGroupByNameQuery(userId, groupName);
+        
+            var group = await _queryDispatcher.DispatchAsync(getGroupByNameQuery);
+
+            return new JsonResult(group);
+        }
+
         [HttpPost]
         public async Task AddCroupMember(Guid chatId, string userName)
         {
