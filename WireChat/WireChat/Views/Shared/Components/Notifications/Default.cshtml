@@ -1,0 +1,183 @@
+﻿@model WireChat.Application.Dtos.NotificationHubDto
+
+<div class="side-menu col-sm-2">
+    <h5 class="font-weight-bold mb-3 text-center">Notifications</h5>
+    <div id="notificationList" class="row notification-list">
+        @if (Model is not null)
+        {
+            <input id="notificationHubId" type="hidden" value="@Model.NotificationHubId" />
+
+            <div id="issuedContactRequestNotifications">
+                @foreach (var notification in Model?.IssuedContactRequestNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Issued Contact Request</h5>
+                                <p class="card-text">
+                                   To: @notification.ReceiverUserName
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="receivedContactRequestNotifications">
+                @foreach (var notification in Model?.ReceivedContactRequestNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Received Contact Request</h5>
+                                <p class="card-text">
+                                    From: @notification.SenderUserName 
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="acceptedContactRequestNotifications">
+                @foreach (var notification in Model?.AcceptedContactRequestNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Accepted Contact Request</h5>
+                                <p class="card-text">
+                                    From @notification.SenderUserName To @notification.ReceiverUserName
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="declinedContactRequestNotifications">
+                @foreach (var notification in Model?.DeclinedContactRequestNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Declined Contact Request</h5>
+                                <p class="card-text">
+                                    From @notification.SenderUserName To @notification.ReceiverUserName
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="createdGroupNotifications">
+                @foreach (var notification in Model?.CreatedGroupNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Created Group</h5>
+                                <p class="card-text">
+                                    Group Name: @notification.GroupName
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="addedGroupMemberNotifications">
+                @foreach (var notification in Model?.AddedGroupMemberNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Added Group Member</h5>
+                                <p class="card-text">
+                                    Group Admin: @notification.GroupAdminUserName Added New Group Member: @notification.GroupMemberUserName
+                                    In Group: @notification.GroupName
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="removedGroupMemberNotifications">
+                @foreach (var notification in Model?.RemovedGroupMemberNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Removed Group Member</h5>
+                                <p class="card-text">
+                                    Group Admin: @notification.GroupAdminUserName Removed Group Member: @notification.GroupMemberUserName
+                                    From Group: @notification.GroupName
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="bannedContactNotifications">
+                @foreach (var notification in Model?.BannedContactNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Banned Contact</h5>
+                                <p class="card-text"> @notification.UserName</p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="bannedGroupMemberNotifications">
+                @foreach (var notification in Model?.BannedGroupMemberNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Banned Group Member</h5>
+                                <p class="card-text">
+                                    Group Admin: @notification.GroupAdminUserName Banned Group Member: @notification.GroupMemberUserName
+                                    From Group: @notification.GroupName
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="removedChatMessageNotifications">
+                @foreach (var notification in Model?.RemovedChatMessageNotificationDtos)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Removed Chat Message</h5>
+                                <p class="card-text">
+                                    @notification.UserName Removed Chat Message
+                                </p>
+                                <p class="text-muted">On: @notification.DateTime</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
