@@ -199,3 +199,150 @@ function showContactsMenu() {
 
     $('#groupsSideMenuModal').modal('hide');
 }
+
+function createGroupNotification(notification) {
+
+    let divElement = ` <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Created Group</h5>
+                                <p class="card-text">
+                                    Group Name: ${notification.groupName}
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+    return divElement;
+}
+
+function createIssuedContactRequestNotification(notification) {
+
+    let divElement = `<div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Issued Contact Request</h5>
+                                <p class="card-text">
+                                    To: ${notification.receiverUserName}
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+    return divElement;
+}
+
+function createReceivedContactRequestNotification(notification) {
+
+    let divElement = `<div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Received Contact Request</h5>
+                                <p class="card-text">
+                                   From: ${notification.senderUserName}
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                     </div>`;
+
+    return divElement;
+}
+
+function createAddedGroupMemberNotification(notification) {
+
+    let divElement = `<div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Added Group Member</h5>
+                                <p class="card-text">
+                                    Group Admin: ${notification.groupAdminUserName} Added New Group Member: ${notification.groupMemberUserName}
+                                    In Group: ${notification.groupName}
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+    return divElement;
+}
+
+function createRemovedGroupMemberNotification(notification) {
+
+    let divElement = ` <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Removed Group Member</h5>
+                                <p class="card-text">
+                                    Group Admin: ${notification.groupAdminUserName} Removed Group Member: ${notification.groupMemberUserName}
+                                    From Group: ${notification.groupName}
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+    return divElement;
+}
+
+function createBannedGroupMemberNotification(notification) {
+
+    let divElement = `<div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Banned Group Member</h5>
+                                <p class="card-text">
+                                    Group Admin: ${notification.groupAdminUserName} Banned Group Member: ${notification.groupMemberUserName}
+                                    From Group: ${notification.groupName}
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+    return divElement;
+}
+
+function createRemovedChatMessageNotification(notification) {
+
+    let divElement = `<div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Removed Chat Message</h5>
+                                <p class="card-text">
+                                    ${notification.userName} Removed Chat Message
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+    return divElement;
+}
+
+function createdAcceptedContactRequestNotification(notification) {
+
+    let divElement = ` <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center mb-3">Accepted Contact Request</h5>
+                                <p class="card-text">
+                                    From ${notification.senderUserName} To ${notification.receiverUserName}
+                                </p>
+                                <p class="text-muted">On: ${notification.dateTime}</p>
+                                <a href="#" class="modern-button text-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>`;
+
+    return divElement;
+}
