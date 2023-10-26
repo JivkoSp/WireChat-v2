@@ -87,6 +87,11 @@
             var connection = new signalR.HubConnectionBuilder()
                 .withUrl("/contactHub").build();
 
+            var userNotificationHub = new signalR.HubConnectionBuilder()
+                .withUrl("/userNotificationHub").build();
+
+            userNotificationHub.start();
+
             connection.start().then(() => {
 
                 connection.invoke("JoinGroup", "@ViewContext.HttpContext.User.Identity.Name");
@@ -118,6 +123,8 @@
                             console.log("Error", response);
                         }
                     });
+
+                    // TODO - RemoveIssuedContactRequest
                 });
 
                 $(document).on('click', '[id^="acceptContactRequest-"]', function () {
@@ -161,6 +168,31 @@
                             console.log("Error", response);
                         }
                     });
+
+                    let signalRAcceptedContactRequestNotificationDto = {
+                        "SenderUserName": senderUserName,
+                        "ReceiverUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                        "DateTime": getCurrentDateTimeOffset()
+                    };
+
+                    userNotificationHub.invoke("AcceptedContactRequestNotification", signalRAcceptedContactRequestNotificationDto);
+
+                    let notificationHubId = $("#notificationHubId").val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/NotificationHub/AddAcceptedContactRequestNotification',
+                        data: {
+                            "notificationHubId": notificationHubId,
+                            "senderUserName": senderUserName
+                        },
+                        failure: function (response) {
+                            console.log("Fail", response);
+                        },
+                        error: function (response) {
+                            console.log("Error", response);
+                        }
+                    });
                 });
 
                 $(document).on('click', '[id^="declineContactRequest-"]', function () {
@@ -190,6 +222,8 @@
                             console.log("Error", response);
                         }
                     });
+
+                    // TODO - RemoveReceivedContactRequest
                 });
 
                 connection.on("IssuedContactRequest", (message) => {
