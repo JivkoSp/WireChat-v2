@@ -73,9 +73,7 @@
                     <button id="sendMessageBtn" type="button" data-mdb-button-init data-mdb-ripple-init class="modern-button me-2 d-inline-block btn-rounded">Send</button>
                 </div>
             </div>
-            <div class="side-menu col-sm-2 mt-sm-2">
-                <h5 class="font-weight-bold mb-3 text-center">Notifications</h5>
-            </div>
+            @await Component.InvokeAsync("Notifications")
         </div>
     </div>
 </section>
@@ -89,6 +87,12 @@
 
             var connection = new signalR.HubConnectionBuilder()
                 .withUrl("/chatHub").build();
+
+            var groupNotificationHub = new signalR.HubConnectionBuilder()
+                .withUrl("/groupNotificationHub").build();
+
+            var chatNotificationHub = new signalR.HubConnectionBuilder()
+                .withUrl("/chatNotificationHub").build();
 
             connection.start().then(() => {
 
@@ -158,6 +162,33 @@
                                 console.log("Error", response);
                             }
                         });
+
+                        let signalRRemovedChatMessageNotificationDto = {
+                            "ChatId": "@Model.ChatDto.ChatId",
+                            "UserName": "@ViewContext.HttpContext.User.Identity.Name",
+                            "DateTime": getCurrentDateTimeOffset()
+                        };
+
+                        chatNotificationHub.invoke("RemovedChatMessageNotification", signalRRemovedChatMessageNotificationDto);
+
+                        let notificationHubId = $("#notificationHubId").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/NotificationHub/AddRemovedChatMessageNotification',
+                            data: {
+                                "notificationHubId": notificationHubId,
+                                "chatId": "@Model.ChatDto.ChatId",
+                                "chatMessageId": chatMessageId
+                            },
+                            failure: function (response) {
+                                console.log("Fail", response);
+                            },
+                            error: function (response) {
+                                console.log("Error", response);
+                            }
+                        });
+
                     } catch (err) {
                         console.error('Error:', err);
                     }
@@ -250,6 +281,46 @@
                 });
             }).catch(function (err) {
                 return console.error(err.toString());
+            });
+
+            groupNotificationHub.start().then(() => {
+
+                const groupMemberGroupId = $("#groupMemberGroupId").val();
+
+                groupNotificationHub.invoke("JoinGroup", groupMemberGroupId);
+
+                groupNotificationHub.on("AddedGroupMemberNotification", (message) => {
+
+                    const divElement = createAddedGroupMemberNotification(message);
+
+                    $("#notificationList").append(divElement);
+                });
+
+                groupNotificationHub.on("RemovedGroupMemberNotification", (message) => {
+
+                    const divElement = createRemovedGroupMemberNotification(message);
+
+                    $("#notificationList").append(divElement);
+                });
+
+                groupNotificationHub.on("BannedGroupMemberNotification", (message) => {
+
+                    const divElement = createBannedGroupMemberNotification(message);
+
+                    $("#notificationList").append(divElement);
+                });
+            });
+
+            chatNotificationHub.start().then(() => {
+
+                chatNotificationHub.invoke("JoinGroup", "@Model.ChatDto.ChatId");
+
+                chatNotificationHub.on("RemovedChatMessageNotification", (message) => {
+
+                    const divElement = createRemovedChatMessageNotification(message);
+
+                    $("#notificationList").append(divElement);
+                });
             });
         });
     </script>
