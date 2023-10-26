@@ -213,12 +213,27 @@
 
             var chatHubConnection = new signalR.HubConnectionBuilder()
                 .withUrl("/chatHub").build();
-            
+
+            var userNotificationHub = new signalR.HubConnectionBuilder()
+                .withUrl("/userNotificationHub").build();
+
+            var groupNotificationHub = new signalR.HubConnectionBuilder()
+                .withUrl("/groupNotificationHub").build();
+
             chatHubConnection.start();
+
+            groupNotificationHub.start();
+
+            userNotificationHub.start().then(() => {
+
+                userNotificationHub.invoke("JoinGroup", "@ViewContext.HttpContext.User.Identity.Name");
+            });
 
             connection.start().then(() => {
 
                 $("#newContact").click(() => {
+
+                    console.log("newContact");
 
                     $('#newContactModal').modal('show');
                 });
@@ -257,6 +272,31 @@
                         }
                     });
 
+                    let signalRIssuedContactRequestNotificationDto = {
+                        "SenderUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                        "ReceiverUserName": contactName,
+                        "DateTime": getCurrentDateTimeOffset()
+                    };
+
+                    userNotificationHub.invoke("IssuedContactRequestNotification", signalRIssuedContactRequestNotificationDto);
+
+                    let notificationHubId = $("#notificationHubId").val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/NotificationHub/AddIssuedContactRequestNotification',
+                        data: {
+                            "notificationHubId": notificationHubId,
+                            "receiverUserName": contactName
+                        },
+                        failure: function (response) {
+                            console.log("Fail", response);
+                        },
+                        error: function (response) {
+                            console.log("Error", response);
+                        }
+                    });
+
                     // Close the modal after sending the contact
                     $('#newContactModal').modal('hide');
                 });
@@ -271,6 +311,40 @@
                         data: {
                             "groupName": groupName
                         },
+                        success: function  (response) {
+                            $.ajax({
+                                type: 'GET',
+                                url: '/Group/GetGroupByName',
+                                data: {
+                                    "groupName": groupName
+                                },
+                                success: function(response) {
+
+                                    let notificationHubId = $("#notificationHubId").val();
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/NotificationHub/AddCreatedGroupNotification',
+                                        data: {
+                                            "notificationHubId": notificationHubId,
+                                            "groupId": response.groupId
+                                        },
+                                        failure: function (response) {
+                                            console.log("Fail", response);
+                                        },
+                                        error: function (response) {
+                                            console.log("Error", response);
+                                        }
+                                    });
+                                },
+                                failure: function (response) {
+                                    console.log("Fail", response);
+                                },
+                                error: function (response) {
+                                    console.log("Error", response);
+                                }
+                            });
+                        },
                         failure: function (response) {
                             console.log("Fail", response);
                         },
@@ -278,6 +352,14 @@
                             console.log("Error", response);
                         }
                     });
+
+                    let signalRCreatedGroupNotificationDto = {
+                        "UserName": "@ViewContext.HttpContext.User.Identity.Name",
+                        "GroupName": groupName,
+                        "DateTime": getCurrentDateTimeOffset()
+                    };
+
+                    userNotificationHub.invoke("CreatedGroupNotification", signalRCreatedGroupNotificationDto);
 
                     // Close the modal after sending the contact
                     $('#newContactModal').modal('hide');
@@ -303,6 +385,8 @@
                 const groupMemberGroupId = $("#groupMemberGroupId").val();
 
                 const newGroupMemberUserName = $("#newGroupMemberUserName").val();
+
+                const groupName = $("#group-name").val();
 
                 $.ajax({
                     type: 'POST',
@@ -341,6 +425,50 @@
                         console.log("Error", response);
                     }
                 });
+
+                let signalRAddedGroupMemberNotificationDto = {
+                    "GroupId": groupMemberGroupId,
+                    "GroupName": groupName,
+                    "GroupAdminUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                    "GroupMemberUserName": newGroupMemberUserName,
+                    "DateTime": getCurrentDateTimeOffset()
+                };
+
+                groupNotificationHub.invoke("AddedGroupMemberNotification", signalRAddedGroupMemberNotificationDto);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Group/GetGroupByName',
+                    data: {
+                        "groupName": groupName
+                    },
+                    success: function (response) {
+
+                        let notificationHubId = $("#notificationHubId").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/NotificationHub/AddAddedGroupMemberNotification',
+                            data: {
+                                "notificationHubId": notificationHubId,
+                                "groupMemberUserName": newGroupMemberUserName,
+                                "groupId": response.groupId
+                            },
+                            failure: function (response) {
+                                console.log("Fail", response);
+                            },
+                            error: function (response) {
+                                console.log("Error", response);
+                            }
+                        });
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
             });
 
             $(document).on('click', '[id^="removeGroupMemberBtn-"]', function () {
@@ -348,6 +476,8 @@
                 const groupMemberGroupId = $("#groupMemberGroupId").val();
 
                 const groupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const groupName = $("#group-name").val();
 
                 $.ajax({
                     type: 'DELETE',
@@ -370,6 +500,33 @@
                 };
 
                 chatHubConnection.invoke("UserRemoved", signalRRemoveChatUserDto);
+                
+                let signalRRemovedGroupMemberNotificationDto = {
+                    "GroupAdminUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                    "GroupMemberUserName": groupMemberUserName,
+                    "GroupId": groupMemberGroupId,
+                    "GroupName": groupName,
+                    "DateTime": getCurrentDateTimeOffset()
+                };
+
+                groupNotificationHub.invoke("RemovedGroupMemberNotification", signalRRemovedGroupMemberNotificationDto);
+
+                let notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveAddedGroupMemberNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "groupMemberUserName": groupMemberUserName
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
             });
 
             $(document).on('click', '[id^="removeBlokedGroupMemberBtn-"]', function () {
@@ -423,6 +580,8 @@
                 };
 
                 chatHubConnection.invoke("BlockedUserRemoved", signalRRemoveChatUserDto);
+
+                // TODO - RemoveBannedGroupMemberNotification
             });
 
             $(document).on('click', '[id^="blockGroupMemberBtn-"]', function () {
@@ -432,6 +591,8 @@
                 const groupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
 
                 const groupMemberUserId = $(`#groupMemberUserId-${groupMemberUserName}`).val();
+
+                const groupName = $("#group-name").val();
 
                 let blockedChatUsersCount = $("#blockedChatUsersCount").val();
 
@@ -461,6 +622,50 @@
                 };
 
                 chatHubConnection.invoke("UserBlocked", signalRRemoveChatUserDto);
+
+                let signalRBannedGroupMemberNotificationDto = {
+                    "GroupId": groupMemberGroupId,
+                    "GroupName": groupName,
+                    "GroupAdminUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                    "GroupMemberUserName": groupMemberUserName,
+                    "DateTime": getCurrentDateTimeOffset()
+                };
+
+                groupNotificationHub.invoke("BannedGroupMemberNotification", signalRBannedGroupMemberNotificationDto);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Group/GetGroupByName',
+                    data: {
+                        "groupName": groupName
+                    },
+                    success: function (response) {
+
+                        let notificationHubId = $("#notificationHubId").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/NotificationHub/AddBannedGroupMemberNotification',
+                            data: {
+                                "notificationHubId": notificationHubId,
+                                "groupMemberUserName": groupMemberUserName,
+                                "groupId": response.groupId
+                            },
+                            failure: function (response) {
+                                console.log("Fail", response);
+                            },
+                            error: function (response) {
+                                console.log("Error", response);
+                            }
+                        });
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                }); 
             });
 
             $("#groupMembersBtn").click(() => {
@@ -525,6 +730,34 @@
                 };
 
                 chatHubConnection.invoke("UserUnblocked", signalRRemoveChatUserDto);
+            });
+
+            userNotificationHub.on("CreatedGroupNotification", (message) => {
+
+                const divElement = createGroupNotification(message);
+
+                $("#notificationList").append(divElement);
+            });
+
+            userNotificationHub.on("IssuedContactRequestNotification", (message) => {
+
+                const divElement = createIssuedContactRequestNotification(message);
+
+                $("#notificationList").append(divElement);
+            });
+
+            userNotificationHub.on("ReceivedContactRequestNotification", (message) => {
+
+                const divElement = createReceivedContactRequestNotification(message);
+
+                $("#notificationList").append(divElement);
+            });
+
+            userNotificationHub.on("AcceptedContactRequestNotification", (message) => {
+
+                const divElement = createdAcceptedContactRequestNotification(message);
+
+                $("#notificationList").append(divElement);
             });
         });
     </script>
