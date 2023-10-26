@@ -93,8 +93,10 @@ namespace WireChat.Controllers
         }
 
         [HttpPost]
-        public async Task AddCreatedGroupNotification(Guid notificationHubId, Guid userId, Guid groupId)
+        public async Task AddCreatedGroupNotification(Guid notificationHubId, Guid groupId)
         {
+            var userId = Guid.Parse(_userManager.GetUserId(User));
+
             var addCreatedGroupNotificationCommand = 
                 new AddCreatedGroupNotificationCommand(notificationHubId, userId, groupId, DateTimeOffset.Now);
 
