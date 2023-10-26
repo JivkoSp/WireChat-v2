@@ -201,6 +201,11 @@ body {
     filter: grayscale(0%);
 }
 
+.notification-list {
+    height: 70vh;
+    overflow-y: auto;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
