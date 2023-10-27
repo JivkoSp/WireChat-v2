@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WireChat.Infrastructure.EntityFramework.Contexts;
@@ -11,9 +12,11 @@ using WireChat.Infrastructure.EntityFramework.Contexts;
 namespace WireChat.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(ReadDbContext))]
-    partial class ReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240906070636_Added NotificationHubId foreign key to all Notification entities")]
+    partial class AddedNotificationHubIdforeignkeytoallNotificationentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,9 +173,12 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("SenderUserId", "ReceiverUserId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.HasIndex("ReceiverUserId");
 
@@ -191,11 +197,14 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("ActiveGroupNotificationId");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.ToTable("ActiveGroupNotification", "wirechat");
                 });
@@ -218,13 +227,16 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("GroupAdminUserId", "GroupMemberUserId");
 
                     b.HasIndex("GroupId");
 
                     b.HasIndex("GroupMemberUserId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.ToTable("AddedGroupMemberNotification", "wirechat");
                 });
@@ -250,11 +262,14 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("UserId", "ChatId");
 
                     b.HasIndex("ChatId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.HasIndex("ChatUserReadModelUserId", "ChatUserReadModelChatId");
 
@@ -282,13 +297,16 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("GroupAdminUserId", "GroupMemberUserId");
 
                     b.HasIndex("GroupId");
 
                     b.HasIndex("GroupMemberId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.ToTable("BannedGroupMemberNotification", "wirechat");
                 });
@@ -388,11 +406,14 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("UserId", "GroupId");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.ToTable("CreatedGroupNotification", "wirechat");
                 });
@@ -412,9 +433,12 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("SenderUserId", "ReceiverUserId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.HasIndex("ReceiverUserId");
 
@@ -453,9 +477,12 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("SenderUserId", "ReceiverUserId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.HasIndex("ReceiverUserId");
 
@@ -491,9 +518,12 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("SenderUserId", "ReceiverUserId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.HasIndex("ReceiverUserId");
 
@@ -521,6 +551,9 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
@@ -529,7 +562,7 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.HasIndex("ChatMessageId")
                         .IsUnique();
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.HasIndex("UserId");
 
@@ -556,13 +589,16 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("NotificationHubId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("NotificationHubReadModelNotificationHubId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("GroupAdminUserId", "GroupMemberUserId");
 
                     b.HasIndex("GroupId");
 
                     b.HasIndex("GroupMemberUserId");
 
-                    b.HasIndex("NotificationHubId");
+                    b.HasIndex("NotificationHubReadModelNotificationHubId");
 
                     b.ToTable("RemovedGroupMemberNotification", "wirechat");
                 });
@@ -714,12 +750,9 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.AcceptedContactRequestNotificationReadModel", b =>
                 {
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("AcceptedContactRequestNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_AcceptedContactRequestNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "Receiver")
                         .WithMany("ReceiverAcceptedContactRequestNotifications")
@@ -735,8 +768,6 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Sender_SenderAcceptedContactRequestNotifications");
 
-                    b.Navigation("NotificationHub");
-
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
@@ -751,16 +782,11 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Group_ActiveGroupNotifications");
 
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("ActiveGroupNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_ActiveGroupNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.Navigation("Group");
-
-                    b.Navigation("NotificationHub");
                 });
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.AddedGroupMemberNotificationReadModel", b =>
@@ -786,20 +812,15 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_GroupMember_GroupMemberAddedGroupMemberNotifications");
 
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("AddedGroupMemberNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_AddedGroupMemberNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.Navigation("Group");
 
                     b.Navigation("GroupAdmin");
 
                     b.Navigation("GroupMember");
-
-                    b.Navigation("NotificationHub");
                 });
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.BannedContactNotificationReadModel", b =>
@@ -811,12 +832,9 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Chat_BannedContactNotifications");
 
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("BannedContactNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_BannedContactNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "User")
                         .WithMany("BannedContactNotifications")
@@ -830,8 +848,6 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .HasForeignKey("ChatUserReadModelUserId", "ChatUserReadModelChatId");
 
                     b.Navigation("Chat");
-
-                    b.Navigation("NotificationHub");
 
                     b.Navigation("User");
                 });
@@ -858,20 +874,15 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_GroupMember_GroupMemberBannedGroupMemberNotifications");
 
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("BannedGroupMemberNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_BannedGroupMemberNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.Navigation("Group");
 
                     b.Navigation("GroupAdmin");
 
                     b.Navigation("GroupMember");
-
-                    b.Navigation("NotificationHub");
                 });
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.BlockedChatUserReadModel", b =>
@@ -945,12 +956,9 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Group_CreatedGroupNotifications");
 
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("CreatedGroupNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_CreatedGroupNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "User")
                         .WithMany("CreatedGroupNotifications")
@@ -961,19 +969,14 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
 
                     b.Navigation("Group");
 
-                    b.Navigation("NotificationHub");
-
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.DeclinedContactRequestNotificationReadModel", b =>
                 {
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("DeclinedContactRequestNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_DeclinedContactRequestNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "Receiver")
                         .WithMany("ReceiverDeclinedContactRequestNotifications")
@@ -988,8 +991,6 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Sender_SenderDeclinedContactRequestNotifications");
-
-                    b.Navigation("NotificationHub");
 
                     b.Navigation("Receiver");
 
@@ -1010,12 +1011,9 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.IssuedContactRequestNotificationReadModel", b =>
                 {
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("IssuedContactRequestNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_IssuedContactRequestNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "Receiver")
                         .WithMany("ReceiverIssuedContactRequestNotifications")
@@ -1031,8 +1029,6 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Sender_SenderIssuedContactRequestNotifications");
 
-                    b.Navigation("NotificationHub");
-
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
@@ -1040,12 +1036,9 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.ReceivedContactRequestNotificationReadModel", b =>
                 {
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("ReceivedContactRequestNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_ReceivedContactRequestNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "Receiver")
                         .WithMany("ReceiverReceivedContactRequestNotifications")
@@ -1060,8 +1053,6 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Sender_SenderReceivedContactRequestNotifications");
-
-                    b.Navigation("NotificationHub");
 
                     b.Navigation("Receiver");
 
@@ -1084,12 +1075,9 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_ChatMessage_RemovedChatMessageNotification");
 
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("RemovedChatMessageNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_RemovedChatMessageNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.HasOne("WireChat.Infrastructure.EntityFramework.Models.UserReadModel", "User")
                         .WithMany("RemovedChatMessageNotifications")
@@ -1104,8 +1092,6 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("ChatMessage");
-
-                    b.Navigation("NotificationHub");
 
                     b.Navigation("User");
                 });
@@ -1133,20 +1119,15 @@ namespace WireChat.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_GroupMember_GroupMemberRemovedGroupMemberNotifications");
 
-                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", "NotificationHub")
+                    b.HasOne("WireChat.Infrastructure.EntityFramework.Models.NotificationHubReadModel", null)
                         .WithMany("RemovedGroupMemberNotifications")
-                        .HasForeignKey("NotificationHubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_NotificationHub_RemovedGroupMemberNotifications");
+                        .HasForeignKey("NotificationHubReadModelNotificationHubId");
 
                     b.Navigation("Group");
 
                     b.Navigation("GroupAdmin");
 
                     b.Navigation("GroupMember");
-
-                    b.Navigation("NotificationHub");
                 });
 
             modelBuilder.Entity("WireChat.Infrastructure.EntityFramework.Models.UserContactRequestReadModel", b =>

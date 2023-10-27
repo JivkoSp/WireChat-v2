@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WireChat.Infrastructure.EntityFramework.Contexts;
@@ -11,9 +12,11 @@ using WireChat.Infrastructure.EntityFramework.Contexts;
 namespace WireChat.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(ReadDbContext))]
-    partial class ReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240906083500_Added NotificationHubId configurations for the read side")]
+    partial class AddedNotificationHubIdconfigurationsforthereadside
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
