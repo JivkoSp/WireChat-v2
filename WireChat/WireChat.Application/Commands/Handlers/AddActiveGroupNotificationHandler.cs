@@ -32,7 +32,7 @@ namespace WireChat.Application.Commands.Handlers
                 throw new GroupNotFoundException(command.GroupId);
             }
 
-            var activeGroupNotification = new ActiveGroupNotification(command.GroupId);
+            var activeGroupNotification = new ActiveGroupNotification(command.GroupId, command.NotificationHubId);
 
             notificationHub.AddActiveGroupNotification(activeGroupNotification);
 
