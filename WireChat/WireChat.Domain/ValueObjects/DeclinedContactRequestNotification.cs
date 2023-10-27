@@ -6,9 +6,11 @@ namespace WireChat.Domain.ValueObjects
     {
         public UserID SenderUserId { get; }
         public UserID ReceiverUserId { get; }
+        public NotificationHubID NotificationHubId { get; set; }
         internal DateTimeOffset DateTime { get; }
 
-        public DeclinedContactRequestNotification(UserID senderUserId, UserID receiverUserId, DateTimeOffset dateTime)
+        public DeclinedContactRequestNotification(UserID senderUserId, UserID receiverUserId, 
+            NotificationHubID notificationHubId, DateTimeOffset dateTime)
         {
             if (senderUserId == null)
             {
@@ -20,13 +22,19 @@ namespace WireChat.Domain.ValueObjects
                 throw new NullUserIdException();
             }
 
+            if (notificationHubId == null)
+            {
+                throw new NullNotificationHubIdException();
+            }
+
             if (dateTime == default || dateTime > DateTimeOffset.Now)
             {
                 throw new InvalidDeclinedContactRequestDateTimeException();
             }
 
             SenderUserId = senderUserId;
-            ReceiverUserId = receiverUserId;    
+            ReceiverUserId = receiverUserId;
+            NotificationHubId = notificationHubId;
             DateTime = dateTime;
         }
     }
