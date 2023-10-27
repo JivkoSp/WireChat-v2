@@ -50,7 +50,8 @@ namespace WireChat.Application.Commands.Handlers
             }
 
             var addedGroupMemberNotification = 
-                new AddedGroupMemberNotification(command.GroupAdminUserId, command.GroupMemberUserId, command.GroupId, command.DateTime);
+                new AddedGroupMemberNotification(command.GroupAdminUserId, command.GroupMemberUserId, command.GroupId,
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddAddedGroupMemberNotification(addedGroupMemberNotification);
 
