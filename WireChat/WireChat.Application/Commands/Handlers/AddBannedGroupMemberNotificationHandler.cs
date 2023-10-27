@@ -50,7 +50,8 @@ namespace WireChat.Application.Commands.Handlers
             }
 
             var bannedGroupMemberNotification = 
-                new BannedGroupMemberNotification(command.GroupAdminUserId, command.GroupMemberUserId, command.GroupId, command.DateTime);
+                new BannedGroupMemberNotification(command.GroupAdminUserId, command.GroupMemberUserId, command.GroupId, 
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddBannedGroupMemberNotification(bannedGroupMemberNotification);
 
