@@ -42,7 +42,8 @@ namespace WireChat.Application.Commands.Handlers
                 throw new GroupNotFoundException(command.GroupId);
             }
 
-            var createdGroupNotification = new CreatedGroupNotification(command.UserId, command.GroupId, command.DateTime);
+            var createdGroupNotification = new CreatedGroupNotification(command.UserId, command.GroupId, 
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddCreatedGroupNotification(createdGroupNotification);
 
