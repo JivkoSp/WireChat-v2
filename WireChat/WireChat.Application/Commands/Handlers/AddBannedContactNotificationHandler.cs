@@ -32,7 +32,8 @@ namespace WireChat.Application.Commands.Handlers
                 throw new UserNotFoundException(command.UserId);
             }
 
-            var bannedContactNotification = new BannedContactNotification(command.UserId, command.ChatId, command.DateTime);
+            var bannedContactNotification = new BannedContactNotification(command.UserId, command.ChatId, 
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddBannedContactNotification(bannedContactNotification);
 
