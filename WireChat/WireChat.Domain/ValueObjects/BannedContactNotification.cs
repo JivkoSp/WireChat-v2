@@ -6,9 +6,10 @@ namespace WireChat.Domain.ValueObjects
     {
         public UserID UserId { get; }
         public ChatID ChatId { get; set; }
+        public NotificationHubID NotificationHubId { get; set; }
         internal DateTimeOffset DateTime { get; }
 
-        public BannedContactNotification(UserID userId, ChatID chatId, DateTimeOffset dateTime)
+        public BannedContactNotification(UserID userId, ChatID chatId, NotificationHubID notificationHubId, DateTimeOffset dateTime)
         {
             if (userId == null)
             {
@@ -20,6 +21,11 @@ namespace WireChat.Domain.ValueObjects
                 throw new NullChatIdException();
             }
 
+            if (notificationHubId == null)
+            {
+                throw new NullNotificationHubIdException();
+            }
+
             if (dateTime == default || dateTime > DateTimeOffset.Now)
             {
                 throw new InvalidBannedContactDateTimeException();
@@ -27,6 +33,7 @@ namespace WireChat.Domain.ValueObjects
 
             UserId = userId;
             ChatId = chatId;
+            NotificationHubId = notificationHubId;
             DateTime = dateTime;
         }
     }
