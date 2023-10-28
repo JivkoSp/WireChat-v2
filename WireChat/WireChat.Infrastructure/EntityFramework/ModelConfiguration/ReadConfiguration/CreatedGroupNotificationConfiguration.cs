@@ -29,6 +29,12 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.ReadConfigu
                 .IsRequired();
 
             // Relationships
+            builder.HasOne(p => p.NotificationHub)
+               .WithMany(p => p.CreatedGroupNotifications)
+               .HasForeignKey(p => p.NotificationHubId)
+               .HasConstraintName("FK_NotificationHub_CreatedGroupNotifications")
+               .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasOne(p => p.User)
                 .WithMany(p => p.CreatedGroupNotifications)
                 .HasForeignKey(p => p.UserId)
