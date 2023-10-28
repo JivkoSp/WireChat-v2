@@ -40,7 +40,8 @@ namespace WireChat.Application.Commands.Handlers
             }
 
             var declinedContactRequestNotification = 
-                new DeclinedContactRequestNotification(command.SenderUserId, command.ReceiverUserId, command.DateTime);
+                new DeclinedContactRequestNotification(command.SenderUserId, command.ReceiverUserId, 
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddDeclinedContactRequestNotification(declinedContactRequestNotification);
 
