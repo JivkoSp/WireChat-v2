@@ -15,6 +15,12 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.ReadConfigu
             builder.HasKey(key => key.ActiveGroupNotificationId);
 
             // Relationships
+            builder.HasOne(p => p.NotificationHub)
+               .WithMany(p => p.ActiveGroupNotifications)
+               .HasForeignKey(p => p.NotificationHubId)
+               .HasConstraintName("FK_NotificationHub_ActiveGroupNotifications")
+               .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasOne(p => p.Group)
                 .WithMany(p => p.ActiveGroupNotifications)
                 .HasForeignKey(p => p.GroupId)
