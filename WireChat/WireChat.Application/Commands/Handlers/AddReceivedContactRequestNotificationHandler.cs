@@ -40,7 +40,8 @@ namespace WireChat.Application.Commands.Handlers
             }
 
             var receivedContactRequestNotification = 
-                new ReceivedContactRequestNotification(command.SenderUserId, command.ReceiverUserId, command.DateTime);
+                new ReceivedContactRequestNotification(command.SenderUserId, command.ReceiverUserId, 
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddReceivedContactRequestNotification(receivedContactRequestNotification);
 
