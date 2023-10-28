@@ -50,7 +50,8 @@ namespace WireChat.Application.Commands.Handlers
             }
 
             var removedGroupMemberNotification = 
-                new RemovedGroupMemberNotification(command.GroupAdminUserId, command.GroupMemberUserId, command.GroupId, command.DateTime);
+                new RemovedGroupMemberNotification(command.GroupAdminUserId, command.GroupMemberUserId, command.GroupId, 
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddRemovedGroupMemberNotification(removedGroupMemberNotification);
 
