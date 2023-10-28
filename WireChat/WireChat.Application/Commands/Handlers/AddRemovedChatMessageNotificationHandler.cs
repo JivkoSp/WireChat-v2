@@ -50,7 +50,8 @@ namespace WireChat.Application.Commands.Handlers
             }
 
             var removedChatMessageNotification = 
-                new RemovedChatMessageNotification(command.ChatId, command.ChatMessageId, command.UserId, command.DateTime);
+                new RemovedChatMessageNotification(command.ChatId, command.ChatMessageId, command.UserId, 
+                command.NotificationHubId, command.DateTime);
 
             notificationHub.AddRemovedChatMessageNotification(removedChatMessageNotification);
 
