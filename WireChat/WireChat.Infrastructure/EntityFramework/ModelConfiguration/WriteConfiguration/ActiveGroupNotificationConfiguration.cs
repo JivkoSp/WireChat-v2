@@ -11,7 +11,7 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
             // Table name
             builder.ToTable("ActiveGroupNotification");
 
-            //Shadow property for ActiveGroupNotificationId.
+            //Shadow property for ActiveGroupNotificationId primary key.
             builder.Property<Guid>("ActiveGroupNotificationId");
 
             //Primary key
@@ -20,6 +20,10 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
             // Property config
             builder.Property(p => p.GroupId)
                 .HasConversion(id => id.Value, id => new GroupID(id))
+                .IsRequired();
+
+            builder.Property(p => p.NotificationHubId)
+                .HasConversion(id => id.Value, id => new NotificationHubID(id))
                 .IsRequired();
         }
     }
