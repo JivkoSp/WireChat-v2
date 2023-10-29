@@ -30,7 +30,11 @@ namespace WireChat.Infrastructure.EntityFramework.ModelConfiguration.WriteConfig
 
             builder.Property(p => p.GroupId)
                 .HasConversion(id => id.Value, id => new GroupID(id))
-                .IsRequired();  
+                .IsRequired();
+
+            builder.Property(p => p.NotificationHubId)
+                .HasConversion(id => id.Value, id => new NotificationHubID(id))
+                .IsRequired();
 
             builder.Property(typeof(DateTimeOffset), "DateTime")
                 .HasConversion(new EncryptedDateTimeOffsetConverter(_encryptionProvider))
