@@ -9,6 +9,8 @@ namespace WireChat.Infrastructure.EntityFramework.Models
         public DateTimeOffset DateTime { get; set; }
 
         // Relationships
+        public Guid NotificationHubId { get; set; } // Foreign key to the NotificationHub table
+        public virtual NotificationHubReadModel NotificationHub { get; set; }
         public virtual UserReadModel Sender { get; set; }
         public virtual UserReadModel Receiver { get; set; }
     }
