@@ -732,6 +732,288 @@
                 chatHubConnection.invoke("UserUnblocked", signalRRemoveChatUserDto);
             });
 
+            $(document).on('click', '[id^="removeIssuedContactRequestNotification-"]', function () {
+
+                const receiverUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveIssuedContactRequestNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "receiverUserName": receiverUserName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeIssuedContactRequestNotification-${receiverUserName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeReceivedContactRequestNotification-"]', function () {
+
+                const senderUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveReceivedContactRequestNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "senderUserName": senderUserName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeReceivedContactRequestNotification-${senderUserName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeAcceptedContactRequestNotification-"]', function () {
+
+                const senderUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveAcceptedContactRequestNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "senderUserName": senderUserName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeAcceptedContactRequestNotification-${senderUserName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeDeclinedContactRequestNotification-"]', function () {
+
+                const senderUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveDeclinedContactRequestNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "senderUserName": senderUserName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeDeclinedContactRequestNotification-${senderUserName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeCreatedGroupNotification-"]', function () {
+
+                const groupName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                const groupId = $(`#removeCreatedGroupNotificationGroupId-${groupName}`).val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveCreatedGroupNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "groupId": groupId
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeCreatedGroupNotification-${groupName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeAddedGroupMemberNotification-"]', function () {
+
+                const groupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveAddedGroupMemberNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "groupMemberUserName": groupMemberUserName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeAddedGroupMemberNotification-${groupMemberUserName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeRemovedGroupMemberNotification-"]', function () {
+
+                const groupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveRemovedGroupMemberNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "groupMemberUserName": groupMemberUserName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeRemovedGroupMemberNotification-${groupMemberUserName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeBannedContactNotification-"]', function () {
+
+                const userName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveBannedContactNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "contactUserName": userName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeBannedContactNotification-${userName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeBannedGroupMemberNotification-"]', function () {
+
+                const groupMemberUserName = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveBannedGroupMemberNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "groupMemberUserName": groupMemberUserName
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeBannedGroupMemberNotification-${groupMemberUserName}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
+            $(document).on('click', '[id^="removeRemovedChatMessageNotification-"]', function () {
+
+                const chatMessageId = this.id.replace(/.*-/, ''); // Get what comes after the dash
+
+                const notificationHubId = $("#notificationHubId").val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/NotificationHub/RemoveRemovedChatMessageNotification',
+                    data: {
+                        "notificationHubId": notificationHubId,
+                        "chatMessageId": chatMessageId
+                    },
+                    success: function (response) {
+
+                        const divElement = $(`#removeRemovedChatMessageNotification-${chatMessageId}`);
+
+                        divElement.closest('.col-12').remove();
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+            });
+
             userNotificationHub.on("CreatedGroupNotification", (message) => {
 
                 const divElement = createGroupNotification(message);
