@@ -18,7 +18,8 @@
                                    To: @notification.ReceiverUserName
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeIssuedContactRequestNotification-@notification.ReceiverUserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -35,7 +36,8 @@
                                     From: @notification.SenderUserName 
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeReceivedContactRequestNotification-@notification.SenderUserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -49,10 +51,11 @@
                             <div class="card-body">
                                 <h5 class="card-title text-center mb-3">Accepted Contact Request</h5>
                                 <p class="card-text">
-                                    From @notification.SenderUserName To @notification.ReceiverUserName
+                                    From: @notification.SenderUserName 
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeAcceptedContactRequestNotification-@notification.SenderUserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -66,10 +69,11 @@
                             <div class="card-body">
                                 <h5 class="card-title text-center mb-3">Declined Contact Request</h5>
                                 <p class="card-text">
-                                    From @notification.SenderUserName To @notification.ReceiverUserName
+                                    From: @notification.SenderUserName 
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeDeclinedContactRequestNotification-@notification.SenderUserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -82,11 +86,14 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title text-center mb-3">Created Group</h5>
+                                <input id="removeCreatedGroupNotificationGroupId-@notification.GroupName" 
+                                    type="hidden" value="@notification.GroupId" />
                                 <p class="card-text">
                                     Group Name: @notification.GroupName
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeCreatedGroupNotification-@notification.GroupName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -104,7 +111,8 @@
                                     In Group: @notification.GroupName
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeAddedGroupMemberNotification-@notification.GroupMemberUserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -122,7 +130,8 @@
                                     From Group: @notification.GroupName
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeRemovedGroupMemberNotification-@notification.GroupMemberUserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -137,7 +146,8 @@
                                 <h5 class="card-title text-center mb-3">Banned Contact</h5>
                                 <p class="card-text"> @notification.UserName</p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeBannedContactNotification-@notification.UserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -155,7 +165,8 @@
                                     From Group: @notification.GroupName
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeBannedGroupMemberNotification-@notification.GroupMemberUserName" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -172,7 +183,8 @@
                                     @notification.UserName Removed Chat Message
                                 </p>
                                 <p class="text-muted">On: @notification.DateTime</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeRemovedChatMessageNotification-@notification.ChatMessageId" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>
