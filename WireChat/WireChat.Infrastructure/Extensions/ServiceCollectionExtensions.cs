@@ -11,6 +11,10 @@ using WireChat.Infrastructure.EntityFramework.Options;
 using WireChat.Infrastructure.EntityFramework.Repositories;
 using WireChat.Infrastructure.EntityFramework.Services.ReadServices;
 using WireChat.Infrastructure.Automapper.Profiles;
+using WireChat.Application.Commands.Handlers;
+using WireChat.Infrastructure.Logging;
+using WireChat.Infrastructure.Exceptions.Interfaces;
+using WireChat.Infrastructure.Exceptions;
 
 namespace WireChat.Infrastructure.Extensions
 {
@@ -65,6 +69,10 @@ namespace WireChat.Infrastructure.Extensions
                 configAction.AddProfile<RemovedGroupMemberNotificationProfile>();
                 configAction.AddProfile<NotificationHubProfile>();
             });
+
+            services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
+
+            services.AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>();
 
             services.AddSignalR(opt => opt.EnableDetailedErrors = true);
 
