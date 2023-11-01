@@ -4,6 +4,7 @@ using WireChat.Infrastructure.EntityFramework.Contexts;
 using WireChat.Infrastructure.EntityFramework.Models;
 using WireChat.Infrastructure.Extensions;
 using WireChat.Infrastructure.SignalR.Hubs;
+using WireChat.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddApplication();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddTransient<ErrorHandlerMiddleware>();
 
 builder.Services.AddIdentity<UserReadModel, IdentityRole>(opt =>
 {
@@ -41,6 +44,8 @@ app.UseStaticFiles();
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
