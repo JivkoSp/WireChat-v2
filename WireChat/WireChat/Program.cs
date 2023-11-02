@@ -1,14 +1,28 @@
 using Microsoft.AspNetCore.Identity;
+using Serilog;
 using WireChat.Application.Extensions;
 using WireChat.Infrastructure.EntityFramework.Contexts;
 using WireChat.Infrastructure.EntityFramework.Models;
 using WireChat.Infrastructure.Extensions;
+using WireChat.Infrastructure.Logging.Formatters;
 using WireChat.Infrastructure.SignalR.Hubs;
 using WireChat.Middlewares;
+
+// Add Serilog configuration
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console() // Add console sink.
+    .WriteTo.Http(requestUri: "http://localhost:5000",
+                  queueLimitBytes: 1000000,
+                  batchFormatter: new SerilogJsonFormatter()) //Add http sink.
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Host.UseSerilog();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddApplication();
