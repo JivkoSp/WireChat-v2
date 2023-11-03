@@ -68,6 +68,7 @@ namespace WireChat.Infrastructure.Extensions
                 configAction.AddProfile<RemovedChatMessageNotificationProfile>();
                 configAction.AddProfile<RemovedGroupMemberNotificationProfile>();
                 configAction.AddProfile<NotificationHubProfile>();
+                configAction.AddProfile<UserProfile>();
             });
 
             services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
