@@ -14,22 +14,13 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm box-shadow mb-1">
             
-            <a id="siteIconNav" class="navbar-brand d-none d-sm-block">
-                <div class="siteIconNav ms-3">
-                    <img src="~/siteIcon/Logo 500x500 px(2).png" class="img-fluid" />
-                </div>
-            </a>
-
-            <!-- Contact Menu Button for Mobile -->
-            <a id="contactMenuMobileBtn" class="ms-3 d-inline-block d-sm-none" data-bs-toggle="modal" data-bs-target="#contactModal">
-                <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                         class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
-                    <div class="pt-1">
-                        <p class="fw-bold mb-0">username</p>
-                    </div>
-                </div>
-            </a>
+            <!-- User info --> 
+            <div id="userInfoBtn" class="ms-3 d-inline-block" data-bs-toggle="modal" data-bs-target="#userInfoModal">
+                @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    @await Component.InvokeAsync("UserInfo")
+                }
+            </div>
 
             <!-- Hamburger Toggle Button -->
             <button class="modern-button navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
@@ -42,13 +33,6 @@
                 <ul class="navbar-nav ms-auto">
                     @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item me-sm-5">
-                            <strong>
-                                <span class="nav-link text-primary font-weight-bold">
-                                    <i class="fas fa-user me-2"></i>@ViewContext.HttpContext.User.Identity.Name
-                                </span>
-                            </strong>
-                        </li>
                         <li class="nav-item">
                             <!-- Contacts Menu Button for Mobile -->
                             <button id="contactsMenuBtn" class="modern-button d-inline-block d-sm-none me-3" type="button" 
@@ -61,7 +45,7 @@
                         </li>
                         <li class="nav-item">
                             <!-- Notifications Menu Button for Mobile -->
-                            <button class="modern-button me-2 d-inline-block d-sm-none me-3" type="button"
+                            <button class="modern-button me-2 d-inline-block me-3" type="button"
                                     data-bs-toggle="modal" data-bs-target="#notificationsSideMenuModal">
                                 Notifications
                             </button>
@@ -89,6 +73,11 @@
             </div>
         </nav>
     </header>
+
+    @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+    {
+        @await Component.InvokeAsync("UserSettings")
+    }
 
     <!-- Contacts Menu Modal -->
     <div id="contactsSideMenuModal" class="modal fade" tabindex="-1" aria-labelledby="contactsSideMenuModalLabel" aria-hidden="true">
@@ -137,7 +126,7 @@
                 <div class="modal-body">
                     @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
                     {
-                        
+                        @await Component.InvokeAsync("Notifications")
                     }
                 </div>
             </div>
@@ -228,6 +217,8 @@
 
                 userNotificationHub.invoke("JoinGroup", "@ViewContext.HttpContext.User.Identity.Name");
             });
+
+            
 
             connection.start().then(() => {
 
@@ -1012,6 +1003,65 @@
                         console.log("Error", response);
                     }
                 });
+            });
+
+            $.ajax({
+                type: 'GET',
+                url: '/UserSettings/FetchRoboHashImages',
+                data: {},
+                success: function (response) {
+
+                    if(response != null)
+                    {
+                        let imageContainer = $("#userImages");
+
+                        // Loop through the response, which contains base64 image strings
+                        response.forEach(function (base64String) {
+
+                            // Create a new div element
+                            let div = document.createElement('div');
+                            div.classList.add('col-4', 'mb-3');
+
+                            // Create a new img element
+                            const img = document.createElement('img');
+                            img.src = `data:image/png;base64,${base64String}`;
+                            img.classList.add('selectable-image', 'img-fluid', 'border');
+
+                            img.style.width = "100px";
+                            img.style.height = "100px";
+
+                            img.setAttribute('data-img-url', `data:image/png;base64,${base64String}`);
+
+                            div.append(img);
+                            imageContainer.append(div);
+                        });
+                    }
+                },
+                failure: function (response) {
+                    console.log("Fail", response);
+                },
+                error: function (response) {
+                    console.log("Error", response);
+                }
+            });
+
+            $("#userInfoAccountBtn").click(() => {
+
+                $("#images-container").removeClass('d-none');
+
+                $("#userInfoAccountBtn").addClass('pulse-animation');
+
+                setTimeout(() => {
+                    $("#userInfoAccountBtn").removeClass('pulse-animation');
+                }, 500);
+            });
+
+            $(document).on('click', '.selectable-image', function () {
+
+                const selectedImageUrl = $(this).attr('data-img-url'); 
+
+                // Set the selected image in the placeholder
+                $('#selectedImage').attr('src', selectedImageUrl);
             });
 
             userNotificationHub.on("CreatedGroupNotification", (message) => {
