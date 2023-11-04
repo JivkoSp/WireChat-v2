@@ -228,7 +228,8 @@ function createIssuedContactRequestNotification(notification) {
                                     To: ${notification.receiverUserName}
                                 </p>
                                 <p class="text-muted">On: ${notification.dateTime}</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeIssuedContactRequestNotification-${notification.receiverUserName}" 
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                     </div>`;
@@ -246,7 +247,8 @@ function createReceivedContactRequestNotification(notification) {
                                    From: ${notification.senderUserName}
                                 </p>
                                 <p class="text-muted">On: ${notification.dateTime}</p>
-                                <a href="#" class="modern-button text-danger">Remove</a>
+                                <a id="removeReceivedContactRequestNotification-${notification.senderUserName}"
+                                    class="modern-button text-danger">Remove</a>
                             </div>
                         </div>
                      </div>`;
