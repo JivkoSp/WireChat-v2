@@ -206,6 +206,15 @@ body {
     overflow-y: auto;
 }
 
+.userInfo {
+    cursor: pointer;
+}
+
+#userImages {
+    height: 20rem;
+    overflow-y: auto;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -270,6 +279,10 @@ body {
 
     .groupMenu {
         display: none;
+    }
+
+    .hide-on-mobile {
+        display: none !important;
     }
 }
 
