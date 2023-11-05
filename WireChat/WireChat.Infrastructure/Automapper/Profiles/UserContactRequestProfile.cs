@@ -10,7 +10,9 @@ namespace WireChat.Infrastructure.Automapper.Profiles
         {
             CreateMap<UserContactRequestReadModel, UserContactRequestDto>()
                 .ForMember(dest => dest.SenderUserName, opt => opt.MapFrom(src => src.Sender.UserName))
-                .ForMember(dest => dest.ReceiverUserName, opt => opt.MapFrom(src => src.Receiver.UserName));
+                .ForMember(dest => dest.ReceiverUserName, opt => opt.MapFrom(src => src.Receiver.UserName))
+                .ForMember(dest => dest.SenderUserPicture, opt => opt.MapFrom(src => src.Sender.UserPicture))
+                .ForMember(dest => dest.ReceiverUserPicture, opt => opt.MapFrom(src => src.Receiver.UserPicture));
         }
     }
 }
