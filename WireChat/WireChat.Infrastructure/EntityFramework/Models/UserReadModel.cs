@@ -7,7 +7,8 @@ namespace WireChat.Infrastructure.EntityFramework.Models
         public int Version { get; set; }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
-        
+        public string UserPicture { get; set; }
+
         // Relationships
         public virtual List<UserContactRequestReadModel> SendedContactRequests { get; set; }
         public virtual List<UserContactRequestReadModel> ReceivedContactRequests { get; set; }
