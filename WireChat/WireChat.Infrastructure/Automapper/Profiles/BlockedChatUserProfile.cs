@@ -9,7 +9,8 @@ namespace WireChat.Infrastructure.Automapper.Profiles
         public BlockedChatUserProfile()
         {
             CreateMap<BlockedChatUserReadModel, BlockedChatUserDto>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
+                .ForMember(dest => dest.UserPicture, opt => opt.MapFrom(src => src.User.UserPicture));
         }
     }
 }
