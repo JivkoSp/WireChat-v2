@@ -75,7 +75,11 @@ namespace WireChat.Infrastructure.Extensions
 
             services.AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>();
 
-            services.AddSignalR(opt => opt.EnableDetailedErrors = true);
+            services.AddSignalR(opt => {
+
+                opt.EnableDetailedErrors = true;
+                opt.MaximumReceiveMessageSize = 256*1024;
+            });
 
             return services;
         }
