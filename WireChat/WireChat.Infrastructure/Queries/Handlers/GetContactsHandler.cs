@@ -22,20 +22,18 @@ namespace WireChat.Infrastructure.Queries.Handlers
         {
             var chatReadModels = await _readDbContext.ChatUserReadModels
                 .Include(x => x.Chat)
+                .ThenInclude(x => x.ChatUsers)
+                .ThenInclude(x => x.User)
                 .Where(x => x.UserId == query.UserId)
                 .Select(x => x.Chat)
                 .AsNoTracking()
                 .ToListAsync();
 
-            chatReadModels = chatReadModels.Where(x => x.ChatType == "OneToOne").ToList();
-
-            var chatUserReadModels = await _readDbContext.ChatUserReadModels
-               .Join(_readDbContext.ChatReadModels, left_side => left_side.ChatId, right_side => right_side.ChatId,
-                     (left_side, right_side) => new { Chat = right_side, ChatUsers = right_side.ChatUsers })
-               .Where(x => chatReadModels.Contains(x.Chat))
-               .Select(x => x.ChatUsers.Where(x => x.UserId != query.UserId).AsQueryable().Include(x => x.User).ToList())
-               .AsNoTracking()
-               .FirstOrDefaultAsync();
+            var chatUserReadModels = chatReadModels
+                .Where(x => x.ChatType == "OneToOne")
+                .SelectMany(chat => chat.ChatUsers)
+                .Where(cu => cu.UserId != query.UserId)
+                .ToList();
 
             return _mapper.Map<List<ChatUserDto>>(chatUserReadModels);
         }
