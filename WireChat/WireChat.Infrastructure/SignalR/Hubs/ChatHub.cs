@@ -31,14 +31,14 @@ namespace WireChat.Infrastructure.SignalR.Hubs
             await Clients.Group(removeChatUser.ChatId).SendAsync("UserRemoved", removeChatUser);
         }
 
-        public async Task UserBlocked(SignalRRemoveChatUserDto removeChatUser)
+        public async Task UserBlocked(SignalRBlockedChatUserDto blockedChatUser)
         {
-            await Clients.Group(removeChatUser.ChatId).SendAsync("UserBlocked", removeChatUser);
+            await Clients.Group(blockedChatUser.ChatId).SendAsync("UserBlocked", blockedChatUser);
         }
 
-        public async Task UserUnblocked(SignalRRemoveChatUserDto removeChatUser)
+        public async Task UserUnblocked(SignalRBlockedChatUserDto blockedChatUser)
         {
-            await Clients.Group(removeChatUser.ChatId).SendAsync("UserUnblocked", removeChatUser);
+            await Clients.Group(blockedChatUser.ChatId).SendAsync("UserUnblocked", blockedChatUser);
         }
 
         public async Task BlockedUserRemoved(SignalRRemoveChatUserDto removeChatUser)
