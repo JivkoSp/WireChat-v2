@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json.Nodes;
 using WireChat.Application.Commands;
 using WireChat.Application.Commands.Dispatcher;
 using WireChat.Application.Queries;
 using WireChat.Application.Queries.Dispatcher;
+using WireChat.Infrastructure.EntityFramework.Models;
 using WireChat.ViewModels;
 
 namespace WireChat.Controllers
@@ -12,11 +15,14 @@ namespace WireChat.Controllers
     {
         private readonly ICommandDispatcher _commandDispatcher;
         private readonly IQueryDispatcher _queryDispatcher;
+        private readonly UserManager<UserReadModel> _userManager;
 
-        public ChatController(ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher)
+        public ChatController(ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher, 
+            UserManager<UserReadModel> userManager)
         {
             _commandDispatcher = commandDispatcher;
             _queryDispatcher = queryDispatcher;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -26,22 +32,45 @@ namespace WireChat.Controllers
 
             var chatDto = await _queryDispatcher.DispatchAsync(getChatQuery);
 
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
             var chatViewModel = new ChatViewModel
             {
                 CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                CurrentUserPicture = user.UserPicture,
                 ChatDto = chatDto,
             };
 
             return View(chatViewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUserChat(string issuerUserName)
+        {
+            var issuer = await _userManager.FindByNameAsync(issuerUserName);
+
+            var receiver = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var getUserChatQuery = new GetUserChatQuery(issuer.Id, receiver.Id);
+        
+            var chatId = await _queryDispatcher.DispatchAsync(getUserChatQuery);
+
+            return new JsonResult(new { 
+                IssuerUserPicture = issuer.UserPicture,
+                ReceiverUserPicture = receiver.UserPicture,
+                ChatId = chatId
+            });
+        }
+
         [HttpPost]
-        public async Task PostMessage(Guid chatId, string message, DateTimeOffset dateTime)
+        public async Task<IActionResult> PostMessage(Guid chatId, string message, DateTimeOffset dateTime)
         {
             var addChatMessageCommand = new AddChatMessageCommand(chatId, Guid.NewGuid(), 
                 Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)), message, dateTime);
 
             await _commandDispatcher.DispatchAsync(addChatMessageCommand);
+
+            return new JsonResult(addChatMessageCommand.ChatMessageId);
         }
 
         [HttpDelete]
