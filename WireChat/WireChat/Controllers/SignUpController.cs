@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WireChat.Application.Commands;
 using WireChat.Application.Commands.Dispatcher;
+using WireChat.Extensions;
 using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Controllers
@@ -68,7 +69,8 @@ namespace WireChat.Controllers
                     UserLastName = LastName,
                     UserName = UserName,
                     Email = Email,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    UserPicture = UserName.CreatePicture()
                 };
 
                 var result = await _userManager.CreateAsync(user, Password);
