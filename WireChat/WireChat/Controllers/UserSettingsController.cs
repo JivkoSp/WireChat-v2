@@ -7,7 +7,13 @@ namespace WireChat.Controllers
     public class UserSettingsController : Controller
     {
         private static readonly HttpClient _httpClient = new HttpClient();
+        private readonly UserManager<UserReadModel> _userManager;
         private const string RoboHashUrl = "https://robohash.org/";
+
+        public UserSettingsController(UserManager<UserReadModel> userManager)
+        {
+            _userManager = userManager;
+        }
 
         // Generate random strings
         private static string GenerateRandomString(int length)
@@ -83,6 +89,16 @@ namespace WireChat.Controllers
             }
 
             return new JsonResult(imagesAsBase64);
+        }
+
+        [HttpPost]
+        public async Task UpdateProfilePicture(string profilePicture)
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            user.UserPicture = profilePicture;
+
+            await _userManager.UpdateAsync(user);
         }
     }
 }
