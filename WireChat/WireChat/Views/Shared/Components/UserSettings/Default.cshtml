@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div id="userInfoMenuModalLabel" class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                    <img src="data:image/png;base64,@Model.UserPicture" alt="avatar"
                          class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
                     <div class="pt-1">
                         <p class="fw-bold mb-0">@Model.UserName</p>
@@ -48,9 +48,9 @@
                     <div class="col-12 col-md-4 d-flex flex-column align-items-center">
                         <div id="imagePlaceholder" class="border p-3" style="width: 200px; height: 200px;">
                             <!-- Placeholder Image -->
-                            <img id="selectedImage" src="https://via.placeholder.com/200" alt="Selected Image" class="img-fluid">
+                            <img id="selectedImage" src="data:image/png;base64,@Model.UserPicture" alt="Selected Image" class="img-fluid">
                         </div>
-                        <button id="saveImageBtn" class="btn btn-primary mt-3">Save</button>
+                        <button id="saveImageBtn" class="modern-button text-primary mt-3">Save</button>
                     </div>
 
                     <!-- Right Side: Image Grid -->
