@@ -215,6 +215,11 @@ body {
     overflow-y: auto;
 }
 
+.contactListContainer {
+    height: 30rem;
+    overflow-y: auto;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -265,19 +270,12 @@ body {
         margin-left: auto;
         margin-right: auto;
     }
+    
     .side-menu {
         display: none;
     }
 
     .home-main-img {
-        display: none;
-    }
-
-    .contactMenu {
-        display: none;
-    }
-
-    .groupMenu {
         display: none;
     }
 
@@ -289,13 +287,5 @@ body {
 @media (min-width: 576px) {
     .navbar-brand.ms-5 {
         margin-left: 1.5rem !important; 
-    }
-
-    .contactMenu {
-        display: block;
-    }
-
-    .groupMenu {
-        display: block;
     }
 }
