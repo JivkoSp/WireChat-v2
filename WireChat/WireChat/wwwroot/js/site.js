@@ -21,36 +21,44 @@ function createChatMessage(messageDto, currentUserName) {
 
         liElement = `<li class="chat-right d-flex mb-4">
                         <div class="card">
-                            <div class="card-header bg-primary text-white d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">${messageDto.userName}</p>
-                                <p class="small ms-2 mb-0"><i class="far fa-clock me-1"></i>${messageDto.messageDateTime}</p>
+                            <div class="card-header bg-primary text-white d-flex p-3">
+                                <div class="d-flex justify-content-end ms-auto">
+                                    <p class="fw-bold mb-0">${messageDto.userName}</p>
+                                    <p class="small ms-3 mb-0"><i class="far fa-clock me-2"></i>${messageDto.messageDateTime}</p>
+                                    <i id="delete-message" class="delete-message fas fa-trash-alt ms-3" title="Delete"></i>
+                                    <input id="message-${messageDto.chatMessageId}" type="hidden" value="${messageDto.chatMessageId}" />
+                                </div>
                             </div>
                             <div class="card-body">
-                                <p class="mb-0">${messageDto.message}</p>
-                           </div>
+                                <p class="mb-0">
+                                    ${messageDto.message}
+                                </p>
+                            </div>
                         </div>
                         <div>
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                                    class="rounded-circle shadow-1-strong ms-1" width="40">
+                            <img src="data:image/png;base64,${messageDto.userPicture}" alt="avatar"
+                                class="rounded-circle shadow-1-strong ms-1" width="40">
                         </div>
-                     </li>`;
+                    </li>`;
     }
     else if (messageDto) {
 
         liElement = `<li class="chat-left d-flex mb-4">
                         <div>
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                                    class="rounded-circle shadow-1-strong me-1" width="40">
-                        </div>
-                        <div class="card">
-                            <div class="card-header bg-info d-flex justify-content-between p-3">
-                                <p class="fw-bold mb-0">${messageDto.userName}</p>
-                                <p class="small ms-2 mb-0"><i class="far fa-clock me-1"></i>${messageDto.messageDateTime}</p>
+                            <img src="data:image/png;base64,${messageDto.userPicture}" alt="avatar"
+                                class="rounded-circle shadow-1-strong me-1" width="40">
                             </div>
-                            <div class="card-body">
-                                <p class="mb-0">${messageDto.message}</p>
+                            <div class="card">
+                                <div class="card-header bg-info d-flex justify-content-between p-3">
+                                    <p class="fw-bold mb-0">${messageDto.userName}</p>
+                                    <p class="small ms-2 mb-0"><i class="far fa-clock me-1"></i>${messageDto.messageDateTime}</p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-0">
+                                        ${messageDto.message}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
                      </li>`;
     }
 
@@ -133,7 +141,7 @@ function createGroupMember(chatUser) {
 
         divElement = `<div id="groupMember-${chatUser.userName}" class="col d-flex align-items-center py-2">
                                 <div class="d-flex flex-row">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                    <img src="data:image/png;base64,${chatUser.userPicture}" alt="avatar"
                                          class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
                                     <div class="d-flex flex-column flex-grow-1">
                                         <p class="fw-bold mb-1 mt-5">${chatUser.userName}</p>
@@ -165,7 +173,7 @@ function createBlockedGroupMember(chatUser) {
 
         divElement = ` <div id="blockedGroupMember-${chatUser.userName}" class="col d-flex align-items-center py-2">
                             <div class="d-flex flex-row">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                <img src="data:image/png;base64,${chatUser.userPicture}" alt="avatar"
                                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong grayscale" width="40">
                                 <div class="d-flex flex-column flex-grow-1">
                                     <p class="fw-bold mb-1 mt-5">${chatUser.userName}</p>
@@ -345,6 +353,42 @@ function createdAcceptedContactRequestNotification(notification) {
                             </div>
                         </div>
                     </div>`;
+
+    return divElement;
+}
+
+function createAddedContact(contact, currentUserName) {
+
+    let divElement = '';
+
+    if (currentUserName == contact.issuerUserName) {
+
+        divElement = `<li class="p-2 bg-body-tertiary shadow-sm">
+                        <a href="/Chat/Index?chatId=${contact.chatId}" class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                                <img src="data:image/png;base64,${contact.receiverUserPicture}" alt="avatar"
+                                     class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
+                                <div class="pt-1">
+                                    <p class="fw-bold mb-0">${contact.receiverUserName}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>`;
+    }
+    else if (currentUserName == contact.receiverUserName) {
+
+        divElement = `<li class="p-2 bg-body-tertiary shadow-sm">
+                        <a href="/Chat/Index?chatId=${contact.chatId}" class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                                <img src="data:image/png;base64,${contact.issuerUserPicture}" alt="avatar"
+                                     class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="40">
+                                <div class="pt-1">
+                                    <p class="fw-bold mb-0">${contact.issuerUserName}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>`;
+    }
 
     return divElement;
 }
