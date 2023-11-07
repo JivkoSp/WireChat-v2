@@ -3,10 +3,10 @@
 <section>
     <div class="container-fluid py-5">
         <div class="row">
-            <div class="col side-menu">
+            <div class="col-lg-2 col-md-3 side-menu">
                 @await Component.InvokeAsync("SideMenu")
             </div>
-            <div class="col-sm-10 mt-sm-1 text-center">
+            <div class="col-lg-10 col-md-9 mt-sm-1 text-center">
                 <div class="row">
                     <div class="row">
                         <!-- Issued Requests Column -->
@@ -18,9 +18,8 @@
                                     class="card mb-3 shadow rounded-3 w-75 m-auto">
                                     <div class="contact-request-card-header bg-primary text-white rounded-3">
                                         <div>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                            <img src="data:image/png;base64,@contactRequest.ReceiverUserPicture" alt="avatar"
                                                  class="rounded-circle shadow-1-strong" width="40">
-                                            <span class="online-indicator" style="left:42px;"></span>
                                             <strong class="ms-1">@contactRequest.ReceiverUserName</strong>
                                         </div>
                                         <div class="ms-2">
@@ -47,9 +46,8 @@
                                     class="card mb-3 shadow rounded-3 w-75 m-auto">
                                     <div class="contact-request-card-header bg-primary text-white rounded-3">
                                         <div>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                                            <img src="data:image/png;base64,@contactRequest.SenderUserPicture" alt="avatar"
                                                  class="rounded-circle shadow-1-strong" width="40">
-                                            <span class="online-indicator" style="left:42px;"></span>
                                             <strong class="ms-1">@contactRequest.SenderUserName</strong>
                                         </div>
                                         <div class="ms-2">
@@ -143,6 +141,36 @@
                         url: '/ContactRequest/AddContactRequest',
                         data: { 
                             "senderUserName": senderUserName 
+                        },
+                        success: (response) => {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/Chat/GetUserChat',
+                            data: {
+                                "issuerUserName": senderUserName
+                            },
+                            success: (response) => {
+
+                                if (response != null) {
+
+                                    const signalAddedContactDto = {
+                                        "IssuerUserName": senderUserName,
+                                        "ReceiverUserName": "@ViewContext.HttpContext.User.Identity.Name",
+                                        "IssuerUserPicture": response.issuerUserPicture,
+                                        "ReceiverUserPicture": response.receiverUserPicture,
+                                        "ChatId": response.chatId
+                                    };
+
+                                    connection.invoke("AddedContact", signalAddedContactDto);
+                                }
+                            },
+                            failure: (response) => {
+                                console.log("Fail", response);
+                            },
+                            error: (response) => {
+                                console.log("Error", response);
+                            }
+                        });
                         },
                         failure: (response) => {
                             console.log("Fail", response);
@@ -248,6 +276,13 @@
                 connection.on("RemovedIssuedContactRequest", (message) => {
 
                     $(`#removeIssuedContactRequestCard-${message.receiverUserName}`).remove();
+                });
+
+                connection.on("AddedContact", (message) => {
+
+                    const divElement = createAddedContact(message, "@ViewContext.HttpContext.User.Identity.Name");
+
+                    $("#contactList").append(divElement);
                 });
             }).catch(function (err) {
                 console.error("SignalR connection error:", err.toString());
