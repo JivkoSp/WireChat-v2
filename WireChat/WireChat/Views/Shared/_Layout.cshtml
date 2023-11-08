@@ -218,8 +218,6 @@
                 userNotificationHub.invoke("JoinGroup", "@ViewContext.HttpContext.User.Identity.Name");
             });
 
-            
-
             connection.start().then(() => {
 
                 $("#newContact").click(() => {
@@ -583,6 +581,11 @@
 
                 const groupMemberUserId = $(`#groupMemberUserId-${groupMemberUserName}`).val();
 
+                const groupMemberUserPictureSrc = $(`#blockGroupMemberUserPicture-${groupMemberUserName}`).attr('src');
+
+                // Extract only the base64 part of the image src
+                const userPictureBase64Image = groupMemberUserPictureSrc.split(',')[1];
+
                 const groupName = $("#group-name").val();
 
                 let blockedChatUsersCount = $("#blockedChatUsersCount").val();
@@ -606,13 +609,14 @@
                     }
                 });
 
-                const signalRRemoveChatUserDto = {
+                const signalRBlockedChatUserDto = {
                     "ChatId": groupMemberGroupId,
                     "UserId": groupMemberUserId,
-                    "UserName": groupMemberUserName
+                    "UserName": groupMemberUserName,
+                    "UserPicture": userPictureBase64Image
                 };
 
-                chatHubConnection.invoke("UserBlocked", signalRRemoveChatUserDto);
+                chatHubConnection.invoke("UserBlocked", signalRBlockedChatUserDto);
 
                 let signalRBannedGroupMemberNotificationDto = {
                     "GroupId": groupMemberGroupId,
@@ -693,6 +697,11 @@
 
                 const blockedGroupMemberUserId = $(`#blockedGroupMemberUserId-${blockedGroupMemberUserName}`).val();
 
+                const groupMemberUserPictureSrc = $(`#blockedGroupMemberUserPicture-${groupMemberUserName}`).attr('src');
+
+                // Extract only the base64 part of the image src
+                const userPictureBase64Image = groupMemberUserPictureSrc.split(',')[1];
+
                 let blockedChatUsersCount = $("#blockedChatUsersCount").val();
 
                 blockedChatUsersCount -= 1;
@@ -714,13 +723,14 @@
                     }
                 });
 
-                const signalRRemoveChatUserDto = {
+                const signalRBlockedChatUserDto = {
                     "ChatId": groupMemberGroupId,
                     "UserId": blockedGroupMemberUserId,
-                    "UserName": blockedGroupMemberUserName
+                    "UserName": blockedGroupMemberUserName,
+                    "UserPicture": userPictureBase64Image
                 };
 
-                chatHubConnection.invoke("UserUnblocked", signalRRemoveChatUserDto);
+                chatHubConnection.invoke("UserUnblocked", signalRBlockedChatUserDto);
             });
 
             $(document).on('click', '[id^="removeIssuedContactRequestNotification-"]', function () {
@@ -1054,6 +1064,29 @@
                 setTimeout(() => {
                     $("#userInfoAccountBtn").removeClass('pulse-animation');
                 }, 500);
+            });
+
+            $("#saveImageBtn").click(() => {
+
+                const imageSrc = $('#selectedImage').attr('src');
+
+                // Extract only the base64 part of the image src
+                const base64Image = imageSrc.split(',')[1];
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/UserSettings/UpdateProfilePicture',
+                    data: {
+                        "profilePicture": base64Image
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
             });
 
             $(document).on('click', '.selectable-image', function () {
