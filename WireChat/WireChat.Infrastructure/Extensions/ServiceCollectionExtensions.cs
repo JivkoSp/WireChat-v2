@@ -15,6 +15,9 @@ using WireChat.Application.Commands.Handlers;
 using WireChat.Infrastructure.Logging;
 using WireChat.Infrastructure.Exceptions.Interfaces;
 using WireChat.Infrastructure.Exceptions;
+using Quartz;
+using Quartz.Simpl;
+using WireChat.Infrastructure.Schedulers;
 
 namespace WireChat.Infrastructure.Extensions
 {
@@ -70,6 +73,25 @@ namespace WireChat.Infrastructure.Extensions
                 configAction.AddProfile<NotificationHubProfile>();
                 configAction.AddProfile<UserProfile>();
             });
+
+            services.AddQuartz(configurator =>
+            {
+                configurator.UseJobFactory<MicrosoftDependencyInjectionJobFactory>();
+
+                var jobKey = new JobKey("DeleteChatMessagesJob");
+
+                configurator.AddJob<DeleteChatMessagesJob>(opts => opts.WithIdentity(jobKey));
+
+                configurator.AddTrigger(opts => opts
+                    .ForJob(jobKey)
+                    .WithIdentity("DeleteChatMessagesJob-trigger")
+                    .StartNow()
+                    .WithSimpleSchedule(x => x
+                    .WithIntervalInHours(24) 
+                    .RepeatForever()));
+            });
+
+            services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
             services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
 
