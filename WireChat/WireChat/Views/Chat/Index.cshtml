@@ -105,6 +105,32 @@
 
                 connection.invoke("JoinGroup", "@Model.ChatDto.ChatId");
 
+                $.ajax({
+                    type: 'GET',
+                    url: '/Chat/IsUserBlocked',
+                    data: {
+                        "chatId": "@Model.ChatDto.ChatId"
+                    },
+                    success: function (response) {
+
+                        if (response != null) {
+
+                            console.log(response);
+
+                            if (response.isUserBlocked) {
+
+                                blockedUser();
+                            }
+                        }
+                    },
+                    failure: function (response) {
+                        console.log("Fail", response);
+                    },
+                    error: function (response) {
+                        console.log("Error", response);
+                    }
+                });
+
                 $("#sendMessageBtn").click(() => {
 
                     try {
