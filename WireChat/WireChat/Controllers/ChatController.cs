@@ -96,5 +96,20 @@ namespace WireChat.Controllers
 
             await _commandDispatcher.DispatchAsync(unblockChatUserCommand);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> IsUserBlocked(Guid chatId)
+        {
+            var getBlockedChatMembersQuery = new GetBlockedChatMembersQuery(chatId);
+
+            var blockedChatMembers = await _queryDispatcher.DispatchAsync(getBlockedChatMembersQuery);
+
+            var blockedUser = blockedChatMembers.SingleOrDefault(x => x.UserName == User.Identity.Name);
+
+            return new JsonResult(new { 
+            
+                IsUserBlocked = blockedUser == null ? false : true
+            });
+        }
     }
 }
