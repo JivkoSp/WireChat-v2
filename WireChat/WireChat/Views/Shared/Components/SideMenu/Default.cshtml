@@ -5,10 +5,12 @@
     <h5 class="side-menu font-weight-bold mb-3 text-center">Contacts</h5>
 
     <div class="card shadow rounded-2">
-        <div class="card-body">
+        <div id="contactsCardBody" class="card-body">
 
             <div class="input-group rounded mb-3">
-                <input id="searchContact" type="text" class="form-control rounded" placeholder="Search" />
+                <input id="searchContact" type="text" class="form-control rounded"
+                       placeholder="Search" onkeyup="searchContact(this.value, 
+                        document.getElementById('contactList'), document.getElementById('contactsCardBody'))" />
                 <span class="input-group-text border-0" id="search-addon">
                     <i class="fas fa-search text-primary"></i>
                 </span>
