@@ -392,3 +392,45 @@ function createAddedContact(contact, currentUserName) {
 
     return divElement;
 }
+
+function blockedUser() {
+
+    $("#sendMessageBtn").prop("disabled", true);
+
+    $("#chatMessage").prop("disabled", true);
+
+    alert("You are banned from this chat");
+}
+
+function searchContact(query, contactList, cardBody) {
+
+    if (query.length >= 1) {  // Start suggesting if the query is not empty.
+
+        //Send ajax HTTP GET request to /Contact/SearchContact.
+        $.ajax({
+            type: 'GET',
+            url: '/Contact/SearchContact',
+            data: {
+                'query': query
+            },
+            success: (response) => {
+
+                if (response != null) {
+
+                    $(contactList).empty();
+
+
+                }
+            },
+            failure: (reponse) => {
+                console.log("failure", response);
+            },
+            error: (response) => {
+                console.log("error", response);
+            }
+        });
+    }
+    else {
+        
+    }
+}
