@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WireChat.Application.Queries;
 using WireChat.Application.Queries.Dispatcher;
@@ -6,6 +7,7 @@ using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Components
 {
+    [Authorize]
     public class NotificationsViewComponent : ViewComponent
     {
         private readonly IQueryDispatcher _queryDispatcher;

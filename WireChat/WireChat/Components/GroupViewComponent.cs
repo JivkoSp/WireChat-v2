@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WireChat.Application.Queries;
 using WireChat.Application.Queries.Dispatcher;
 
 namespace WireChat.Components
 {
+    [Authorize]
     public class GroupViewComponent : ViewComponent
     {
         private readonly IQueryDispatcher _queryDispatcher;

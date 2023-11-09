@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WireChat.Application.Dtos;
 using WireChat.Application.Queries;
 using WireChat.Application.Queries.Dispatcher;
 
 namespace WireChat.Components
 {
+    [Authorize]
     public class ContactViewComponent : ViewComponent
     {
         private readonly IQueryDispatcher _queryDispatcher;
