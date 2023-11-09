@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Serilog;
+using System.Threading.RateLimiting;
 using WireChat.Application.Extensions;
 using WireChat.Infrastructure.EntityFramework.Contexts;
 using WireChat.Infrastructure.EntityFramework.Models;
@@ -22,6 +23,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Host.UseSerilog();
+
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var options = new TokenBucketRateLimiterOptions
+    {
+        TokenLimit = 100, // Max number of tokens in the bucket
+        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+        QueueLimit = 10, // Allows for brief traffic bursts
+        ReplenishmentPeriod = TimeSpan.FromSeconds(1),
+        TokensPerPeriod = 10, // Tokens added per replenishment period
+        AutoReplenishment = true
+    };
+
+    return new TokenBucketRateLimiter(options);
+});
 
 builder.Services.AddControllersWithViews();
 
