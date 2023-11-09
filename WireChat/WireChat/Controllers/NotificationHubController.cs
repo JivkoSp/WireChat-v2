@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
 using WireChat.Application.Commands;
 using WireChat.Application.Commands.Dispatcher;
 using WireChat.Application.Queries;
@@ -9,6 +9,7 @@ using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Controllers
 {
+    [Authorize]
     public class NotificationHubController : Controller
     {
         private readonly UserManager<UserReadModel> _userManager;

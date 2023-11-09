@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Text.Json.Nodes;
 using WireChat.Application.Commands;
 using WireChat.Application.Commands.Dispatcher;
 using WireChat.Application.Queries;
@@ -11,6 +11,7 @@ using WireChat.ViewModels;
 
 namespace WireChat.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;

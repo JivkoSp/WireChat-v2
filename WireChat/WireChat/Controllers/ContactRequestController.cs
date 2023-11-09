@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WireChat.Application.Commands;
 using WireChat.Application.Commands.Dispatcher;
@@ -10,6 +11,7 @@ using WireChat.ViewModels;
 
 namespace WireChat.Controllers
 {
+    [Authorize]
     public class ContactRequestController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;

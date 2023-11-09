@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
 using WireChat.Application.Dtos;
@@ -7,6 +8,7 @@ using WireChat.Application.Queries.Dispatcher;
 
 namespace WireChat.Controllers
 {
+    [Authorize]
     public class ContactController : Controller
     {
         private readonly IQueryDispatcher _queryDispatcher;

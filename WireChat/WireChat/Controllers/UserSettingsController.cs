@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WireChat.Infrastructure.EntityFramework.Models;
 
 namespace WireChat.Controllers
 {
+    [Authorize]
     public class UserSettingsController : Controller
     {
         private static readonly HttpClient _httpClient = new HttpClient();

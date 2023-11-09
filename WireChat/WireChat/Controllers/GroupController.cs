@@ -7,9 +7,11 @@ using WireChat.Infrastructure.EntityFramework.Models;
 using WireChat.Application.Queries.Dispatcher;
 using WireChat.Application.Queries;
 using WireChat.Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WireChat.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;

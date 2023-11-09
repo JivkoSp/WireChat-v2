@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using WireChat.Models;
 
 namespace WireChat.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly SignInManager<UserReadModel> _signInManager;
