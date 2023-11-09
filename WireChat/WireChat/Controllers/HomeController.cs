@@ -7,7 +7,6 @@ using WireChat.Models;
 
 namespace WireChat.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly SignInManager<UserReadModel> _signInManager;
