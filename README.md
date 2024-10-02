@@ -88,7 +88,7 @@ In this project, "sufficient security" is accomplished through the following mea
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-2.PNG" alt="homePageI" width="400">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-2.PNG" alt="homePageI" width="300">
 </p>
 
 ### Sign Up Page
@@ -98,7 +98,7 @@ In this project, "sufficient security" is accomplished through the following mea
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-2.PNG" alt="homePageI" width="400">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-2.PNG" alt="homePageI" width="300">
 </p>
 
 ### Signed In User 
@@ -108,11 +108,11 @@ In this project, "sufficient security" is accomplished through the following mea
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-2.PNG" alt="homePageI" width="400">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-2.PNG" alt="homePageI" width="300">
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-3.PNG" alt="homePageI" width="400">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-3.PNG" alt="homePageI" width="300">
 </p>
 
 ### Add New Contact
