@@ -74,49 +74,95 @@ In this project, "sufficient security" is accomplished through the following mea
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Main-2.PNG" alt="homePageI" width="800">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Main-2.PNG" alt="homePageII" width="800">
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Main-3.PNG" alt="homePageI" width="800">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Main-3.PNG" alt="homePageII" width="800">
 </p>
 
 ### Sign In Page 
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-1.PNG" alt="homePageI" width="800">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-1.PNG" alt="signInPageI" width="800">
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-2.PNG" alt="homePageI" width="300">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-2.PNG" alt="signInPageII" width="300">
 </p>
 
 ### Sign Up Page
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-1.PNG" alt="homePageI" width="800">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-1.PNG" alt="signUpPageI" width="800">
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-2.PNG" alt="homePageI" width="300">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-2.PNG" alt="signUpPageII" width="300">
 </p>
 
 ### Signed In User 
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-1.PNG" alt="homePageI" width="800">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-1.PNG" alt="signedInUserI" width="800">
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-2.PNG" alt="homePageI" width="300">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-2.PNG" alt="signedInUserII" width="300">
 </p>
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-3.PNG" alt="homePageI" width="300">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-3.PNG" alt="signedInUserIII" width="300">
 </p>
 
 ### Add New Contact
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/NewContact-1.PNG" alt="homePageI" width="800">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/NewContact-1.PNG" alt="addNewContactI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/NewContact-2.PNG" alt="addNewContactII" width="300">
+</p>
+
+### Create Group
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/NewGroup-1.PNG" alt="createGroupI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/NewGroup-2.PNG" alt="createGroupII" width="300">
+</p>
+
+### Notifications
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Notifications.PNG" alt="notifications" width="800">
+</p>
+
+### One-To-One Chat
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Chat-1.PNG" alt="oneToOneChatI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Chat-2.PNG" alt="oneToOneChatII" width="300">
+</p>
+
+### Profile Settings
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/ProfileSettings-1.PNG" alt="profileSettings" width="800">
+</p>
+
+### Group
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Group-1.PNG" alt="groupI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Group-2.PNG" alt="groupII" width="800">
 </p>
