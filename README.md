@@ -44,3 +44,79 @@ In this project, "sufficient security" is accomplished through the following mea
 - **Event Logging System**: An event logging system captures events occurring within the application, providing a clear overview of the system's activities from a centralized location.
 
 <h2>📖 <a href="#" target="_blank">Documentation</a></h2>
+
+* **Intro** 📜
+    - [Purpose](Docs/intro-purpose.md)
+    - [Capabilities](Docs/intro-capabilities.md)
+    - [Overall design](Docs/intro-design.md)
+    - [Technologies](Docs/intro-technologies.md)
+* **Design Decisions** 🧩
+    - [Architecture](Docs/design-decision-service-architecture.md)
+    - [Authentication and Authorization](Docs/design-decision-authentication-and-authorization.md)
+    - [Messaging](Docs/design-decision-messaging.md)
+    - [Containerization](Docs/design-decision-containerization.md)
+    - [Fault Handling](Docs/design-decision-fault-handling.md)
+    - [Data Storage](Docs/design-decision-data-storage.md)
+* **Design** 🛠️
+    - [Log Collection Service](Docs/design-logcollection-service.md)
+* **Project Structure** 📂
+    - [Project Structure](Docs/project-structure-user-service.md)
+* **Usage** 🚀
+   - [How to Run](Docs/usage-how-to-run.md)
+   - [API Documentation](Docs/usage-api-documentation.md)
+ 
+## How the app looks
+
+### Home Page
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Main-1.PNG" alt="homePageI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Main-2.PNG" alt="homePageI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Main-3.PNG" alt="homePageI" width="800">
+</p>
+
+### Sign In Page 
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-1.PNG" alt="homePageI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Login-2.PNG" alt="homePageI" width="800">
+</p>
+
+### Sign Up Page
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-1.PNG" alt="homePageI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Register-2.PNG" alt="homePageI" width="800">
+</p>
+
+### Signed In User 
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-1.PNG" alt="homePageI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-2.PNG" alt="homePageI" width="800">
+</p>
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Home-3.PNG" alt="homePageI" width="800">
+</p>
+
+### Add New Contact
+
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/NewContact-1.PNG" alt="homePageI" width="800">
+</p>
