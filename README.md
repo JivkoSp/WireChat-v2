@@ -47,7 +47,7 @@ In this project, "sufficient security" is accomplished through the following mea
 
 * **Intro** 📜
     - [Purpose](Docs/intro-purpose.md)
-    - [Capabilities](Docs/intro-capabilities.md)
+    - [Capabilities](Docs/WireChat/intro-capabilities.md)
     - [Overall design](Docs/intro-design.md)
     - [Technologies](Docs/intro-technologies.md)
 * **Design Decisions** 🧩
