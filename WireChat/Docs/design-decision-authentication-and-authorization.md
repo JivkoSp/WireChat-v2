@@ -9,18 +9,18 @@
   while ensuring the implementation of industry-standard practices.
 - **Security** The Identity API offers out-of-the-box support for secure features such as password hashing, two-factor authentication (2FA), and token-based authentication, ensuring strong protection
   of user accounts. By leveraging Identity's built-in security mechanisms, the risk of introducing vulnerabilities that might arise from custom implementations are minimized.
-- Integration with ASP.NET Core Middleware The Identity API integrates seamlessly with ASP.NET Core’s middleware pipeline, allowing for consistent management of authentication across the entire application.
+- **Integration with ASP.NET Core Middleware** The Identity API integrates seamlessly with ASP.NET Core’s middleware pipeline, allowing for consistent management of authentication across the entire application.
   This design choice also allows us to easily plug in other authentication mechanisms (e.g., OAuth, JWT tokens) if required in the future, providing flexibility as the app evolves.
-- Extensibility and Customization While the Identity API provides many default behaviors, it also allows for significant customization, which was important for meeting the specific needs of WireChat. For example:
+- **Extensibility and Customization** While the Identity API provides many default behaviors, it also allows for significant customization, which was important for meeting the specific needs of WireChat. For example:
     - Custom user properties are supported (e.g., profile pictures, status updates).
     - The ability to extend role-based access controls to fit more complex authorization scenarios, like group-specific permissions, aligns well with the application’s growth roadmap.
     - Claims-based authorization and policies were used to implement finer-grained control over what actions users can perform, which is critical in features like blocking/unblocking users or moderating group chats.
-- Scalability As WireChat is designed to support a growing user base, scalability was a critical factor. The Identity API, when paired with Entity Framework Core, provides excellent support for handling large datasets.
+- **Scalability** As WireChat is designed to support a growing user base, scalability was a critical factor. The Identity API, when paired with Entity Framework Core, provides excellent support for handling large datasets.
   The ability to store and manage user accounts, claims, and roles in a relational database (like SQL Server or PostgreSQL) ensures that the authentication and authorization layers will scale with increasing usage.
-- Future-Proofing The decision to use .NET Core Identity was also influenced by its flexibility for future enhancements. For instance, while the current implementation supports password authentication
+- **Future-Proofing** The decision to use .NET Core Identity was also influenced by its flexibility for future enhancements. For instance, while the current implementation supports password authentication
   and two-factor authentication (using QR codes), the system can be easily extended to include OAuth-based logins (e.g., Google, Facebook) or custom external authentication providers without significant
   architectural changes.
-- Consistency with .NET Ecosystem WireChat is built using .NET Core, and Identity is the recommended framework for authentication and authorization in this ecosystem.
+- **Consistency with .NET Ecosystem** WireChat is built using .NET Core, and Identity is the recommended framework for authentication and authorization in this ecosystem.
   By using Identity, we can ensure that we follow best practices and take advantage of security updates and features that are regularly improved by the .NET community and Microsoft.
   This reduces the long-term maintenance burden on the development team.
 
