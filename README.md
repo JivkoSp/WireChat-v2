@@ -46,7 +46,7 @@ In this project, "sufficient security" is accomplished through the following mea
 <h2>📖 <a href="#" target="_blank">Documentation</a></h2>
 
 * **Intro** 📜
-    - [Purpose](Docs/intro-purpose.md)
+    - [Purpose](WireChat/Docs/intro-purpose.md)
     - [Capabilities](WireChat/Docs/intro-capabilities.md)
     - [Overall design](Docs/intro-design.md)
     - [Technologies](Docs/intro-technologies.md)
