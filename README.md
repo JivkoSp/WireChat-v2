@@ -48,15 +48,15 @@ In this project, "sufficient security" is accomplished through the following mea
 * **Intro** 📜
     - [Purpose](WireChat/Docs/intro-purpose.md)
     - [Capabilities](WireChat/Docs/intro-capabilities.md)
-    - [Overall design](Docs/intro-design.md)
-    - [Technologies](Docs/intro-technologies.md)
+    - [Overall design](WireChat/Docs/intro-design.md)
+    - [Technologies](WireChat/Docs/intro-technologies.md)
 * **Design Decisions** 🧩
-    - [Architecture](Docs/design-decision-service-architecture.md)
-    - [Authentication and Authorization](Docs/design-decision-authentication-and-authorization.md)
-    - [Messaging](Docs/design-decision-messaging.md)
-    - [Containerization](Docs/design-decision-containerization.md)
-    - [Fault Handling](Docs/design-decision-fault-handling.md)
-    - [Data Storage](Docs/design-decision-data-storage.md)
+    - [Architecture](WireChat/Docs/design-decision-architecture.md)
+    - [Authentication and Authorization](WireChat/Docs/design-decision-authentication-and-authorization.md)
+    - [Messaging](WireChat/Docs/design-decision-messaging.md)
+    - [Containerization](WireChat/Docs/design-decision-containerization.md)
+    - [Fault Handling](WireChat/Docs/design-decision-fault-handling.md)
+    - [Data Storage](WireChat/Docs/design-decision-data-storage.md)
 * **Design** 🛠️
     - [Log Collection Service](Docs/design-logcollection-service.md)
 * **Project Structure** 📂
