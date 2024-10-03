@@ -1,4 +1,4 @@
-# Service Architecture
+# Clean Architecture
 
 ## I have chosen Clean Architecture because of the principles it focuses on
 
