@@ -58,9 +58,9 @@ In this project, "sufficient security" is accomplished through the following mea
     - [Fault Handling](WireChat/Docs/design-decision-fault-handling.md)
     - [Data Storage](WireChat/Docs/design-decision-data-storage.md)
 * **Design** 🛠️
-    - [Log Collection Service](Docs/design-logcollection-service.md)
+    - [Log Collection Service](WireChat/Docs/design-logcollection-service.md)
 * **Project Structure** 📂
-    - [Project Structure](Docs/project-structure-user-service.md)
+    - [Project Structure](WireChat/Docs/project-structure.md)
 * **Usage** 🚀
    - [How to Run](Docs/usage-how-to-run.md)
    - [API Documentation](Docs/usage-api-documentation.md)
