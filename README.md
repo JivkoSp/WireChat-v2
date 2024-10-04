@@ -62,7 +62,7 @@ In this project, "sufficient security" is accomplished through the following mea
 * **Project Structure** 📂
     - [Structure](WireChat/Docs/project-structure.md)
 * **Usage** 🚀
-   - [How to Run](Docs/usage-how-to-run.md)
+   - [How to Run](WireChat/Docs/usage-how-to-run.md)
    - [API Documentation](Docs/usage-api-documentation.md)
  
 ## How the app looks
