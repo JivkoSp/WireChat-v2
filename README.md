@@ -4,7 +4,7 @@
 
 ## What is WireChat?
 
-WireChat is a messaging app inspired by Signal and other similar messaging applications, like Telegram. This is the second version of the WireChat project, which I worked on two years ago.
+WireChat is a messaging app inspired by Signal and other similar messaging applications, like Telegram. This is the second version of the [WireChat](https://github.com/JivkoSp/WireChat) project, which I worked on two years ago.
 
 This version supports the functionalities from the first version, which include:
 
