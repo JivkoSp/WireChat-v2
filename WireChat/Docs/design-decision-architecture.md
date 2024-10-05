@@ -1,5 +1,9 @@
 # Clean Architecture
 
+<p align="center">
+    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/CleanArchitecture.PNG" alt="Logo" width="450">
+</p>
+
 ## I have chosen Clean Architecture because of the principles it focuses on
 
 * **Independence of framework components** - The architecture should be independent of any specific external framework or component. This allows for easier portability and adaptability to changes in the technologies
