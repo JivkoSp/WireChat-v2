@@ -60,7 +60,7 @@ In this project, "sufficient security" is accomplished through the following mea
 * **Design** 🛠️
     - [Log Collection Service](WireChat/Docs/design-logcollection-service.md)
 * **Project Structure** 📂
-    - [Structure](WireChat/Docs/project-structure.md)
+    - [File Structure](WireChat/Docs/project-structure.md)
 * **Usage** 🚀
    - [How to Run](WireChat/Docs/usage-how-to-run.md)
  
