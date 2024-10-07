@@ -533,3 +533,56 @@ WireChat
 │   │   ├── Program.cs
 ------------------------------------------------------------------
 ```
+
+## Directory/File Descriptions
+
+| Layer          | Directory/File                                                                                        | Description                                                   |
+|----------------|-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
+| Domain         | `WireChat/src/WireChat.Domain/Entities/`                                                        | Contains domain entities representing core business concepts. |
+| Domain         | `WireChat/src/WireChat.Domain/Events/`                                                          | Includes domain events capturing significant changes or actions. |
+| Domain         | `WireChat/src/WireChat.Domain/Exceptions/`                                                      | Houses custom exceptions specific to domain logic.             |
+| Domain         | `WireChat/src/WireChat.Domain/Factories/`                                                       | Provides factories for creating domain entities.               |
+| Domain         | `WireChat/src/WireChat.Domain/Repositories/`                                                    | Defines interfaces or base classes for data access operations. |
+| Domain         | `WireChat/src/WireChat.Domain/ValueObjects/`                                                    | Contains immutable value objects used within the domain.       |
+| Application    | `WireChat/src/WireChat.Application/Commands/`                                                   | Contains command types and serves as the central location for defining and organizing commands. |
+| Application    | `WireChat/src/WireChat.Application/Commands/Dispatcher/`                                        | Contains command dispatcher type and serves as the central component responsible for 
+routing commands to their respective command handlers. |
+| Application    | `WireChat/src/WireChat.Application/Commands/Handlers/`                                          | Contains command handler types that implement ICommandHandler<T> interface and plays a crucial role in implementing 
+Command Query Responsibility Segregation (CQRS). |
+| Application    | `WireChat/src/WireChat.Application/Dtos/`                                                       | Contains Data Transfer Objects (DTOs). |
+| Application    | `WireChat/src/WireChat.Application/Exceptions/`                                                 | Contains Application layer specific custom exception types. |
+| Application    | `WireChat/src/WireChat.Application/Extensions/`                                                 | Contains custom extension methods. |
+| Application    | `WireChat/src/WireChat.Application/Queries/`                                                    | Contains query types and serves as the central location for defining and organizing queries. |
+| Application    | `WireChat/src/WireChat.Application/Queries/Dispatcher/`                                         | Contains query dispatcher type that implements IQueryDispatcher interface and serves as the central component responsible for 
+routing queries to their respective query handlers for execution and data retrieval. |
+| Application    | `WireChat/src/WireChat.Application/Queries/Handlers/`                                           | Contains the definition of the IQueryHandler<TQuery, TResult> interface, which serves as a contract for all query handlers 
+responsible for executing queries and retrieving data from the application's read-side or queryable data sources.  |
+| Application    | `WireChat/src/WireChat.Application/Services/`                                                   | Implements application services containing business logic.     |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/Automapper/`                                              | Contains types, that are inheriting the Profile type from AutoMapper library. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Contexts/`                                | Contains two EntityFramework DbContext classes - ReadDbContext and WriteDbContext. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Encryption/`                              | Contains custom EntityFramework encryption converters and encryption provider. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Initialization/`                          | Contains DbInitializer class that applies entity framework migrations. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Migrations/`                              | Contains EntityFramework migrations. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/ModelConfiguration/ReadConfiguration/`    | Contains classes that implement IEntityTypeConfiguration<T> and are containing configuration for the database models. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/ModelConfiguration/WriteConfiguration/`   | Contains classes that implement IEntityTypeConfiguration<T> and are containing configuration for DOMAIN entities and value objects. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Models/`                                  | Contains classes for the database models that represent the database tables and the overall database schema. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Options/`                                 | Contains class that is used for the OPTIONS pattern. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Repositories/`                            | Contains implementations of interfaces for data access operations. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/EntityFramework/Services/`                                | Contains implementations of interfaces for services containing business logic. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/Exceptions/`                                              | Contains Infrastructure layer specific custom exception types. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/Extensions/`                                              | Contains custom extension methods. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/Logging/`                                                 | Contains logging decorators and formatters. The purpose of the decorators is to wrap the behaviour of a Command Handler or other part of the application and to enrich it's capabilities with the ability to log information. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/Queries/`                                                 | Contains query handlers that work with the queries from the Command Query Responsibility Segregation (CQRS) approach. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/Schedulers/`                                              | Contains classes that represent schedulers for various activities. |
+| Infrastructure | `WireChat/src/WireChat.Infrastructure/SignalR/`                                                 | Contains classes that represent SignalR Hubs. |
+| Presentation   | `WireChat/src/WireChat.Presentation/Properties/`                                                | Contains the application properties related to port and protocol configuration. |
+| Presentation   | `WireChat/src/WireChat.Presentation/wwwroot/css/`                                                | Contains css files. |
+| Presentation   | `WireChat/src/WireChat.Presentation/wwwroot/home/`                                                | Contains .png files for the home page. |
+| Presentation   | `WireChat/src/WireChat.Presentation/wwwroot/js/`                                                | Contains javascript files. |
+| Presentation   | `WireChat/src/WireChat.Presentation/Components/`                                               | Contains view component classes. |
+| Presentation   | `WireChat/src/WireChat.Presentation/Controllers/`                                               | Contains API controllers handling HTTP requests and responses. |
+| Presentation   | `WireChat/src/WireChat.Presentation/Extensions/`                                                      | Provides Data Transfer Objects (DTOs) for API input and output. |
+| Presentation   | `WireChat/src/WireChat.Presentation/Middlewares/`                                               | Contains custom middlewares. |
+| Presentation   | `WireChat/src/WireChat.Presentation/Models/`                                               | Contains classes that represent various models, used by the presentation layer. |
+| Presentation   | `WireChat/src/WireChat.Presentation/ViewModels/`                                               | Contains classes that represent various view models, used by the presentation layer. |
+| Presentation   | `WireChat/src/WireChat.Presentation/Views/`                                               | Contains views for controllers and components. |
