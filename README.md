@@ -66,7 +66,7 @@ In this project, "sufficient security" is accomplished through the following mea
  
 ## How the app looks
 
-### <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube" width="20" height="20"/> Demo on YouTube
+### Demo on YouTube <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube" width="20" height="20"/>
 [▶️ WireChat features - part 1](https://www.youtube.com/watch?v=hM9-OXI4hU4)
 
 [▶️ WireChat features - part 2](https://www.youtube.com/watch?v=ZVln-XfXfVc)
