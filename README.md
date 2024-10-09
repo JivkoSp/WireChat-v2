@@ -66,10 +66,10 @@ In this project, "sufficient security" is accomplished through the following mea
  
 ## How the app looks
 
-### Demo on Youtube
-[WireChat features - part 1](https://www.youtube.com/watch?v=hM9-OXI4hU4)
+### Demo on Youtube ![YouTube](https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png)
+[▶️ WireChat features - part 1](https://www.youtube.com/watch?v=hM9-OXI4hU4)
 
-[WireChat features - part 2](https://www.youtube.com/watch?v=ZVln-XfXfVc)
+[▶️ WireChat features - part 2](https://www.youtube.com/watch?v=ZVln-XfXfVc)
 
 ### Home Page
 
