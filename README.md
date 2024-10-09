@@ -71,6 +71,8 @@ In this project, "sufficient security" is accomplished through the following mea
 
 [▶️ WireChat features - part 2](https://www.youtube.com/watch?v=ZVln-XfXfVc)
 
+----------------------------------
+
 ### Home Page
 
 <p align="center">
