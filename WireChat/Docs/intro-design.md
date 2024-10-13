@@ -1,6 +1,6 @@
 # Abstract representation of the project structure
 
-![Architecture Overview](https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/OverallDesign.PNG)
+![Architecture Overview](https://raw.githubusercontent.com/JivkoSp/WireChat-v2/master/WireChat/Assets/OverallDesign.PNG)
 
 ## The components of the diagram have the following meaning
 
