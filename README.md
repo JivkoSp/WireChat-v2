@@ -43,7 +43,7 @@ In this project, "sufficient security" is accomplished through the following mea
 - **Data Encryption**: Information transmitted trough the application and the database is encrypted;
 - **Event Logging System**: An event logging system captures events occurring within the application, providing a clear overview of the system's activities from a centralized location.
 
-<h2>📖 <a href="#" target="_blank">Documentation</a></h2>
+<h2>📖 <a href="https://jivkosp.github.io/WireChat-v2/" target="_blank">Documentation</a></h2>
 
 * **Intro** 📜
     - [Purpose](WireChat/Docs/intro-purpose.md)
