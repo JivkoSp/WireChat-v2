@@ -28,7 +28,7 @@ The group functionality could also be enhanced by adding user roles and the abil
 
 ## Architecture Overview
 
-![Architecture Overview](https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/ArchitectureOverview.PNG)
+![Architecture Overview](https://raw.githubusercontent.com/JivkoSp/WireChat-v2/master/WireChat/Assets/ArchitectureOverview.PNG)
 
 ## Why Security Matters
 
