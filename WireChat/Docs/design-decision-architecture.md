@@ -1,7 +1,7 @@
 # Clean Architecture
 
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/CleanArchitecture.PNG" alt="Logo" width="450">
+    <img src="https://raw.githubusercontent.com/JivkoSp/WireChat-v2/master/WireChat/Assets/CleanArchitecture.PNG" alt="Logo" width="450">
 </p>
 
 ## I have chosen Clean Architecture because of the principles it focuses on
