@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/JivkoSp/WireChat-v2/blob/master/WireChat/Assets/Logo.PNG" alt="Logo" width="600">
+    <img src="https://raw.githubusercontent.com/JivkoSp/WireChat-v2/master/WireChat/Assets/Logo.PNG" alt="Logo" width="600">
 </p>
 
 ## What is WireChat?
