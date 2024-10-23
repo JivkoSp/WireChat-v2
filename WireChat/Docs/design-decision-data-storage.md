@@ -67,7 +67,7 @@ While PostgreSQL is a powerful relational database system with many advantages f
 
 ## Trade-offs Considered
 
-While Elasticsearch is an excellent choice for log management, we also considered a few trade-offs:
+While Elasticsearch is an excellent choice for log management, I also considered a few trade-offs:
 
 - **Resource Usage**: Elasticsearch requires more resources (CPU, memory) to maintain its indices and execute search queries, especially compared to a simpler relational database like PostgreSQL.
 - **Learning Curve**: Using Elasticsearch introduces additional complexity in terms of configuration, maintenance, and monitoring compared to PostgreSQL, which the team was already familiar with.
