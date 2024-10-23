@@ -1,7 +1,6 @@
 # Run locally
 
-For local development it is more convenient to use the Docker deployment with a selection of components from the integration, data storage and observability categories,
-while the .NET services could be ran in the IDE
+For local development it is more convenient to use the Docker deployment with a selection of components from the integration, data storage and observability categories.
 
 # Certificates
 
