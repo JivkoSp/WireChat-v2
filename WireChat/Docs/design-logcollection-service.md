@@ -1,6 +1,6 @@
 # Log Collection Service
 
-## Responsible for collecting and recording information in an Elasticsearch database regarding events occurring in the services offered by the application
+### Responsible for collecting and recording information in an Elasticsearch database regarding events occurring in the services offered by the application
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/JivkoSp/WireChat-v2/master/WireChat/Assets/LogCollectionService-1.PNG" alt="Logo" width="450">
